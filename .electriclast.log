@@ -1,0 +1,184 @@
+; ============= The header:
+; LC n           Library count
+; LD name file   Library read from disk
+; LM name file   Library not read from disk
+; WO n           Window offset currently 'n'
+; WT n           Window count
+; WC n x y w h   Component window, index 'n' at (x,y), size (wXh)
+; WE n x y w h   Edit window, index 'n' at (x,y), size (wXh)
+; WP n           Window has 'n' partitions
+; WB lx hx ly hy slx shx sly shy state cell loc    Window partition (background)
+; WF lx hx ly hy slx shx sly shy state cell loc    Window partition (foreground)
+; CI n           Current window index
+; CT tech        Current technology
+LC 1
+LM noname noname
+WO 1
+WT 2
+WE 1 108 4294967293 722 644
+WP 1
+WF 0 707 12 594 -5345 5345 -4400 4400 8 ***NONODEPROTO*** entire
+WC 0 4294967288 4294967266 112 715
+WP 0
+CI 3
+CT mocmos
+; ============= The body:
+; KT k x y s w t Key 'k' typed at (x,y), special 's', window 'w', time 't'
+; BP n x y s w t Button 'n' pressed at (x,y), special 's', window 'w', time 't'
+; BD n x y s w t Button 'n' double-clicked at (x,y), special 's', window 'w', time 't'
+; BR n x y s w t Button 'n' released at (x,y), special 's', window 'w', time 't'
+; MP x y s w     Motion with button pressed at (x,y), special 's', window 'w'
+; MR x y s w     Motion with button released at (x,y), special 's', window 'w'
+; ME m i t       Invoked menu 'm', item 'i', time 't'
+; WS n w h t     Window 'n' grows to (wXh), time 't'
+; WM n x y t     Window 'n' moves to (x,y), time 't'
+; FS path        File selected is 'path'
+; PM v t         Popup menu selected 'v', time 't'
+; DI w i         Item 'i' of dialog selected
+; DS w i c vals  Dialog 'w' scroll item 'i' selects 'c' lines in 'values'
+; DE w i hc s    Dialog 'w' edit item 'i' hit character 'hc', text now 's'
+; DP w i e       Dialog 'w' popup item 'i' set to entry 'e'
+; DC w i v       Dialog 'w' item 'i' set to value 'v'
+; DM w x y       Dialog 'w' coordinates at (x,y)
+; DD w           Dialog 'w' done
+MR 480 505 0 1
+MR 480 501 0 1
+MR 484 482 0 1
+MR 488 470 0 1
+MR 491 456 0 1
+MR 495 441 0 1
+MR 498 429 0 1
+MR 501 414 0 1
+MR 503 402 0 1
+MR 506 393 0 1
+MR 507 388 0 1
+MR 507 386 0 1
+MR 508 384 0 1
+MR 509 383 0 1
+MR 509 380 0 1
+MR 509 377 0 1
+MR 509 375 0 1
+MR 509 374 0 1
+MR 509 373 0 1
+MR 509 372 0 1
+MR 509 371 0 1
+MR 509 372 0 1
+MR 508 376 0 1
+MR 508 379 0 1
+MR 507 386 0 1
+MR 507 398 0 1
+MR 507 413 0 1
+MR 506 431 0 1
+MR 504 449 0 1
+MR 503 475 0 1
+MR 501 513 0 1
+MR 499 545 0 1
+MR 499 569 0 1
+MR 497 587 0 1
+MR 497 585 0 1
+MR 498 575 0 1
+MR 499 566 0 1
+MR 500 555 0 1
+MR 502 543 0 1
+MR 503 529 0 1
+MR 506 514 0 1
+MR 507 501 0 1
+MR 508 486 0 1
+MR 508 472 0 1
+MR 508 462 0 1
+MR 508 452 0 1
+MR 508 444 0 1
+MR 508 437 0 1
+MR 508 436 0 1
+MR 508 435 0 1
+MR 508 432 0 1
+MR 508 430 0 1
+MR 508 429 0 1
+MR 505 426 0 1
+MR 500 423 0 1
+MR 494 419 0 1
+MR 490 415 0 1
+MR 484 410 0 1
+MR 473 403 0 1
+MR 462 396 0 1
+MR 451 388 0 1
+MR 442 380 0 1
+MR 433 372 0 1
+MR 422 366 0 1
+MR 414 361 0 1
+MR 413 360 0 1
+MR 411 357 0 1
+MR 410 356 0 1
+MR 409 355 0 1
+MR 409 353 0 1
+MR 409 350 0 1
+MR 409 348 0 1
+MR 409 344 0 1
+MR 407 340 0 1
+MR 406 337 0 1
+MR 404 333 0 1
+MR 402 330 0 1
+MR 401 330 0 1
+MR 400 327 0 1
+MR 399 325 0 1
+MR 397 323 0 1
+MR 397 322 0 1
+MR 397 320 0 1
+MR 397 319 0 1
+MR 397 318 0 1
+MR 397 317 0 1
+MR 396 315 0 1
+MR 396 314 0 1
+MR 395 313 0 1
+MR 395 312 0 1
+MR 395 311 0 1
+MR 394 309 0 1
+MR 394 308 0 1
+MR 394 307 0 1
+MR 393 307 0 1
+MR 393 305 0 1
+MR 393 304 0 1
+MR 393 302 0 1
+MR 393 300 0 1
+MR 392 298 0 1
+MR 390 299 0 1
+MR 390 300 0 1
+MR 388 302 0 1
+MR 388 303 0 1
+MR 385 305 0 1
+MR 383 308 0 1
+MR 379 313 0 1
+MR 377 317 0 1
+MR 372 323 0 1
+MR 371 325 0 1
+MR 369 329 0 1
+MR 369 333 0 1
+MR 364 339 0 1
+MR 363 343 0 1
+MR 361 345 0 1
+MR 359 348 0 1
+MR 357 351 0 1
+MR 356 354 0 1
+MR 354 360 0 1
+MR 350 367 0 1
+MR 348 375 0 1
+MR 345 383 0 1
+MR 344 390 0 1
+MR 343 397 0 1
+MR 342 403 0 1
+MR 342 408 0 1
+MR 341 415 0 1
+MR 341 423 0 1
+MR 341 432 0 1
+MR 342 442 0 1
+MR 346 454 0 1
+MR 353 468 0 1
+MR 362 484 0 1
+MR 368 498 0 1
+MR 377 516 0 1
+MR 385 528 0 1
+MR 392 541 0 1
+MR 399 553 0 1
+MR 407 569 0 1
+MR 413 579 0 1
+MR 416 590 0 1

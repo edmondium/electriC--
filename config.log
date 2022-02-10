@@ -1,0 +1,82 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:534: checking for c++
+configure:566: checking whether the C++ compiler (c++  ) works
+configure:582: c++ -o conftest    conftest.C  1>&5
+configure:608: checking whether the C++ compiler (c++  ) is a cross-compiler
+configure:613: checking whether we are using GNU C++
+configure:641: checking whether c++ accepts -g
+configure:675: checking for gcc
+configure:788: checking whether the C compiler (gcc  ) works
+configure:804: gcc -o conftest    conftest.c  1>&5
+configure:801:1: warning: return type defaults to 'int' [-Wimplicit-int]
+  801 | main(){return(0);}
+      | ^~~~
+configure:830: checking whether the C compiler (gcc  ) is a cross-compiler
+configure:835: checking whether we are using GNU C
+configure:863: checking whether gcc accepts -g
+configure:895: checking how to run the C preprocessor
+configure:976: checking whether gcc needs -traditional
+configure:1027: checking for X
+configure:1341: checking for dnet_ntoa in -ldnet
+configure:1382: checking for dnet_ntoa in -ldnet_stub
+configure:1430: checking for gethostbyname
+configure:1528: checking for connect
+configure:1620: checking for remove
+configure:1712: checking for shmat
+configure:1813: checking for IceConnectionNumber in -lICE
+configure:1857: checking for XmuCompareISOLatin1 in -lXmu
+configure:1898: checking for XShmAttach in -lXext
+configure:1939: checking for XpStartPage in -lXp
+configure:1985: checking for dirent.h that defines DIR
+configure:2023: checking for opendir in -ldir
+configure:2106: checking for ANSI C header files
+configure:2210: checking for sys/wait.h that is POSIX.1 compatible
+configure:2255: checking for db.h
+configure:2255: checking for fcntl.h
+configure:2255: checking for stdint.h
+configure:2255: checking for inttypes.h
+configure:2255: checking for sys/int_types.h
+configure:2255: checking for locale.h
+configure:2255: checking for sgtty.h
+configure:2255: checking for string.h
+configure:2255: checking for strings.h
+configure:2255: checking for sys/time.h
+configure:2255: checking for sys/timeb.h
+configure:2255: checking for termios.h
+configure:2255: checking for termio.h
+configure:2255: checking for unistd.h
+configure:2255: checking for Xm.h
+configure:2293: checking for working const
+configure:2368: checking whether time.h and sys/time.h may both be included
+configure:2403: checking whether struct tm is in sys/time.h or time.h
+configure:2438: checking for pid_t
+configure:2472: checking for vfork.h
+configure:2507: checking for working vfork
+configure:2681: checking return type of signal handlers
+configure:2722: checking for vprintf
+configure:2828: checking for type of readdir_r
+configure:2884: checking for ftime
+configure:2884: checking for getcwd
+configure:2884: checking for gethostid
+configure:2884: checking for getpagesize
+configure:2884: checking for gettimeofday
+configure:2884: checking for getwd
+configure:2884: checking for qsort
+configure:2884: checking for scandir
+configure:2884: checking for setlocale
+configure:2884: checking for strstr
+configure:2884: checking for strchr
+configure:2884: checking for valloc
+configure:2884: checking for vsnprintf
+configure:2964: checking host system type
+configure:2992: checking for pthread.h
+configure:3039: checking for pthread_join in LIBS=-lpthread with CFLAGS=
+configure:3052: gcc -o conftest -g -O2    conftest.c -lpthread  1>&5
+configure:3186: checking for joinable pthread attribute
+configure:3195: gcc -o conftest -g -O2    conftest.c -lpthread  1>&5
+configure:3237: checking if more special flags are required for pthreads
+configure:3255: checking for cc_r
+configure:3305: checking for u_int64_t
+configure:3338: checking for uint64_t
