@@ -186,7 +186,7 @@ JAVA_OBJS = $(JAVA_SRCS:%.java=%.class)
 # DEBUG = -g3
 
 ##### This is the name of the executable
-PROGNAME = electric
+PROGNAME = electriC++
 
 ##### These are your compilers:
 CPPCOMPILER = c++
@@ -509,28 +509,28 @@ CONS_SRC = \
     src/cons/contable.cpp
 
 DB_SRC = \
-    src/db/aidtable.c \
-    src/db/data.c \
-    src/db/dbchange.c \
-    src/db/dbcontour.c \
-    src/db/dbcontrol.c \
-    src/db/dbcreate.c \
-    src/db/dberror.c \
-    src/db/dbgeom.c \
-    src/db/dblang.c \
-    src/db/dblangelk.c \
+    src/db/aidtable.cpp \
+    src/db/data.cpp \
+    src/db/dbchange.cpp \
+    src/db/dbcontour.cpp \
+    src/db/dbcontrol.cpp \
+    src/db/dbcreate.cpp \
+    src/db/dberror.cpp \
+    src/db/dbgeom.cpp \
+    src/db/dblang.cpp \
+    src/db/dblangelk.cpp \
     src/db/dblangjava.cpp \
-    src/db/dblangtcl.c \
-    src/db/dblibrary.c \
-    src/db/dbmath.c \
-    src/db/dbmemory.c \
-    src/db/dbmerge.c \
-    src/db/dbmult.c \
-    src/db/dbnoproto.c \
-    src/db/dbtech.c \
-    src/db/dbtechi.c \
-    src/db/dbtext.c \
-    src/db/dbvars.c
+    src/db/dblangtcl.cpp \
+    src/db/dblibrary.cpp \
+    src/db/dbmath.cpp \
+    src/db/dbmemory.cpp \
+    src/db/dbmerge.cpp \
+    src/db/dbmult.cpp \
+    src/db/dbnoproto.cpp \
+    src/db/dbtech.cpp \
+    src/db/dbtechi.cpp \
+    src/db/dbtext.cpp \
+    src/db/dbvars.cpp
 
 DRC_SRC = \
     src/drc/drc.c \
@@ -720,7 +720,7 @@ TEC_SRC = \
     src/tec/tecfpga.c \
     src/tec/tecgem.c \
     src/tec/tecgen.c \
-    src/tec/tecmocmos.c \
+    src/tec/tecmocmos.cpp \
     src/tec/tecmocmosold.c \
     src/tec/tecmocmossub.c \
     src/tec/tecnmos.c \
@@ -1018,29 +1018,29 @@ src/cons/conlingtt.o: src/cons/conlingtt.cpp $(HDS)/global.h $(HDS)/conlin.h
 src/cons/conlinprs.o: src/cons/conlinprs.cpp $(HDS)/global.h $(HDS)/conlin.h
 src/cons/conlinttg.o: src/cons/conlinttg.cpp $(HDS)/global.h $(HDS)/database.h $(HDS)/conlin.h
 src/cons/contable.o: src/cons/contable.cpp $(HDS)/global.h $(HDS)/conlay.h $(HDS)/conlin.h
-src/db/aidtable.o: src/db/aidtable.c $(HDS)/global.h $(HDS)/network.h $(HDS)/compact.h $(HDS)/compensate.h $(HDS)/drc.h $(HDS)/eio.h $(HDS)/logeffort.h $(HDS)/network.h $(HDS)/pla.h $(HDS)/rout.h $(HDS)/sc1.h $(HDS)/sim.h $(HDS)/usr.h $(HDS)/vhdl.h
-src/db/data.o: src/db/data.c $(HDS)/global.h
-src/db/dbchange.o: src/db/dbchange.c $(HDS)/global.h $(HDS)/database.h $(HDS)/edialogs.h $(HDS)/sim.h $(HDS)/usr.h
-src/db/dbcontour.o: src/db/dbcontour.c $(HDS)/global.h $(HDS)/dbcontour.h $(HDS)/tecart.h $(HDS)/tecgen.h $(HDS)/eio.h
-src/db/dbcontrol.o: src/db/dbcontrol.c $(HDS)/global.h $(HDS)/database.h $(HDS)/tech.h $(HDS)/edialogs.h $(HDS)/usr.h
-src/db/dbcreate.o: src/db/dbcreate.c $(HDS)/global.h $(HDS)/egraphics.h $(HDS)/database.h
-src/db/dberror.o: src/db/dberror.c $(HDS)/global.h $(HDS)/database.h $(HDS)/usr.h
-src/db/dbgeom.o: src/db/dbgeom.c $(HDS)/global.h $(HDS)/database.h $(HDS)/egraphics.h $(HDS)/tech.h $(HDS)/tecgen.h $(HDS)/tecschem.h $(HDS)/tecart.h
-src/db/dblang.o: src/db/dblang.c $(HDS)/global.h $(HDS)/database.h $(HDS)/dblang.h
-src/db/dblangelk.o: src/db/dblangelk.c $(HDS)/config.h $(HDS)/global.h $(HDS)/dblang.h
+src/db/aidtable.o: src/db/aidtable.cpp $(HDS)/global.h $(HDS)/network.h $(HDS)/compact.h $(HDS)/compensate.h $(HDS)/drc.h $(HDS)/eio.h $(HDS)/logeffort.h $(HDS)/network.h $(HDS)/pla.h $(HDS)/rout.h $(HDS)/sc1.h $(HDS)/sim.h $(HDS)/usr.h $(HDS)/vhdl.h
+src/db/data.o: src/db/data.cpp $(HDS)/global.h
+src/db/dbchange.o: src/db/dbchange.cpp $(HDS)/global.h $(HDS)/database.h $(HDS)/edialogs.h $(HDS)/sim.h $(HDS)/usr.h
+src/db/dbcontour.o: src/db/dbcontour.cpp $(HDS)/global.h $(HDS)/dbcontour.h $(HDS)/tecart.h $(HDS)/tecgen.h $(HDS)/eio.h
+src/db/dbcontrol.o: src/db/dbcontrol.cpp $(HDS)/global.h $(HDS)/database.h $(HDS)/tech.h $(HDS)/edialogs.h $(HDS)/usr.h
+src/db/dbcreate.o: src/db/dbcreate.cpp $(HDS)/global.h $(HDS)/egraphics.h $(HDS)/database.h
+src/db/dberror.o: src/db/dberror.cpp $(HDS)/global.h $(HDS)/database.h $(HDS)/usr.h
+src/db/dbgeom.o: src/db/dbgeom.cpp $(HDS)/global.h $(HDS)/database.h $(HDS)/egraphics.h $(HDS)/tech.h $(HDS)/tecgen.h $(HDS)/tecschem.h $(HDS)/tecart.h
+src/db/dblang.o: src/db/dblang.cpp $(HDS)/global.h $(HDS)/database.h $(HDS)/dblang.h
+src/db/dblangelk.o: src/db/dblangelk.cpp $(HDS)/config.h $(HDS)/global.h $(HDS)/dblang.h
 src/db/dblangjava.o: src/db/dblangjava.cpp $(HDS)/config.h $(HDS)/global.h $(HDS)/dblang.h $(HDS)/usr.h
 src/db/dblangmm.o: src/db/dblangmm.c $(HDS)/config.h $(HDS)/global.h $(HDS)/dblang.h
-src/db/dblangtcl.o: src/db/dblangtcl.c $(HDS)/config.h $(HDS)/global.h $(HDS)/dblang.h $(HDS)/database.h
-src/db/dblibrary.o: src/db/dblibrary.c $(HDS)/global.h $(HDS)/database.h $(HDS)/network.h
-src/db/dbmath.o: src/db/dbmath.c $(HDS)/global.h $(HDS)/database.h $(HDS)/egraphics.h $(HDS)/efunction.h $(HDS)/tecart.h $(HDS)/tecgen.h $(HDS)/tecschem.h $(HDS)/usr.h $(HDS)/drc.h
-src/db/dbmemory.o: src/db/dbmemory.c $(HDS)/global.h $(HDS)/database.h
-src/db/dbmerge.o: src/db/dbmerge.c $(HDS)/global.h $(HDS)/database.h $(HDS)/egraphics.h $(HDS)/tecart.h $(HDS)/tecgen.h
-src/db/dbmult.o: src/db/dbmult.c $(HDS)/global.h $(HDS)/database.h
-src/db/dbnoproto.o: src/db/dbnoproto.c $(HDS)/global.h $(HDS)/database.h $(HDS)/egraphics.h $(HDS)/usr.h $(HDS)/network.h
-src/db/dbtech.o: src/db/dbtech.c $(HDS)/global.h $(HDS)/database.h $(HDS)/egraphics.h $(HDS)/tech.h $(HDS)/tecgen.h $(HDS)/tecart.h $(HDS)/tecschem.h $(HDS)/tecmocmos.h $(HDS)/drc.h $(HDS)/efunction.h
-src/db/dbtechi.o: src/db/dbtechi.c $(HDS)/global.h $(HDS)/database.h $(HDS)/egraphics.h $(HDS)/tech.h $(HDS)/tecgen.h $(HDS)/tecmocmos.h $(HDS)/efunction.h $(HDS)/usr.h
-src/db/dbtext.o: src/db/dbtext.c $(HDS)/global.h $(HDS)/database.h $(HDS)/egraphics.h $(HDS)/edialogs.h $(HDS)/usr.h $(HDS)/tecgen.h $(HDS)/network.h
-src/db/dbvars.o: src/db/dbvars.c $(HDS)/global.h $(HDS)/database.h $(HDS)/egraphics.h $(HDS)/edialogs.h $(HDS)/usr.h $(HDS)/drc.h $(HDS)/erc.h $(HDS)/rout.h $(HDS)/network.h $(HDS)/logeffort.h $(HDS)/sim.h $(HDS)/simirsim.h $(HDS)/eio.h $(HDS)/tecart.h $(HDS)/tecmocmos.h $(HDS)/tecmocmossub.h $(HDS)/tecschem.h
+src/db/dblangtcl.o: src/db/dblangtcl.cpp $(HDS)/config.h $(HDS)/global.h $(HDS)/dblang.h $(HDS)/database.h
+src/db/dblibrary.o: src/db/dblibrary.cpp $(HDS)/global.h $(HDS)/database.h $(HDS)/network.h
+src/db/dbmath.o: src/db/dbmath.cpp $(HDS)/global.h $(HDS)/database.h $(HDS)/egraphics.h $(HDS)/efunction.h $(HDS)/tecart.h $(HDS)/tecgen.h $(HDS)/tecschem.h $(HDS)/usr.h $(HDS)/drc.h
+src/db/dbmemory.o: src/db/dbmemory.cpp $(HDS)/global.h $(HDS)/database.h
+src/db/dbmerge.o: src/db/dbmerge.cpp $(HDS)/global.h $(HDS)/database.h $(HDS)/egraphics.h $(HDS)/tecart.h $(HDS)/tecgen.h
+src/db/dbmult.o: src/db/dbmult.cpp $(HDS)/global.h $(HDS)/database.h
+src/db/dbnoproto.o: src/db/dbnoproto.cpp $(HDS)/global.h $(HDS)/database.h $(HDS)/egraphics.h $(HDS)/usr.h $(HDS)/network.h
+src/db/dbtech.o: src/db/dbtech.cpp $(HDS)/global.h $(HDS)/database.h $(HDS)/egraphics.h $(HDS)/tech.h $(HDS)/tecgen.h $(HDS)/tecart.h $(HDS)/tecschem.h $(HDS)/tecmocmos.h $(HDS)/drc.h $(HDS)/efunction.h
+src/db/dbtechi.o: src/db/dbtechi.cpp $(HDS)/global.h $(HDS)/database.h $(HDS)/egraphics.h $(HDS)/tech.h $(HDS)/tecgen.h $(HDS)/tecmocmos.h $(HDS)/efunction.h $(HDS)/usr.h
+src/db/dbtext.o: src/db/dbtext.cpp $(HDS)/global.h $(HDS)/database.h $(HDS)/egraphics.h $(HDS)/edialogs.h $(HDS)/usr.h $(HDS)/tecgen.h $(HDS)/network.h
+src/db/dbvars.o: src/db/dbvars.cpp $(HDS)/global.h $(HDS)/database.h $(HDS)/egraphics.h $(HDS)/edialogs.h $(HDS)/usr.h $(HDS)/drc.h $(HDS)/erc.h $(HDS)/rout.h $(HDS)/network.h $(HDS)/logeffort.h $(HDS)/sim.h $(HDS)/simirsim.h $(HDS)/eio.h $(HDS)/tecart.h $(HDS)/tecmocmos.h $(HDS)/tecmocmossub.h $(HDS)/tecschem.h
 src/drc/drc.o: src/drc/drc.c $(HDS)/config.h $(HDS)/global.h $(HDS)/egraphics.h $(HDS)/drc.h $(HDS)/efunction.h $(HDS)/tech.h $(HDS)/tecgen.h $(HDS)/tecschem.h $(HDS)/edialogs.h $(HDS)/usr.h $(HDS)/usrdiacom.h
 src/drc/drcbatch.o: src/drc/drcbatch.c $(HDS)/config.h $(HDS)/global.h $(HDS)/efunction.h $(HDS)/drc.h $(HDS)/database.h $(HDS)/tech.h $(HDS)/egraphics.h $(HDS)/usr.h
 src/drc/drcflat.o: src/drc/drcflat.cpp $(HDS)/config.h $(HDS)/global.h $(HDS)/drc.h $(HDS)/efunction.h $(HDS)/egraphics.h
@@ -1200,7 +1200,7 @@ src/tec/tecefido.o: src/tec/tecefido.c $(HDS)/config.h $(HDS)/global.h $(HDS)/eg
 src/tec/tecfpga.o: src/tec/tecfpga.c $(HDS)/config.h $(HDS)/global.h $(HDS)/egraphics.h $(HDS)/tech.h $(HDS)/tecfpga.h $(HDS)/tecgen.h $(HDS)/efunction.h $(HDS)/usr.h $(HDS)/edialogs.h $(HDS)/network.h
 src/tec/tecgem.o: src/tec/tecgem.c $(HDS)/config.h $(HDS)/global.h $(HDS)/egraphics.h $(HDS)/tech.h $(HDS)/tecgem.h $(HDS)/efunction.h
 src/tec/tecgen.o: src/tec/tecgen.c $(HDS)/global.h $(HDS)/egraphics.h $(HDS)/tech.h $(HDS)/efunction.h $(HDS)/tecgen.h $(HDS)/tecart.h
-src/tec/tecmocmos.o: src/tec/tecmocmos.c $(HDS)/config.h $(HDS)/global.h $(HDS)/egraphics.h $(HDS)/tech.h $(HDS)/tecmocmos.h $(HDS)/efunction.h $(HDS)/drc.h
+src/tec/tecmocmos.o: src/tec/tecmocmos.cpp $(HDS)/config.h $(HDS)/global.h $(HDS)/egraphics.h $(HDS)/tech.h $(HDS)/tecmocmos.h $(HDS)/efunction.h $(HDS)/drc.h
 src/tec/tecmocmosold.o: src/tec/tecmocmosold.c $(HDS)/config.h $(HDS)/global.h $(HDS)/egraphics.h $(HDS)/tech.h $(HDS)/tecmocmosold.h $(HDS)/efunction.h
 src/tec/tecmocmossub.o: src/tec/tecmocmossub.c $(HDS)/config.h $(HDS)/global.h $(HDS)/egraphics.h $(HDS)/tech.h $(HDS)/drc.h $(HDS)/tecmocmossub.h $(HDS)/efunction.h
 src/tec/tecmocmos2.o: src/tec/tecmocmos2.c $(HDS)/config.h $(HDS)/global.h $(HDS)/egraphics.h $(HDS)/tech.h $(HDS)/efunction.h

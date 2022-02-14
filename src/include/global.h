@@ -1561,8 +1561,8 @@ void       addstringtostringobj(CHAR *string, STRINGOBJ *so);
 #define EPI               3.14159265		/* Pi */
 #define NOSTRING        ((CHAR *)-1)
 #define FARTEXTLIMIT              20		/* distance (in lambda) of "far text" */
-#define DEFTECH             x_("mocmos")		/* default technology */
-#define DEFCONSTR           x_("layout")		/* default constraint system */
+#define DEFTECH             x_((char*)"mocmos")		/* default technology */
+#define DEFCONSTR           x_((char*)"layout")		/* default constraint system */
 #define MINIMUMTEXTSIZE            6		/* minimum text size (smaller text not drawn) */
 
 /* the sounds available to "ttybeep()" */

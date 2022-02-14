@@ -394,7 +394,8 @@ class SpiceCell
 	friend class SpiceInst;
 	friend class SpiceNet;
 public:
-	SpiceCell( CHAR *name = "" );
+	//SpiceCell( CHAR *name = "" );
+	SpiceCell( CHAR *name =(CHAR*) "" );
 	~SpiceCell();
 	CHAR *name() { return _name; }
 	static SpiceCell *findByName( CHAR *name );
