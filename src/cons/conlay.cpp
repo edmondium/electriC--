@@ -62,11 +62,11 @@ static BOOLEAN cla_lookdown(NODEPROTO*);
 /* command completion table for this constraint solver */
 static KEYWORD layconopt[] =
 {
-	{x_("debug-toggle"),      0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"debug-toggle"),      0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
 	TERMKEY
 };
 COMCOMP cla_layconp = {layconopt, NOTOPLIST, NONEXTLIST, NOPARAMS,
-	0, x_(" \t"), M_("layout constraint system option"), 0};
+	0, x_((char*)" \t"), M_((char*)"layout constraint system option"), 0};
 
 INTBIG cla_changeclock;
 #ifdef CLA_DEBUG
@@ -95,36 +95,36 @@ void cla_layconterm(void)
 
 void cla_layconsetmode(INTBIG count, CHAR *par[])
 {
-	REGISTER INTBIG l;
-	REGISTER CHAR *pp;
+	 INTBIG l;
+	 CHAR *pp;
 
 	if (count == 0)
 	{
-		ttyputusage(x_("constraint tell layout OPTION"));
+		ttyputusage(x_((char*)"constraint tell layout OPTION"));
 		return;
 	}
 
 	if (el_curconstraint != cla_constraint)
 	{
-		ttyputerr(M_("Must first switch to this solver with 'constraint use'"));
+		ttyputerr(M_((char*)"Must first switch to this solver with 'constraint use'"));
 		return;
 	}
 
 	l = estrlen(pp = par[0]);
 
 	/* debugging switch */
-	if (namesamen(pp, x_("debug-toggle"), l) == 0 && l >= 1)
+	if (namesamen(pp, x_((char*)"debug-toggle"), l) == 0 && l >= 1)
 	{
 #ifdef CLA_DEBUG
 		cla_conlaydebug = !cla_conlaydebug;
-		if (cla_conlaydebug) ttyputmsg(M_("Layout constraint debugging on")); else
-			ttyputmsg(M_("Layout constraint debugging off"));
+		if (cla_conlaydebug) ttyputmsg(M_((char*)"Layout constraint debugging on")); else
+			ttyputmsg(M_((char*)"Layout constraint debugging off"));
 #else
 		ttyputmsg(M_("Sorry, constraint debugging code has been compiled out"));
 #endif
 		return;
 	}
-	ttyputbadusage(x_("constraint tell layout"));
+	ttyputbadusage(x_((char*)"constraint tell layout"));
 }
 
 /*
@@ -133,13 +133,13 @@ void cla_layconsetmode(INTBIG count, CHAR *par[])
  */
 INTBIG cla_layconrequest(CHAR *command, INTBIG arg1)
 {
-	REGISTER ARCINST *ai;
-	REGISTER INTBIG l;
-	REGISTER void *infstr;
+	 ARCINST *ai;
+	 INTBIG l;
+	 void *infstr;
 
 	l = estrlen(command);
 
-	if (namesamen(command, x_("describearc"), l) == 0)
+	if (namesamen(command, x_((char*)"describearc"), l) == 0)
 	{
 		ai = (ARCINST *)arg1;
 		infstr = initinfstr();
@@ -148,7 +148,7 @@ INTBIG cla_layconrequest(CHAR *command, INTBIG arg1)
 			switch (ai->userbits&(FIXANG|CANTSLIDE))
 			{
 				case 0:                addtoinfstr(infstr, 'S');         break;
-				case FIXANG:           addstringtoinfstr(infstr, x_("FS"));  break;
+				case FIXANG:           addstringtoinfstr(infstr, x_((char*)"FS"));  break;
 				case CANTSLIDE:        addtoinfstr(infstr, 'X');         break;
 				case FIXANG|CANTSLIDE: addtoinfstr(infstr, 'F');         break;
 			}
@@ -163,9 +163,9 @@ INTBIG cla_layconrequest(CHAR *command, INTBIG arg1)
  */
 void cla_layconsolve(NODEPROTO *np)
 {
-	REGISTER CHANGECELL *cc;
-	REGISTER CHANGEBATCH *curbatch;
-	REGISTER CHANGE *c;
+	 CHANGECELL *cc;
+	 CHANGEBATCH *curbatch;
+	 CHANGE *c;
 
 	/* if only one cell is requested, solve that */
 	curbatch = db_getcurrentbatch();
@@ -212,9 +212,9 @@ void cla_layconsolve(NODEPROTO *np)
  */
 void cla_layconnewobject(INTBIG addr, INTBIG type)
 {
-	REGISTER NODEPROTO *np;
-	REGISTER PORTPROTO *pp;
-	REGISTER NODEINST *ni;
+	 NODEPROTO *np;
+	 PORTPROTO *pp;
+	 NODEINST *ni;
 
 	if (type == VPORTPROTO)
 	{
@@ -235,9 +235,9 @@ void cla_layconnewobject(INTBIG addr, INTBIG type)
  */
 void cla_layconkillobject(INTBIG addr, INTBIG type)
 {
-	REGISTER NODEPROTO *np;
-	REGISTER PORTPROTO *pp;
-	REGISTER NODEINST *ni;
+	 NODEPROTO *np;
+	 PORTPROTO *pp;
+	 NODEINST *ni;
 
 	if (type == VPORTPROTO)
 	{
@@ -259,9 +259,9 @@ void cla_layconkillobject(INTBIG addr, INTBIG type)
 void cla_layconnewvariable(INTBIG addr, INTBIG type, INTBIG skey, INTBIG stype)
 {
 	CHAR *name;
-	REGISTER NODEPROTO *np;
-	REGISTER PORTPROTO *pp;
-	REGISTER NODEINST *ni;
+	 NODEPROTO *np;
+	 PORTPROTO *pp;
+	 NODEINST *ni;
 
 	if (type == VPORTPROTO)
 	{
@@ -292,7 +292,7 @@ void cla_layconnewvariable(INTBIG addr, INTBIG type, INTBIG skey, INTBIG stype)
 BOOLEAN cla_layconsetobject(INTBIG addr, INTBIG type, INTBIG changetype,
 	INTBIG /*@unused@*/ changedata)
 {
-	REGISTER ARCINST *ai;
+	 ARCINST *ai;
 
 	if ((type&VTYPE) != VARCINST) return(TRUE);
 	ai = (ARCINST *)addr;
@@ -301,27 +301,27 @@ BOOLEAN cla_layconsetobject(INTBIG addr, INTBIG type, INTBIG changetype,
 	{
 		case CHANGETYPERIGID:				/* arc rigid */
 			if ((ai->userbits & FIXED) != 0) return(TRUE);
-			(void)setval((INTBIG)ai, VARCINST, x_("userbits"), ai->userbits|FIXED, VINTEGER);
+			(void)setval((INTBIG)ai, VARCINST, x_((char*)"userbits"), ai->userbits|FIXED, VINTEGER);
 			break;
 		case CHANGETYPEUNRIGID:				/* arc un-rigid */
 			if ((ai->userbits & FIXED) == 0) return(TRUE);
-			(void)setval((INTBIG)ai, VARCINST, x_("userbits"), ai->userbits & ~FIXED, VINTEGER);
+			(void)setval((INTBIG)ai, VARCINST, x_((char*)"userbits"), ai->userbits & ~FIXED, VINTEGER);
 			break;
 		case CHANGETYPEFIXEDANGLE:			/* arc fixed-angle */
 			if ((ai->userbits & FIXANG) != 0) return(TRUE);
-			(void)setval((INTBIG)ai, VARCINST, x_("userbits"), ai->userbits|FIXANG, VINTEGER);
+			(void)setval((INTBIG)ai, VARCINST, x_((char*)"userbits"), ai->userbits|FIXANG, VINTEGER);
 			break;
 		case CHANGETYPENOTFIXEDANGLE:		/* arc not fixed-angle */
 			if ((ai->userbits & FIXANG) == 0) return(TRUE);
-			(void)setval((INTBIG)ai, VARCINST, x_("userbits"), ai->userbits & ~FIXANG, VINTEGER);
+			(void)setval((INTBIG)ai, VARCINST, x_((char*)"userbits"), ai->userbits & ~FIXANG, VINTEGER);
 			break;
 		case CHANGETYPESLIDABLE:			/* arc slidable */
 			if ((ai->userbits & CANTSLIDE) == 0) return(TRUE);
-			(void)setval((INTBIG)ai, VARCINST, x_("userbits"), ai->userbits & ~CANTSLIDE, VINTEGER);
+			(void)setval((INTBIG)ai, VARCINST, x_((char*)"userbits"), ai->userbits & ~CANTSLIDE, VINTEGER);
 			break;
 		case CHANGETYPENOTSLIDABLE:			/* arc nonslidable */
 			if ((ai->userbits & CANTSLIDE) != 0) return(TRUE);
-			(void)setval((INTBIG)ai, VARCINST, x_("userbits"), ai->userbits|CANTSLIDE, VINTEGER);
+			(void)setval((INTBIG)ai, VARCINST, x_((char*)"userbits"), ai->userbits|CANTSLIDE, VINTEGER);
 			break;
 		case CHANGETYPETEMPRIGID:			/* arc temporarily rigid */
 			if (ai->changed == cla_changeclock + 2) return(TRUE);
@@ -357,8 +357,8 @@ void cla_layconmodifynodeinst(NODEINST *ni, INTBIG dlx, INTBIG dly, INTBIG dhx, 
 void cla_layconmodifynodeinsts(INTBIG count, NODEINST **nis, INTBIG *dlxs, INTBIG *dlys,
 	INTBIG *dhxs, INTBIG *dhys, INTBIG *drots, INTBIG *dtranss)
 {
-	REGISTER INTBIG i;
-	REGISTER NODEPROTO *parent;
+	 INTBIG i;
+	 NODEPROTO *parent;
 
 	/* advance the change clock */
 	cla_changeclock += 4;
@@ -481,8 +481,8 @@ void cla_layconmodifydescript(INTBIG addr, INTBIG type, INTBIG key, UINTBIG *old
 BOOLEAN cla_modifynodeinst(NODEINST *ni, INTBIG deltalx, INTBIG deltaly, INTBIG deltahx,
 	INTBIG deltahy, INTBIG dangle, INTBIG dtrans, BOOLEAN announce)
 {
-	REGISTER INTBIG oldlx, oldly, oldhx, oldhy, change;
-	REGISTER INTSML oldang, oldtrans;
+	 INTBIG oldlx, oldly, oldhx, oldhy, change;
+	 INTSML oldang, oldtrans;
 
 	/* determine whether this is a position or size change */
 	if (deltalx == deltahx && deltaly == deltahy)
@@ -511,7 +511,7 @@ BOOLEAN cla_modifynodeinst(NODEINST *ni, INTBIG deltalx, INTBIG deltaly, INTBIG 
 
 #ifdef CLA_DEBUG
 	if (cla_conlaydebug)
-		ttyputmsg(M_("Change node %s by X(%s %s) Y(%s %s) r=%ld t=%ld"),
+		ttyputmsg(M_((char*)"Change node %s by X(%s %s) Y(%s %s) r=%ld t=%ld"),
 			describenodeinst(ni), latoa(deltalx, 0), latoa(deltahx, 0), latoa(deltaly, 0),
 				latoa(deltahy, 0), dangle, dtrans);
 #endif
@@ -540,7 +540,7 @@ BOOLEAN cla_modifynodeinst(NODEINST *ni, INTBIG deltalx, INTBIG deltaly, INTBIG 
  */
 BOOLEAN cla_modnodearcs(NODEINST *ni, INTBIG dangle, INTBIG dtrans)
 {
-	REGISTER BOOLEAN examinecell;
+	 BOOLEAN examinecell;
 
 	/* assume cell needs no further looks */
 	examinecell = FALSE;
@@ -562,9 +562,9 @@ BOOLEAN cla_modnodearcs(NODEINST *ni, INTBIG dangle, INTBIG dtrans)
  */
 void cla_modwithin(NODEINST *ni, INTBIG dangle, INTBIG dtrans)
 {
-	REGISTER PORTARCINST *pi;
-	REGISTER ARCINST *ai;
-	REGISTER INTBIG ox, oy, i, total;
+	 PORTARCINST *pi;
+	 ARCINST *ai;
+	 INTBIG ox, oy, i, total;
 	INTBIG nox, noy, onox, onoy;
 	XARRAY trans;
 
@@ -622,7 +622,7 @@ void cla_modwithin(NODEINST *ni, INTBIG dangle, INTBIG dtrans)
 		xform(ai->end[1].xpos-ox, ai->end[1].ypos-oy, &onox, &onoy, trans);
 #ifdef	CLA_DEBUG
 		if (cla_conlaydebug)
-			ttyputmsg(M_("Internal arc %s moves 0:%s,%s  1:%s,%s"),
+			ttyputmsg(M_((char*)"Internal arc %s moves 0:%s,%s  1:%s,%s"),
 				describearcinst(ai), latoa(nox, 0), latoa(noy, 0), latoa(onox, 0), latoa(onoy, 0));
 #endif
 		/* move the arcinst */
@@ -638,15 +638,15 @@ void cla_modwithin(NODEINST *ni, INTBIG dangle, INTBIG dtrans)
  */
 BOOLEAN cla_modrigid(NODEINST *ni, INTBIG dangle, INTBIG dtrans)
 {
-	REGISTER PORTPROTO *opt;
-	REGISTER PORTARCINST *pi;
-	REGISTER ARCINST *ai, **arclist;
-	REGISTER NODEINST *ono;
+	 PORTPROTO *opt;
+	 PORTARCINST *pi;
+	 ARCINST *ai, **arclist;
+	 NODEINST *ono;
 	INTBIG ax[2], ay[2], onox, onoy, dx, dy;
 	XARRAY trans;
-	REGISTER INTBIG othx, othy, ox, oy, i, total, thisend, thatend;
-	REGISTER INTBIG nextangle;
-	REGISTER BOOLEAN examinecell, locked;
+	 INTBIG othx, othy, ox, oy, i, total, thisend, thatend;
+	 INTBIG nextangle;
+	 BOOLEAN examinecell, locked;
 
 	/* build a list of the rigid arcs on this nodeinst */
 	total = 0;
@@ -716,7 +716,7 @@ BOOLEAN cla_modrigid(NODEINST *ni, INTBIG dangle, INTBIG dtrans)
 		opt = ai->end[thatend].portarcinst->proto;
 #ifdef	CLA_DEBUG
 		if (cla_conlaydebug)
-			ttyputmsg(M_("Modify rigid arc %s from %s to %s"),
+			ttyputmsg(M_((char*)"Modify rigid arc %s from %s to %s"),
 				describearcinst(ai), describenodeinst(ni), describenodeinst(ono));
 #endif
 
@@ -725,7 +725,7 @@ BOOLEAN cla_modrigid(NODEINST *ni, INTBIG dangle, INTBIG dtrans)
 			&ay[thatend], trans);
 #ifdef	CLA_DEBUG
 		if (cla_conlaydebug)
-			ttyputmsg(M_("Other end of arc moves to (%s,%s)"),
+			ttyputmsg(M_((char*)"Other end of arc moves to (%s,%s)"),
 				latoa(ax[thatend], 0), latoa(ay[thatend], 0));
 #endif
 
@@ -776,7 +776,7 @@ BOOLEAN cla_modrigid(NODEINST *ni, INTBIG dangle, INTBIG dtrans)
 		/* move the arcinst */
 #ifdef	CLA_DEBUG
 		if (cla_conlaydebug)
-			ttyputmsg(M_("Now arc runs from (%s,%s) to (%s,%s)"),
+			ttyputmsg(M_((char*)"Now arc runs from (%s,%s) to (%s,%s)"),
 				latoa(ax[0], 0), latoa(ay[0], 0), latoa(ax[1], 0), latoa(ay[1], 0));
 #endif
 		cla_domovearcinst(ai, ax[0],ay[0], ax[1],ay[1], 0);
@@ -811,12 +811,12 @@ BOOLEAN cla_modrigid(NODEINST *ni, INTBIG dangle, INTBIG dtrans)
  */
 BOOLEAN cla_modflex(NODEINST *ni, INTBIG dangle, INTBIG dtrans)
 {
-	REGISTER PORTARCINST *pi;
-	REGISTER ARCINST *ai, **arclist;
-	REGISTER NODEINST *ono;
-	REGISTER INTBIG i, total, ox, oy, odx, ody, thisend, thatend, mangle;
-	REGISTER INTBIG nextangle;
-	REGISTER BOOLEAN examinecell;
+	 PORTARCINST *pi;
+	 ARCINST *ai, **arclist;
+	 NODEINST *ono;
+	 INTBIG i, total, ox, oy, odx, ody, thisend, thatend, mangle;
+	 INTBIG nextangle;
+	 BOOLEAN examinecell;
 	XARRAY trans;
 	INTBIG ax[2], ay[2], dx, dy, lx, hx, ly, hy;
 	static POLYGON *poly = NOPOLYGON;
@@ -864,7 +864,7 @@ BOOLEAN cla_modflex(NODEINST *ni, INTBIG dangle, INTBIG dtrans)
 #ifdef	CLA_DEBUG
 		if (cla_conlaydebug)
 		{
-			ttyputmsg(M_("Considering arc %s (clock=%ld, curclock=%ld)"),
+			ttyputmsg(M_((char*)"Considering arc %s (clock=%ld, curclock=%ld)"),
 				describearcinst(ai), ai->changed, cla_changeclock+1);
 		}
 #endif
@@ -927,7 +927,7 @@ BOOLEAN cla_modflex(NODEINST *ni, INTBIG dangle, INTBIG dtrans)
 #ifdef	CLA_DEBUG
 		if (cla_conlaydebug)
 		{
-			ttyputmsg(M_("Modify flexible arc %s from %s to %s"),
+			ttyputmsg(M_((char*)"Modify flexible arc %s from %s to %s"),
 				describearcinst(ai), describenodeinst(ni), describenodeinst(ono));
 		}
 #endif
@@ -978,7 +978,7 @@ BOOLEAN cla_modflex(NODEINST *ni, INTBIG dangle, INTBIG dtrans)
 
 #ifdef	CLA_DEBUG
 					if (cla_conlaydebug)
-						ttyputmsg(M_("  Moving other end of arc to (%s,%s), other node by (%s,0)"),
+						ttyputmsg(M_((char*)"  Moving other end of arc to (%s,%s), other node by (%s,0)"),
 							latoa(ax[thatend], 0), latoa(ay[thatend], 0), latoa(dx-odx, 0));
 #endif
 					if (dx != odx)
@@ -1010,7 +1010,7 @@ BOOLEAN cla_modflex(NODEINST *ni, INTBIG dangle, INTBIG dtrans)
 
 #ifdef	CLA_DEBUG
 				if (cla_conlaydebug)
-					ttyputmsg(M_("  Moving other end of arc to (%s,%s), other node by (0,%s)"),
+					ttyputmsg(M_((char*)"  Moving other end of arc to (%s,%s), other node by (0,%s)"),
 						latoa(ax[thatend], 0), latoa(ay[thatend], 0), latoa(dy-ody, 0));
 #endif
 				if (dy != ody)
@@ -1048,7 +1048,7 @@ BOOLEAN cla_modflex(NODEINST *ni, INTBIG dangle, INTBIG dtrans)
 		/* other node has changed or arc is funny, just use its position */
 #ifdef	CLA_DEBUG
 		if (cla_conlaydebug)
-			ttyputmsg(M_("  ! Moving arc %s to (%s,%s)-(%s,%s)"), describearcinst(ai),
+			ttyputmsg(M_((char*)"  ! Moving arc %s to (%s,%s)-(%s,%s)"), describearcinst(ai),
 				latoa(ax[0], 0), latoa(ay[0], 0), latoa(ax[1], 0), latoa(ay[1], 0));
 #endif
 		cla_domovearcinst(ai, ax[0],ay[0], ax[1],ay[1], 1);
@@ -1065,9 +1065,9 @@ BOOLEAN cla_modflex(NODEINST *ni, INTBIG dangle, INTBIG dtrans)
 void cla_nonorthogfixang(ARCINST *ai, INTBIG thisend, INTBIG thatend, NODEINST *ono,
 	INTBIG ax[2], INTBIG ay[2])
 {
-	REGISTER PORTARCINST *pi;
-	REGISTER ARCINST *oai, *bestai;
-	REGISTER INTBIG bestdist;
+	 PORTARCINST *pi;
+	 ARCINST *oai, *bestai;
+	 INTBIG bestdist;
 	INTBIG ix, iy;
 
 	/* look for longest other arc on "ono" to determine proper end position */
@@ -1109,7 +1109,7 @@ void cla_nonorthogfixang(ARCINST *ai, INTBIG thisend, INTBIG thatend, NODEINST *
  */
 void cla_ensurearcinst(ARCINST *ai, INTBIG arctyp)
 {
-	REGISTER BOOLEAN inside0, inside1;
+	 BOOLEAN inside0, inside1;
 	INTBIG lx0, lx1, hx0, hx1, ly0, ly1, hy0, hy1, fx, fy, tx, ty;
 	static POLYGON *poly0 = NOPOLYGON, *poly1 = NOPOLYGON;
 
@@ -1133,7 +1133,7 @@ void cla_ensurearcinst(ARCINST *ai, INTBIG arctyp)
 		getcenter(poly1, &tx, &ty);
 #ifdef	CLA_DEBUG
 		if (cla_conlaydebug)
-			ttyputmsg(M_("Ensuring rigid arc %s"), describearcinst(ai));
+			ttyputmsg(M_((char*)"Ensuring rigid arc %s"), describearcinst(ai));
 #endif
 		cla_domovearcinst(ai, fx, fy, tx, ty, arctyp);
 		return;
@@ -1153,7 +1153,7 @@ void cla_ensurearcinst(ARCINST *ai, INTBIG arctyp)
 		closestpoint(poly1, &tx, &ty);
 #ifdef	CLA_DEBUG
 		if (cla_conlaydebug)
-			ttyputmsg(M_("Ensuring manhattan arc %s"), describearcinst(ai));
+			ttyputmsg(M_((char*)"Ensuring manhattan arc %s"), describearcinst(ai));
 #endif
 		cla_domovearcinst(ai, fx, fy, tx, ty, arctyp);
 		return;
@@ -1167,7 +1167,7 @@ void cla_ensurearcinst(ARCINST *ai, INTBIG arctyp)
 		closestpoint(poly1, &tx, &ty);
 #ifdef	CLA_DEBUG
 		if (cla_conlaydebug)
-			ttyputmsg(M_("Ensuring manhattan arc %s"), describearcinst(ai));
+			ttyputmsg(M_((char*)"Ensuring manhattan arc %s"), describearcinst(ai));
 #endif
 		cla_domovearcinst(ai, fx, fy, tx, ty, arctyp);
 		return;
@@ -1185,7 +1185,7 @@ void cla_ensurearcinst(ARCINST *ai, INTBIG arctyp)
  */
 void cla_updatearc(ARCINST *ai, INTBIG fx, INTBIG fy, INTBIG tx, INTBIG ty, INTBIG arctyp)
 {
-	REGISTER INTBIG oldxA, oldyA, oldxB, oldyB, oldlen;
+	 INTBIG oldxA, oldyA, oldxB, oldyB, oldlen;
 
 	(void)db_change((INTBIG)ai, OBJECTSTART, VARCINST, 0, 0, 0, 0, 0);
 
@@ -1197,7 +1197,7 @@ void cla_updatearc(ARCINST *ai, INTBIG fx, INTBIG fy, INTBIG tx, INTBIG ty, INTB
 	/* set the proper arcinst position */
 #ifdef CLA_DEBUG
 	if (cla_conlaydebug)
-		ttyputmsg(M_("Change arc %s from (%s,%s)-(%s,%s) to (%s,%s)-(%s,%s)"),
+		ttyputmsg(M_((char*)"Change arc %s from (%s,%s)-(%s,%s) to (%s,%s)-(%s,%s)"),
 			describearcinst(ai), latoa(ai->end[0].xpos, 0), latoa(ai->end[0].ypos, 0),
 				latoa(ai->end[1].xpos, 0), latoa(ai->end[1].ypos, 0),
 					latoa(fx, 0), latoa(fy, 0), latoa(tx, 0), latoa(ty, 0));
@@ -1224,12 +1224,12 @@ void cla_updatearc(ARCINST *ai, INTBIG fx, INTBIG fy, INTBIG tx, INTBIG ty, INTB
 
 void cla_domovearcinst(ARCINST *ai, INTBIG fx, INTBIG fy, INTBIG tx, INTBIG ty, INTBIG arctyp)
 {
-	REGISTER NODEPROTO *np, *pnt;
-	REGISTER ARCPROTO *ap;
-	REGISTER ARCINST *ar1, *ar2, *ar3;
-	REGISTER PORTPROTO *pp, *fpt, *tpt;
-	REGISTER NODEINST *no1, *no2, *fno, *tno;
-	REGISTER INTBIG oldxA, oldyA, oldxB, oldyB, wid, oldbits, lx, hx, ly, hy;
+	 NODEPROTO *np, *pnt;
+	 ARCPROTO *ap;
+	 ARCINST *ar1, *ar2, *ar3;
+	 PORTPROTO *pp, *fpt, *tpt;
+	 NODEINST *no1, *no2, *fno, *tno;
+	 INTBIG oldxA, oldyA, oldxB, oldyB, wid, oldbits, lx, hx, ly, hy;
 	INTBIG psx, psy;
 
 	/* check for null arcinst motion */
@@ -1253,7 +1253,7 @@ void cla_domovearcinst(ARCINST *ai, INTBIG fx, INTBIG fy, INTBIG tx, INTBIG ty, 
 #ifdef	CLA_DEBUG
 	if (cla_conlaydebug)
 	{
-		ttyputmsg(M_("Jogging arc %s (0%o) to run from (%s,%s) to (%s,%s)"),
+		ttyputmsg(M_((char*)"Jogging arc %s (0%o) to run from (%s,%s) to (%s,%s)"),
 			describearcinst(ai), ai, latoa(fx, 0), latoa(fy, 0), latoa(tx, 0), latoa(ty, 0));
 	}
 #endif
@@ -1294,7 +1294,7 @@ void cla_domovearcinst(ARCINST *ai, INTBIG fx, INTBIG fy, INTBIG tx, INTBIG ty, 
 	}
 	if (no1 == NONODEINST || no2 == NONODEINST)
 	{
-		ttyputerr(_("Problem creating jog pins"));
+		ttyputerr(_((char*)"Problem creating jog pins"));
 		return;
 	}
 	(void)db_change((INTBIG)no1, OBJECTEND, VNODEINST, 0, 0, 0, 0, 0);
@@ -1306,7 +1306,7 @@ void cla_domovearcinst(ARCINST *ai, INTBIG fx, INTBIG fy, INTBIG tx, INTBIG ty, 
 	ar3 = db_newarcinst(ap, wid, oldbits, no1, pp, oldxB,oldyB, tno, tpt, tx,ty, pnt);
 	if (ar1 == NOARCINST || ar2 == NOARCINST || ar3 == NOARCINST)
 	{
-		ttyputerr(_("Problem creating jog arcs"));
+		ttyputerr(_((char*)"Problem creating jog arcs"));
 		return;
 	}
 	(void)copyvars((INTBIG)ai, VARCINST, (INTBIG)ar2, VARCINST, FALSE);
@@ -1350,7 +1350,7 @@ void cla_domovearcinst(ARCINST *ai, INTBIG fx, INTBIG fy, INTBIG tx, INTBIG ty, 
  */
 void cla_adjustmatrix(NODEINST *ni, PORTPROTO *pp, XARRAY trans)
 {
-	REGISTER INTBIG ox, oy;
+	 INTBIG ox, oy;
 	INTBIG onox, onoy, dx, dy;
 
 	if (((CHANGE *)ni->changeaddr)->p5 == ni->rotation &&
@@ -1364,9 +1364,9 @@ void cla_adjustmatrix(NODEINST *ni, PORTPROTO *pp, XARRAY trans)
 #ifdef	CLA_DEBUG
 		if (cla_conlaydebug)
 		{
-			ttyputmsg(M_("Node %s port %s was at (%s,%s), is at (%s,%s)"), describenodeinst(ni),
+			ttyputmsg(M_((char*)"Node %s port %s was at (%s,%s), is at (%s,%s)"), describenodeinst(ni),
 				pp->protoname, latoa(onox, 0), latoa(onoy, 0), latoa(dx, 0), latoa(dy, 0));
-			ttyputmsg(M_("    Node moved (%s,%s)"), latoa(ox, 0), latoa(oy, 0));
+			ttyputmsg(M_((char*)"    Node moved (%s,%s)"), latoa(ox, 0), latoa(oy, 0));
 		}
 #endif
 		trans[2][0] = dx - onox + ox;   trans[2][1] = dy - onoy + oy;
@@ -1386,7 +1386,7 @@ void cla_adjustmatrix(NODEINST *ni, PORTPROTO *pp, XARRAY trans)
  */
 void cla_oldportposition(NODEINST *ni, PORTPROTO *pp, INTBIG *x, INTBIG *y)
 {
-	REGISTER INTBIG lox, hix, loy, hiy;
+	 INTBIG lox, hix, loy, hiy;
 	XARRAY localtran, subrot, temptr;
 	static POLYGON *poly = NOPOLYGON;
 
@@ -1441,8 +1441,8 @@ void cla_oldportposition(NODEINST *ni, PORTPROTO *pp, INTBIG *x, INTBIG *y)
 
 void cla_makeoldrot(NODEINST *ni, XARRAY trans)
 {
-	REGISTER INTBIG nlx, nly, nhx, nhy;
-	REGISTER INTSML nr, nt;
+	 INTBIG nlx, nly, nhx, nhy;
+	 INTSML nr, nt;
 
 	/* save values */
 	nlx = ni->lowx;         nly = ni->lowy;
@@ -1472,8 +1472,8 @@ void cla_makeoldrot(NODEINST *ni, XARRAY trans)
 
 void cla_makeoldtrans(NODEINST *ni, XARRAY trans)
 {
-	REGISTER INTBIG nlx, nly, nhx, nhy, ntlx, ntly, nthx, nthy;
-	REGISTER NODEPROTO *np;
+	 INTBIG nlx, nly, nhx, nhy, ntlx, ntly, nthx, nthy;
+	 NODEPROTO *np;
 
 	/* save values */
 	np = ni->proto;
@@ -1520,18 +1520,18 @@ void cla_makeoldtrans(NODEINST *ni, XARRAY trans)
  */
 void cla_computecell(NODEPROTO *cell, BOOLEAN forcedlook)
 {
-	REGISTER NODEINST *ni, *lni;
-	REGISTER NODEPROTO *np, *oneparent;
+	 NODEINST *ni, *lni;
+	 NODEPROTO *np, *oneparent;
 	INTBIG nlx, nhx, nly, nhy, offx, offy;
 	XARRAY trans;
-	REGISTER INTBIG dlx, dly, dhx, dhy, flx, fhx, fly, fhy;
-	REGISTER BOOLEAN mixed;
-	REGISTER CHANGE *c;
-	REGISTER LIBRARY *lib;
+	 INTBIG dlx, dly, dhx, dhy, flx, fhx, fly, fhy;
+	 BOOLEAN mixed;
+	 CHANGE *c;
+	 LIBRARY *lib;
 
 #ifdef	CLA_DEBUG
 	if (cla_conlaydebug)
-		ttyputmsg(M_("In computecell on cell %s (fl=%ld)"),
+		ttyputmsg(M_((char*)"In computecell on cell %s (fl=%ld)"),
 			cell->protoname, forcedlook);
 #endif
 	/* get current boundary of cell */
@@ -1579,7 +1579,7 @@ void cla_computecell(NODEPROTO *cell, BOOLEAN forcedlook)
 	{
 #ifdef	CLA_DEBUG
 		if (cla_conlaydebug)
-			ttyputmsg(M_("   Recomputing uniform parents of cell %s"),
+			ttyputmsg(M_((char*)"   Recomputing uniform parents of cell %s"),
 				describenodeproto(cell));
 #endif
 		dlx = cell->lowx - flx;   dhx = cell->highx - fhx;
@@ -1604,7 +1604,7 @@ void cla_computecell(NODEPROTO *cell, BOOLEAN forcedlook)
 	 */
 #ifdef	CLA_DEBUG
 	if (cla_conlaydebug)
-		ttyputmsg(M_("   Performing complex tree examination"));
+		ttyputmsg(M_((char*)"   Performing complex tree examination"));
 #endif
 	for(lib = el_curlib; lib != NOLIBRARY; lib = lib->nextlibrary)
 		for(np = lib->firstnodeproto; np != NONODEPROTO; np = np->nextnodeproto)
@@ -1623,10 +1623,10 @@ void cla_computecell(NODEPROTO *cell, BOOLEAN forcedlook)
 
 BOOLEAN cla_lookdown(NODEPROTO *start)
 {
-	REGISTER NODEINST *ni;
-	REGISTER NODEPROTO *np;
-	REGISTER INTBIG dlx, dhx, dly, dhy, flx, fhx, fly, fhy;
-	REGISTER BOOLEAN forcedlook, foundone;
+	 NODEINST *ni;
+	 NODEPROTO *np;
+	 INTBIG dlx, dhx, dly, dhy, flx, fhx, fly, fhy;
+	 BOOLEAN forcedlook, foundone;
 	INTBIG nlx, nhx, nly, nhy, offx, offy;
 	XARRAY trans;
 
@@ -1679,7 +1679,7 @@ BOOLEAN cla_lookdown(NODEPROTO *start)
 	}
 #ifdef	CLA_DEBUG
 	if (cla_conlaydebug)
-		ttyputmsg(M_("      Complex tree search at cell %s"), describenodeproto(start));
+		ttyputmsg(M_((char*)"      Complex tree search at cell %s"), describenodeproto(start));
 #endif
 	/* modify the nodes in this cell that changed */
 	forcedlook = FALSE;

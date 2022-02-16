@@ -53,13 +53,13 @@ static void cli_addnodeprotoname(void*, NODEPROTO*);
  */
 void cli_highlightequivalent(GEOM *geom)
 {
-	REGISTER NODEPROTO *par;
-	REGISTER ARCINST *ai;
-	REGISTER NODEINST *ni;
-	REGISTER INTBIG i, cindex, total;
-	REGISTER CHAR *str, *compname;
-	REGISTER COMPONENTDEC *dec;
-	REGISTER COMPONENT *compo;
+	 NODEPROTO *par;
+	 ARCINST *ai;
+	 NODEINST *ni;
+	 INTBIG i, cindex, total;
+	 CHAR *str, *compname;
+	 COMPONENTDEC *dec;
+	 COMPONENT *compo;
 
 	par = geomparent(geom);
 	if (cli_curcell != par) return;
@@ -69,17 +69,17 @@ void cli_highlightequivalent(GEOM *geom)
 	{
 		ai = geom->entryaddr.ai;
 		cindex = cli_findtextconn(ai);
-		if (cindex != -1) (void)asktool(us_tool, x_("edit-highlightline"), (INTBIG)cli_curwindow, cindex);
+		if (cindex != -1) (void)asktool(us_tool, x_((char*)"edit-highlightline"), (INTBIG)cli_curwindow, cindex);
 		return;
 	}
 
 	/* highlight the equivalent node */
 	ni = geom->entryaddr.ni;
 	compname = cli_componentname(ni);
-	total = asktool(us_tool, x_("edit-totallines"), (INTBIG)cli_curwindow);
+	total = asktool(us_tool, x_((char*)"edit-totallines"), (INTBIG)cli_curwindow);
 	for(i=0; i<total; i++)
 	{
-		str = (CHAR *)asktool(us_tool, x_("edit-getline"), (INTBIG)cli_curwindow, i);
+		str = (CHAR *)asktool(us_tool, x_((char*)"edit-getline"), (INTBIG)cli_curwindow, i);
 		if (str == NOSTRING) break;
 		if (cli_linetype(str) != LINEDECL) continue;
 		dec = cli_parsecomp(str, FALSE);
@@ -93,7 +93,7 @@ void cli_highlightequivalent(GEOM *geom)
 		/* search for the changed node */
 		for(compo = dec->firstcomponent; compo != NOCOMPONENT; compo = compo->nextcomponent)
 			if (namesame(compname, compo->name) == 0) break;
-		if (compo != NOCOMPONENT) (void)asktool(us_tool, x_("edit-highlightline"), (INTBIG)cli_curwindow, i);
+		if (compo != NOCOMPONENT) (void)asktool(us_tool, x_((char*)"edit-highlightline"), (INTBIG)cli_curwindow, i);
 		cli_deletecomponentdec(dec);
 		return;
 	}
@@ -108,22 +108,22 @@ void cli_highlightequivalent(GEOM *geom)
 void cli_maketextcell(NODEPROTO *np)
 {
 	CHAR *name;
-	REGISTER CHAR *pt;
-	REGISTER NODEINST *ni, *oni;
-	REGISTER PORTPROTO *pp;
-	REGISTER ARCINST *ai;
-	REGISTER INTBIG first, lensofar, len, i, trunclen;
+	 CHAR *pt;
+	 NODEINST *ni, *oni;
+	 PORTPROTO *pp;
+	 ARCINST *ai;
+	 INTBIG first, lensofar, len, i, trunclen;
 	INTBIG chars, lines;
-	REGISTER void *infstr;
+	 void *infstr;
 
 	/* initialize the textual equivalent window */
 	cli_curcell = np;
 	if (!cli_texton)
 	{
-		(void)asktool(us_tool, x_("edit-describe"), (INTBIG)&name);
+		(void)asktool(us_tool, x_((char*)"edit-describe"), (INTBIG)&name);
 		infstr = initinfstr();
 		addstringtoinfstr(infstr, name);
-		addstringtoinfstr(infstr, M_(" Editor equivalence for cell "));
+		addstringtoinfstr(infstr, M_((char*)" Editor equivalence for cell "));
 		addstringtoinfstr(infstr, np->protoname);
 		(void)allocstring(&name, returninfstr(infstr), el_tempcluster);
 		cli_curwindow = cli_makeeditorwindow(name, &chars, &lines);
@@ -133,21 +133,21 @@ void cli_maketextcell(NODEPROTO *np)
 	if (np == NONODEPROTO) return;
 
 	/* convert all components into declarations */
-	(void)asktool(us_tool, x_("edit-suspendgraphics"), (INTBIG)cli_curwindow);
+	(void)asktool(us_tool, x_((char*)"edit-suspendgraphics"), (INTBIG)cli_curwindow);
 
 	/* erase the window */
-	len = asktool(us_tool, x_("edit-totallines"), (INTBIG)cli_curwindow);
+	len = asktool(us_tool, x_((char*)"edit-totallines"), (INTBIG)cli_curwindow);
 	for(i=0; i<len; i++)
-		(void)asktool(us_tool, x_("edit-deleteline"), (INTBIG)cli_curwindow, i);
+		(void)asktool(us_tool, x_((char*)"edit-deleteline"), (INTBIG)cli_curwindow, i);
 
 	/* load the cell */
 	trunclen = chars / 4 * 3;
 	cli_textlines = 0;
 	infstr = initinfstr();
-	addstringtoinfstr(infstr, x_("BEGINCELL "));
+	addstringtoinfstr(infstr, x_((char*)"BEGINCELL "));
 	addstringtoinfstr(infstr, np->protoname);
-	addstringtoinfstr(infstr, x_(";"));
-	(void)asktool(us_tool, x_("edit-addline"), (INTBIG)cli_curwindow, 0, (INTBIG)returninfstr(infstr));
+	addstringtoinfstr(infstr, x_((char*)";"));
+	(void)asktool(us_tool, x_((char*)"edit-addline"), (INTBIG)cli_curwindow, 0, (INTBIG)returninfstr(infstr));
 	for(ni = np->firstnodeinst; ni != NONODEINST; ni = ni->nextnodeinst)
 		ni->temp1 = 0;
 	for(ni = np->firstnodeinst; ni != NONODEINST; ni = ni->nextnodeinst)
@@ -174,12 +174,12 @@ void cli_maketextcell(NODEPROTO *np)
 			if (first == 0)
 			{
 				infstr = initinfstr();
-				addstringtoinfstr(infstr, x_("declare "));
+				addstringtoinfstr(infstr, x_((char*)"declare "));
 				lensofar = 8;
 				first++;
 			} else
 			{
-				addstringtoinfstr(infstr, x_(", "));
+				addstringtoinfstr(infstr, x_((char*)", "));
 				lensofar += 2;
 			}
 			pt = cli_componentname(oni);
@@ -206,8 +206,8 @@ void cli_maketextcell(NODEPROTO *np)
 	/* now convert the constaints */
 	for(ai = np->firstarcinst; ai != NOARCINST; ai = ai->nextarcinst)
 		cli_addequivcon(ai);
-	cli_replaceendcell(x_("ENDCELL;"), cli_curwindow);
-	(void)asktool(us_tool, x_("edit-resumegraphics"), (INTBIG)cli_curwindow);
+	cli_replaceendcell(x_((char*)"ENDCELL;"), cli_curwindow);
+	(void)asktool(us_tool, x_((char*)"edit-resumegraphics"), (INTBIG)cli_curwindow);
 }
 
 /***************************** GRAPHIC CHANGES *****************************/
@@ -217,11 +217,11 @@ void cli_maketextcell(NODEPROTO *np)
  */
 void cli_eq_newnode(NODEINST *ni)
 {
-	REGISTER COMPONENTDEC *dec;
-	REGISTER COMPONENT *compo;
-	REGISTER CHAR *str;
-	REGISTER INTBIG i, total;
-	REGISTER void *infstr;
+	 COMPONENTDEC *dec;
+	 COMPONENT *compo;
+	 CHAR *str;
+	 INTBIG i, total;
+	 void *infstr;
 
 	/* ignore changes generated by constraint results */
 	if (cli_ownchanges) return;
@@ -230,10 +230,10 @@ void cli_eq_newnode(NODEINST *ni)
 	if (ni->parent != cli_curcell) return;
 
 	/* look for a declaration of this type of node */
-	total = asktool(us_tool, x_("edit-totallines"), (INTBIG)cli_curwindow);
+	total = asktool(us_tool, x_((char*)"edit-totallines"), (INTBIG)cli_curwindow);
 	for(i=0; i<total; i++)
 	{
-		str = (CHAR *)asktool(us_tool, x_("edit-getline"), (INTBIG)cli_curwindow, i);
+		str = (CHAR *)asktool(us_tool, x_((char*)"edit-getline"), (INTBIG)cli_curwindow, i);
 		if (str == NOSTRING) break;
 		if (cli_linetype(str) != LINEDECL) continue;
 		dec = cli_parsecomp(str, FALSE);
@@ -246,12 +246,12 @@ void cli_eq_newnode(NODEINST *ni)
 
 		/* found the declaration, rebuild with existing components */
 		infstr = initinfstr();
-		addstringtoinfstr(infstr, x_("declare "));
+		addstringtoinfstr(infstr, x_((char*)"declare "));
 		for(compo = dec->firstcomponent; compo != NOCOMPONENT; compo = compo->nextcomponent)
 		{
 			addstringtoinfstr(infstr, compo->name);
 			cli_addcomponentdata(infstr, compo);
-			addstringtoinfstr(infstr, x_(", "));
+			addstringtoinfstr(infstr, x_((char*)", "));
 		}
 
 		/* add in the new component */
@@ -262,14 +262,14 @@ void cli_eq_newnode(NODEINST *ni)
 		/* finish the declaration and replace the line */
 		addstringtoinfstr(infstr, dec->protoname);
 		addtoinfstr(infstr, ';');
-		(void)asktool(us_tool, x_("edit-replaceline"), (INTBIG)cli_curwindow, i, (INTBIG)returninfstr(infstr));
+		(void)asktool(us_tool, x_((char*)"edit-replaceline"), (INTBIG)cli_curwindow, i, (INTBIG)returninfstr(infstr));
 		cli_deletecomponentdec(dec);
 		return;
 	}
 
 	/* build a simple declaration for this node */
 	infstr = initinfstr();
-	addstringtoinfstr(infstr, x_("declare "));
+	addstringtoinfstr(infstr, x_((char*)"declare "));
 	addstringtoinfstr(infstr, cli_componentname(ni));
 	(void)cli_addcomponentinfo(infstr, ni);
 	addtoinfstr(infstr, ' ');
@@ -283,11 +283,11 @@ void cli_eq_newnode(NODEINST *ni)
  */
 void cli_eq_killnode(NODEINST *ni)
 {
-	REGISTER CHAR *str, *compname;
-	REGISTER INTBIG first, i, total;
-	REGISTER COMPONENTDEC *dec;
-	REGISTER COMPONENT *compo, *ocomp;
-	REGISTER void *infstr;
+	 CHAR *str, *compname;
+	 INTBIG first, i, total;
+	 COMPONENTDEC *dec;
+	 COMPONENT *compo, *ocomp;
+	 void *infstr;
 
 	/* see if node is in graphics cell that has equivalent text */
 	if (cli_ownchanges) return;
@@ -297,10 +297,10 @@ void cli_eq_killnode(NODEINST *ni)
 
 	/* look for a declaration of this type of node */
 	compname = cli_componentname(ni);
-	total = asktool(us_tool, x_("edit-totallines"), (INTBIG)cli_curwindow);
+	total = asktool(us_tool, x_((char*)"edit-totallines"), (INTBIG)cli_curwindow);
 	for(i=0; i<total; i++)
 	{
-		str = (CHAR *)asktool(us_tool, x_("edit-getline"), (INTBIG)cli_curwindow, i);
+		str = (CHAR *)asktool(us_tool, x_((char*)"edit-getline"), (INTBIG)cli_curwindow, i);
 		if (str == NOSTRING) break;
 		if (cli_linetype(str) != LINEDECL) continue;
 		dec = cli_parsecomp(str, FALSE);
@@ -324,7 +324,7 @@ void cli_eq_killnode(NODEINST *ni)
 		if (dec->count == 1 && namesame(dec->firstcomponent->name, compname) == 0)
 		{
 			/* line had only one keyword: delete the line */
-			(void)asktool(us_tool, x_("edit-deleteline"), (INTBIG)cli_curwindow, i);
+			(void)asktool(us_tool, x_((char*)"edit-deleteline"), (INTBIG)cli_curwindow, i);
 			cli_textlines--;
 			cli_deletecomponentdec(dec);
 			return;
@@ -332,12 +332,12 @@ void cli_eq_killnode(NODEINST *ni)
 
 		/* rebuild line without the deleted component */
 		infstr = initinfstr();
-		addstringtoinfstr(infstr, x_("declare "));
+		addstringtoinfstr(infstr, x_((char*)"declare "));
 		first = 0;
 		for(ocomp = dec->firstcomponent; ocomp != NOCOMPONENT; ocomp = ocomp->nextcomponent)
 		{
 			if (compo == ocomp) continue;
-			if (first != 0) addstringtoinfstr(infstr, x_(", "));
+			if (first != 0) addstringtoinfstr(infstr, x_((char*)", "));
 			first++;
 			addstringtoinfstr(infstr, ocomp->name);
 			cli_addcomponentdata(infstr, ocomp);
@@ -345,11 +345,11 @@ void cli_eq_killnode(NODEINST *ni)
 		addtoinfstr(infstr, ' ');
 		addstringtoinfstr(infstr, dec->protoname);
 		addtoinfstr(infstr, ';');
-		(void)asktool(us_tool, x_("edit-replaceline"), (INTBIG)cli_curwindow, i, (INTBIG)returninfstr(infstr));
+		(void)asktool(us_tool, x_((char*)"edit-replaceline"), (INTBIG)cli_curwindow, i, (INTBIG)returninfstr(infstr));
 		cli_deletecomponentdec(dec);
 		return;
 	}
-	ttyputmsg(M_("Warning: cannot find node %s in text"), compname);
+	ttyputmsg(M_((char*)"Warning: cannot find node %s in text"), compname);
 }
 
 /* handle the change of node "ni" */
@@ -363,9 +363,9 @@ void cli_eq_modnode(NODEINST *ni)
 /* handle the creation of new arc "ai" */
 void cli_eq_newarc(ARCINST *ai)
 {
-	REGISTER INTBIG i, j;
-	REGISTER NODEINST *ni;
-	REGISTER PORTARCINST *pi;
+	 INTBIG i, j;
+	 NODEINST *ni;
+	 PORTARCINST *pi;
 
 	/* see if arc is in graphics cell that has equivalent text */
 	if (cli_ownchanges) return;
@@ -386,8 +386,8 @@ void cli_eq_newarc(ARCINST *ai)
 /* handle the deletion of arc "ai" */
 void cli_eq_killarc(ARCINST *ai)
 {
-	REGISTER NODEINST *ni;
-	REGISTER INTBIG i;
+	 NODEINST *ni;
+	 INTBIG i;
 
 	/* see if arc is in graphics cell that has equivalent text */
 	if (cli_ownchanges) return;
@@ -410,8 +410,8 @@ void cli_eq_killarc(ARCINST *ai)
  */
 void cli_eq_modarc(ARCINST *ai)
 {
-	REGISTER CHAR *str;
-	REGISTER INTBIG cindex;
+	 CHAR *str;
+	 INTBIG cindex;
 
 	/* see if arc is in graphics cell that has equivalent text */
 	if (cli_ownchanges) return;
@@ -423,7 +423,7 @@ void cli_eq_modarc(ARCINST *ai)
 	cindex = cli_findtextconn(ai);
 	if (cindex == -1)
 	{
-		ttyputerr(M_("Cannot find text equivalent for arc %s"), describearcinst(ai));
+		ttyputerr(M_((char*)"Cannot find text equivalent for arc %s"), describearcinst(ai));
 		return;
 	}
 
@@ -431,7 +431,7 @@ void cli_eq_modarc(ARCINST *ai)
 	str = cli_makearcline(ai);
 
 	/* change the line */
-	(void)asktool(us_tool, x_("edit-replaceline"), (INTBIG)cli_curwindow, cindex, (INTBIG)str);
+	(void)asktool(us_tool, x_((char*)"edit-replaceline"), (INTBIG)cli_curwindow, cindex, (INTBIG)str);
 }
 
 /* handle the creation of port "pp" */
@@ -446,20 +446,20 @@ void cli_eq_newport(PORTPROTO *pp)
 /* handle the deletion of port "pp" */
 void cli_eq_killport(PORTPROTO *pp)
 {
-	REGISTER INTBIG i, total;
-	REGISTER CHAR *str;
-	REGISTER EXPORT *e;
+	 INTBIG i, total;
+	 CHAR *str;
+	 EXPORT *e;
 
 	/* see if port is in graphics cell that has equivalent text */
 	if (cli_ownchanges) return;
 	if (pp->parent != cli_curcell) return;
 
 	/* find the export line with this port */
-	total = asktool(us_tool, x_("edit-totallines"), (INTBIG)cli_curwindow);
+	total = asktool(us_tool, x_((char*)"edit-totallines"), (INTBIG)cli_curwindow);
 	for(i=0; i<total; i++)
 	{
 		/* get a line of text */
-		str = (CHAR *)asktool(us_tool, x_("edit-getline"), (INTBIG)cli_curwindow, i);
+		str = (CHAR *)asktool(us_tool, x_((char*)"edit-getline"), (INTBIG)cli_curwindow, i);
 		if (str == NOSTRING) break;
 		if (cli_linetype(str) != LINEEXPORT) continue;
 
@@ -473,7 +473,7 @@ void cli_eq_killport(PORTPROTO *pp)
 		}
 
 		/* export line found: delete it */
-		(void)asktool(us_tool, x_("edit-deleteline"), (INTBIG)cli_curwindow, i);
+		(void)asktool(us_tool, x_((char*)"edit-deleteline"), (INTBIG)cli_curwindow, i);
 		cli_textlines--;
 		cli_deleteexport(e);
 		break;
@@ -483,20 +483,20 @@ void cli_eq_killport(PORTPROTO *pp)
 /* handle the modification of port "pp" */
 void cli_eq_modport(PORTPROTO *pp)
 {
-	REGISTER CHAR *str;
-	REGISTER EXPORT *e;
-	REGISTER INTBIG i, total;
+	 CHAR *str;
+	 EXPORT *e;
+	 INTBIG i, total;
 
 	/* see if port is in graphics cell that has equivalent text */
 	if (cli_ownchanges) return;
 	if (pp->parent != cli_curcell) return;
 
 	/* find the export line with this port */
-	total = asktool(us_tool, x_("edit-totallines"), (INTBIG)cli_curwindow);
+	total = asktool(us_tool, x_((char*)"edit-totallines"), (INTBIG)cli_curwindow);
 	for(i=0; i<total; i++)
 	{
 		/* get a line of text */
-		str = (CHAR *)asktool(us_tool, x_("edit-getline"), (INTBIG)cli_curwindow, i);
+		str = (CHAR *)asktool(us_tool, x_((char*)"edit-getline"), (INTBIG)cli_curwindow, i);
 		if (str == NOSTRING) break;
 		if (cli_linetype(str) != LINEEXPORT) continue;
 
@@ -510,7 +510,7 @@ void cli_eq_modport(PORTPROTO *pp)
 		}
 
 		/* export line found: rewrite it */
-		(void)asktool(us_tool, x_("edit-replaceline"), (INTBIG)cli_curwindow, i,
+		(void)asktool(us_tool, x_((char*)"edit-replaceline"), (INTBIG)cli_curwindow, i,
 			(INTBIG)cli_makeportline(pp));
 		cli_deleteexport(e);
 		break;
@@ -520,9 +520,9 @@ void cli_eq_modport(PORTPROTO *pp)
 /* handle the creation of variable type "type", name "key", and value "addr" */
 void cli_eq_newvar(INTBIG addr, INTBIG type, INTBIG key)
 {
-	REGISTER NODEINST *ni;
+	 NODEINST *ni;
 	CHAR line[50];
-	REGISTER VARIABLE *var;
+	 VARIABLE *var;
 
 	if (cli_ownchanges) return;
 
@@ -567,8 +567,8 @@ void cli_eq_newvar(INTBIG addr, INTBIG type, INTBIG key)
 void cli_eq_killvar(INTBIG addr, INTBIG type, INTBIG key)
 {
 	CHAR line[50];
-	REGISTER VARIABLE *var;
-	REGISTER NODEINST *ni;
+	 VARIABLE *var;
+	 NODEINST *ni;
 
 	if (cli_ownchanges) return;
 	if (type == VNODEINST)
@@ -619,20 +619,20 @@ void cli_eq_solve(void)
  */
 void cli_addequivcon(ARCINST *ai)
 {
-	REGISTER INTBIG i, total;
+	 INTBIG i, total;
 
-	total = asktool(us_tool, x_("edit-totallines"), (INTBIG)cli_curwindow);
+	total = asktool(us_tool, x_((char*)"edit-totallines"), (INTBIG)cli_curwindow);
 
 	/* search for the last line with a valid connection declaration */
 	for(i = total-1; i >= 0; i--)
-		if (cli_linetype((CHAR *)asktool(us_tool, x_("edit-getline"),
+		if (cli_linetype((CHAR *)asktool(us_tool, x_((char*)"edit-getline"),
 			(INTBIG)cli_curwindow, i)) == LINECONN) break;
 	if (i < 0)
 	{
 		/* no "connect" lines, take last line anywhere */
 		i = total-1;
 	}
-	(void)asktool(us_tool, x_("edit-addline"), (INTBIG)cli_curwindow, i+1, (INTBIG)cli_makearcline(ai));
+	(void)asktool(us_tool, x_((char*)"edit-addline"), (INTBIG)cli_curwindow, i+1, (INTBIG)cli_makearcline(ai));
 	cli_textlines++;
 }
 
@@ -641,13 +641,13 @@ void cli_addequivcon(ARCINST *ai)
  */
 void cli_deleteequivcon(ARCINST *ai)
 {
-	REGISTER INTBIG cindex;
+	 INTBIG cindex;
 
 	/* get the text node that describes this arc */
 	cindex = cli_findtextconn(ai);
 	if (cindex != -1)
 	{
-		(void)asktool(us_tool, x_("edit-deleteline"), (INTBIG)cli_curwindow, cindex);
+		(void)asktool(us_tool, x_((char*)"edit-deleteline"), (INTBIG)cli_curwindow, cindex);
 		cli_textlines--;
 	}
 }
@@ -657,18 +657,18 @@ void cli_deleteequivcon(ARCINST *ai)
  */
 void cli_changeequivcomp(NODEINST *ni)
 {
-	REGISTER CHAR *str, *compname;
-	REGISTER INTBIG i, total;
-	REGISTER COMPONENTDEC *dec;
-	REGISTER COMPONENT *compo, *ocomp;
-	REGISTER void *infstr;
+	 CHAR *str, *compname;
+	 INTBIG i, total;
+	 COMPONENTDEC *dec;
+	 COMPONENT *compo, *ocomp;
+	 void *infstr;
 
 	/* look for a declaration of this type of node */
 	compname = cli_componentname(ni);
-	total = asktool(us_tool, x_("edit-totallines"), (INTBIG)cli_curwindow);
+	total = asktool(us_tool, x_((char*)"edit-totallines"), (INTBIG)cli_curwindow);
 	for(i=0; i<total; i++)
 	{
-		str = (CHAR *)asktool(us_tool, x_("edit-getline"), (INTBIG)cli_curwindow, i);
+		str = (CHAR *)asktool(us_tool, x_((char*)"edit-getline"), (INTBIG)cli_curwindow, i);
 		if (str == NOSTRING) break;
 		if (cli_linetype(str) != LINEDECL) continue;
 		dec = cli_parsecomp(str, FALSE);
@@ -689,10 +689,10 @@ void cli_changeequivcomp(NODEINST *ni)
 		}
 
 		infstr = initinfstr();
-		addstringtoinfstr(infstr, x_("declare "));
+		addstringtoinfstr(infstr, x_((char*)"declare "));
 		for(ocomp = dec->firstcomponent; ocomp != NOCOMPONENT; ocomp = ocomp->nextcomponent)
 		{
-			if (ocomp != dec->firstcomponent) addstringtoinfstr(infstr, x_(", "));
+			if (ocomp != dec->firstcomponent) addstringtoinfstr(infstr, x_((char*)", "));
 			if (compo == ocomp)
 			{
 				addstringtoinfstr(infstr, cli_componentname(ni));
@@ -706,11 +706,11 @@ void cli_changeequivcomp(NODEINST *ni)
 		addtoinfstr(infstr, ' ');
 		addstringtoinfstr(infstr, dec->protoname);
 		addtoinfstr(infstr, ';');
-		(void)asktool(us_tool, x_("edit-replaceline"), (INTBIG)cli_curwindow, i, (INTBIG)returninfstr(infstr));
+		(void)asktool(us_tool, x_((char*)"edit-replaceline"), (INTBIG)cli_curwindow, i, (INTBIG)returninfstr(infstr));
 		cli_deletecomponentdec(dec);
 		return;
 	}
-	ttyputmsg(M_("Warning: cannot find node %s in text"), compname);
+	ttyputmsg(M_((char*)"Warning: cannot find node %s in text"), compname);
 }
 
 /*
@@ -719,22 +719,22 @@ void cli_changeequivcomp(NODEINST *ni)
  */
 void cli_replacename(CHAR *oldname, CHAR *newname)
 {
-	REGISTER CHAR *str;
-	REGISTER INTBIG i, rewrite, total;
+	 CHAR *str;
+	 INTBIG i, rewrite, total;
 	CHAR line[50];
-	REGISTER EXPORT *e;
-	REGISTER COMPONENTDEC *dcl;
-	REGISTER COMPONENT *compo, *ocomp;
-	REGISTER CONNECTION *dec;
-	REGISTER CONS *cons;
-	REGISTER ATTR *a;
-	REGISTER void *infstr;
+	 EXPORT *e;
+	 COMPONENTDEC *dcl;
+	 COMPONENT *compo, *ocomp;
+	 CONNECTION *dec;
+	 CONS *cons;
+	 ATTR *a;
+	 void *infstr;
 
 	/* look through all statements for the old name */
-	total = asktool(us_tool, x_("edit-totallines"), (INTBIG)cli_curwindow);
+	total = asktool(us_tool, x_((char*)"edit-totallines"), (INTBIG)cli_curwindow);
 	for(i=0; i<total; i++)
 	{
-		str = (CHAR *)asktool(us_tool, x_("edit-getline"), (INTBIG)cli_curwindow, i);
+		str = (CHAR *)asktool(us_tool, x_((char*)"edit-getline"), (INTBIG)cli_curwindow, i);
 		if (str == NOSTRING) break;
 
 		/* search declaration statement */
@@ -752,10 +752,10 @@ void cli_replacename(CHAR *oldname, CHAR *newname)
 
 			/* rewrite the component declaration line */
 			infstr = initinfstr();
-			addstringtoinfstr(infstr, x_("declare "));
+			addstringtoinfstr(infstr, x_((char*)"declare "));
 			for(ocomp = dcl->firstcomponent; ocomp != NOCOMPONENT; ocomp = ocomp->nextcomponent)
 			{
-				if (ocomp != dcl->firstcomponent) addstringtoinfstr(infstr, x_(", "));
+				if (ocomp != dcl->firstcomponent) addstringtoinfstr(infstr, x_((char*)", "));
 				if (ocomp == compo) addstringtoinfstr(infstr, newname); else
 					addstringtoinfstr(infstr, ocomp->name);
 				cli_addcomponentdata(infstr, ocomp);
@@ -763,7 +763,7 @@ void cli_replacename(CHAR *oldname, CHAR *newname)
 			addtoinfstr(infstr, ' ');
 			addstringtoinfstr(infstr, dcl->protoname);
 			addtoinfstr(infstr, ';');
-			(void)asktool(us_tool, x_("edit-replaceline"), (INTBIG)cli_curwindow, i, (INTBIG)returninfstr(infstr));
+			(void)asktool(us_tool, x_((char*)"edit-replaceline"), (INTBIG)cli_curwindow, i, (INTBIG)returninfstr(infstr));
 			cli_deletecomponentdec(dcl);
 			continue;
 		}
@@ -781,44 +781,44 @@ void cli_replacename(CHAR *oldname, CHAR *newname)
 
 			/* rewrite the export line */
 			infstr = initinfstr();
-			addstringtoinfstr(infstr, x_("export "));
+			addstringtoinfstr(infstr, x_((char*)"export "));
 			if ((e->flag&(EXPCHAR|EXPATTR)) != 0)
 			{
 				if ((e->flag&EXPCHAR) != 0)
 				{
-					addstringtoinfstr(infstr, x_("[type="));
+					addstringtoinfstr(infstr, x_((char*)"[type="));
 					switch (e->bits&STATEBITS)
 					{
 						case INPORT :
-							addstringtoinfstr(infstr, M_("input")); break;
+							addstringtoinfstr(infstr, M_((char*)"input")); break;
 						case OUTPORT:
-							addstringtoinfstr(infstr, M_("output")); break;
+							addstringtoinfstr(infstr, M_((char*)"output")); break;
 						case BIDIRPORT:
-							addstringtoinfstr(infstr, M_("bidirectional")); break;
+							addstringtoinfstr(infstr, M_((char*)"bidirectional")); break;
 						case PWRPORT:
-							addstringtoinfstr(infstr, M_("power")); break;
+							addstringtoinfstr(infstr, M_((char*)"power")); break;
 						case GNDPORT:
-							addstringtoinfstr(infstr, M_("ground")); break;
+							addstringtoinfstr(infstr, M_((char*)"ground")); break;
 						case CLKPORT:
-							addstringtoinfstr(infstr, M_("clock")); break;
+							addstringtoinfstr(infstr, M_((char*)"clock")); break;
 						case C1PORT:
-							addstringtoinfstr(infstr, M_("clock1")); break;
+							addstringtoinfstr(infstr, M_((char*)"clock1")); break;
 						case C2PORT:
-							addstringtoinfstr(infstr, M_("clock2")); break;
+							addstringtoinfstr(infstr, M_((char*)"clock2")); break;
 						case C3PORT:
-							addstringtoinfstr(infstr, M_("clock3")); break;
+							addstringtoinfstr(infstr, M_((char*)"clock3")); break;
 						case C4PORT:
-							addstringtoinfstr(infstr, M_("clock4")); break;
+							addstringtoinfstr(infstr, M_((char*)"clock4")); break;
 						case C5PORT:
-							addstringtoinfstr(infstr, M_("clock5")); break;
+							addstringtoinfstr(infstr, M_((char*)"clock5")); break;
 						case C6PORT:
-							addstringtoinfstr(infstr, M_("clock6")); break;
+							addstringtoinfstr(infstr, M_((char*)"clock6")); break;
 						case REFOUTPORT:
-							addstringtoinfstr(infstr, M_("refout")); break;
+							addstringtoinfstr(infstr, M_((char*)"refout")); break;
 						case REFINPORT:
-							addstringtoinfstr(infstr, M_("refin")); break;
+							addstringtoinfstr(infstr, M_((char*)"refin")); break;
 						case REFBASEPORT:
-							addstringtoinfstr(infstr, M_("refbase")); break;
+							addstringtoinfstr(infstr, M_((char*)"refbase")); break;
 					}
 				}
 				if ((e->flag&EXPATTR) != 0)
@@ -831,10 +831,10 @@ void cli_replacename(CHAR *oldname, CHAR *newname)
 						cli_addattr(infstr, a);
 					}
 				}
-				addstringtoinfstr(infstr, x_("] "));
+				addstringtoinfstr(infstr, x_((char*)"] "));
 			}
 			addstringtoinfstr(infstr, e->portname);
-			addstringtoinfstr(infstr, x_(" is "));
+			addstringtoinfstr(infstr, x_((char*)" is "));
 			addstringtoinfstr(infstr, newname);
 			if (e->subport != 0)
 			{
@@ -842,7 +842,7 @@ void cli_replacename(CHAR *oldname, CHAR *newname)
 				addstringtoinfstr(infstr, e->subport);
 			}
 			addtoinfstr(infstr, ';');
-			(void)asktool(us_tool, x_("edit-replaceline"), (INTBIG)cli_curwindow, i, (INTBIG)returninfstr(infstr));
+			(void)asktool(us_tool, x_((char*)"edit-replaceline"), (INTBIG)cli_curwindow, i, (INTBIG)returninfstr(infstr));
 			cli_deleteexport(e);
 			continue;
 		}
@@ -873,12 +873,12 @@ void cli_replacename(CHAR *oldname, CHAR *newname)
 
 			/* rewrite the connetion line */
 			infstr = initinfstr();
-			addstringtoinfstr(infstr, x_("connect "));
+			addstringtoinfstr(infstr, x_((char*)"connect "));
 			if ((dec->flag&(LAYERVALID|WIDTHVALID|ATTRVALID)) != 0)
 			{
 				if ((dec->flag&LAYERVALID) != 0)
 				{
-					addstringtoinfstr(infstr, x_("[layer="));
+					addstringtoinfstr(infstr, x_((char*)"[layer="));
 					addstringtoinfstr(infstr, dec->layer);
 				}
 				if ((dec->flag&WIDTHVALID) != 0)
@@ -898,7 +898,7 @@ void cli_replacename(CHAR *oldname, CHAR *newname)
 						cli_addattr(infstr, a);
 					}
 				}
-				addstringtoinfstr(infstr, x_("] "));
+				addstringtoinfstr(infstr, x_((char*)"] "));
 			}
 
 			addstringtoinfstr(infstr, dec->end1);
@@ -914,25 +914,25 @@ void cli_replacename(CHAR *oldname, CHAR *newname)
 				addstringtoinfstr(infstr, cons->direction);
 				addtoinfstr(infstr, ' ');
 				addstringtoinfstr(infstr, frtoa(cons->amount));
-				if (cons->flag == 1) addstringtoinfstr(infstr, x_(" or more"));
-				if (cons->flag == -1) addstringtoinfstr(infstr, x_(" or less"));
+				if (cons->flag == 1) addstringtoinfstr(infstr, x_((char*)" or more"));
+				if (cons->flag == -1) addstringtoinfstr(infstr, x_((char*)" or less"));
 			}
 
 			/* decide whether to print the arc offset */
 			if ((dec->flag&OFFSETVALID) != 0)
 			{
-				(void)esnprintf(line, 50, x_(" [%s,%s]"), latoa(dec->xoff, 0), latoa(dec->yoff, 0));
+				(void)esnprintf(line, 50, x_((char*)" [%s,%s]"), latoa(dec->xoff, 0), latoa(dec->yoff, 0));
 				addstringtoinfstr(infstr, line);
 			}
-			addstringtoinfstr(infstr, x_(" to "));
+			addstringtoinfstr(infstr, x_((char*)" to "));
 			addstringtoinfstr(infstr, dec->end2);
 			if ((dec->flag&PORT2VALID) != 0)
 			{
 				addtoinfstr(infstr, ':');
 				addstringtoinfstr(infstr, dec->port2);
 			}
-			addstringtoinfstr(infstr, x_(";"));
-			(void)asktool(us_tool, x_("edit-replaceline"), (INTBIG)cli_curwindow, i, (INTBIG)returninfstr(infstr));
+			addstringtoinfstr(infstr, x_((char*)";"));
+			(void)asktool(us_tool, x_((char*)"edit-replaceline"), (INTBIG)cli_curwindow, i, (INTBIG)returninfstr(infstr));
 			cli_deleteconnection(dec);
 		}
 	}
@@ -946,15 +946,15 @@ void cli_replacename(CHAR *oldname, CHAR *newname)
  */
 INTBIG cli_findtextconn(ARCINST *ai)
 {
-	REGISTER INTBIG i, total;
-	REGISTER CHAR *str;
-	REGISTER CONNECTION *dec;
+	 INTBIG i, total;
+	 CHAR *str;
+	 CONNECTION *dec;
 
-	total = asktool(us_tool, x_("edit-totallines"), (INTBIG)cli_curwindow);
+	total = asktool(us_tool, x_((char*)"edit-totallines"), (INTBIG)cli_curwindow);
 	for(i=0; i<total; i++)
 	{
 		/* get a valid connection line */
-		str = (CHAR *)asktool(us_tool, x_("edit-getline"), (INTBIG)cli_curwindow, i);
+		str = (CHAR *)asktool(us_tool, x_((char*)"edit-getline"), (INTBIG)cli_curwindow, i);
 		if (str == NOSTRING) break;
 		if (cli_linetype(str) != LINECONN) continue;
 		dec = cli_parseconn(str, TRUE);
@@ -1002,26 +1002,26 @@ INTBIG cli_findtextconn(ARCINST *ai)
 CHAR *cli_makearcline(ARCINST *ai)
 {
 	CHAR line[50];
-	REGISTER VARIABLE *var;
-	REGISTER INTBIG i, len;
-	REGISTER BOOLEAN doit, added;
-	REGISTER INTBIG conx, cony, xcons, ycons, lambda;
-	REGISTER LINCON *conptr;
-	REGISTER void *infstr;
+	 VARIABLE *var;
+	 INTBIG i, len;
+	 BOOLEAN doit, added;
+	 INTBIG conx, cony, xcons, ycons, lambda;
+	 LINCON *conptr;
+	 void *infstr;
 
 	infstr = initinfstr();
-	addstringtoinfstr(infstr, x_("connect "));
+	addstringtoinfstr(infstr, x_((char*)"connect "));
 	added = FALSE;
 	if (!cli_uniquelayer(ai))
 	{
-		addstringtoinfstr(infstr, x_("[layer="));
+		addstringtoinfstr(infstr, x_((char*)"[layer="));
 		addstringtoinfstr(infstr, describearcproto(ai->proto));
 		added = TRUE;
 	}
 	if (ai->width != ai->proto->nominalwidth)
 	{
 		if (!added) addtoinfstr(infstr, '['); else addtoinfstr(infstr, ',');
-		addstringtoinfstr(infstr, x_("width="));
+		addstringtoinfstr(infstr, x_((char*)"width="));
 		addstringtoinfstr(infstr, latoa(ai->width, 0));
 		added = TRUE;
 	}
@@ -1035,7 +1035,7 @@ CHAR *cli_makearcline(ARCINST *ai)
 		addstringtoinfstr(infstr, describevariable(var, -1, 1));
 		added = TRUE;
 	}
-	if (added) addstringtoinfstr(infstr, x_("] "));
+	if (added) addstringtoinfstr(infstr, x_((char*)"] "));
 	addstringtoinfstr(infstr, cli_componentname(ai->end[0].nodeinst));
 	if (!cli_uniqueport(ai->end[0].nodeinst, ai->end[0].portarcinst->proto))
 	{
@@ -1070,17 +1070,17 @@ CHAR *cli_makearcline(ARCINST *ai)
 				case CLDOWN:
 					ycons++;
 					cony = -conptr->value * lambda / WHOLE;
-					(void)esnprintf(line, 50, x_(" down %s"), latoa(-cony, 0));
+					(void)esnprintf(line, 50, x_((char*)" down %s"), latoa(-cony, 0));
 					break;
 				case CLUP:
 					ycons++;
 					cony = conptr->value * lambda / WHOLE;
-					(void)esnprintf(line, 50, x_(" up %s"), latoa(cony, 0));
+					(void)esnprintf(line, 50, x_((char*)" up %s"), latoa(cony, 0));
 					break;
 			}
 			addstringtoinfstr(infstr, line);
-			if (conptr->oper == 0) addstringtoinfstr(infstr, x_(" or more"));
-			if (conptr->oper == 2) addstringtoinfstr(infstr, x_(" or less"));
+			if (conptr->oper == 0) addstringtoinfstr(infstr, x_((char*)" or more"));
+			if (conptr->oper == 2) addstringtoinfstr(infstr, x_((char*)" or less"));
 		}
 	}
 
@@ -1092,18 +1092,18 @@ CHAR *cli_makearcline(ARCINST *ai)
 		doit = TRUE;
 	if (doit)
 	{
-		(void)esnprintf(line, 50, x_(" [%s,%s]"), latoa(ai->end[1].xpos - ai->end[0].xpos, 0),
+		(void)esnprintf(line, 50, x_((char*)" [%s,%s]"), latoa(ai->end[1].xpos - ai->end[0].xpos, 0),
 			latoa(ai->end[1].ypos - ai->end[0].ypos, 0));
 		addstringtoinfstr(infstr, line);
 	}
-	addstringtoinfstr(infstr, x_(" to "));
+	addstringtoinfstr(infstr, x_((char*)" to "));
 	addstringtoinfstr(infstr, cli_componentname(ai->end[1].nodeinst));
 	if (!cli_uniqueport(ai->end[1].nodeinst, ai->end[1].portarcinst->proto))
 	{
 		addtoinfstr(infstr, ':');
 		addstringtoinfstr(infstr, ai->end[1].portarcinst->proto->protoname);
 	}
-	addstringtoinfstr(infstr, x_(";"));
+	addstringtoinfstr(infstr, x_((char*)";"));
 	return(returninfstr(infstr));
 }
 
@@ -1112,33 +1112,33 @@ CHAR *cli_makearcline(ARCINST *ai)
  */
 CHAR *cli_makeportline(PORTPROTO *pp)
 {
-	REGISTER BOOLEAN added;
-	REGISTER INTBIG i;
-	REGISTER VARIABLE *var;
-	REGISTER void *infstr;
+	 BOOLEAN added;
+	 INTBIG i;
+	 VARIABLE *var;
+	 void *infstr;
 
 	infstr = initinfstr();
-	addstringtoinfstr(infstr, x_("export "));
+	addstringtoinfstr(infstr, x_((char*)"export "));
 	if ((pp->userbits&STATEBITS) != 0)
 	{
-		addstringtoinfstr(infstr, x_("[type="));
+		addstringtoinfstr(infstr, x_((char*)"[type="));
 		switch (pp->userbits&STATEBITS)
 		{
-			case INPORT:      addstringtoinfstr(infstr, x_("input"));         break;
-			case OUTPORT:     addstringtoinfstr(infstr, x_("output"));        break;
-			case BIDIRPORT:   addstringtoinfstr(infstr, x_("bidirectional")); break;
-			case PWRPORT:     addstringtoinfstr(infstr, x_("power"));         break;
-			case GNDPORT:     addstringtoinfstr(infstr, x_("ground"));        break;
-			case CLKPORT:     addstringtoinfstr(infstr, x_("clock"));         break;
-			case C1PORT:      addstringtoinfstr(infstr, x_("clock1"));        break;
-			case C2PORT:      addstringtoinfstr(infstr, x_("clock2"));        break;
-			case C3PORT:      addstringtoinfstr(infstr, x_("clock3"));        break;
-			case C4PORT:      addstringtoinfstr(infstr, x_("clock4"));        break;
-			case C5PORT:      addstringtoinfstr(infstr, x_("clock5"));        break;
-			case C6PORT:      addstringtoinfstr(infstr, x_("clock6"));        break;
-			case REFOUTPORT:  addstringtoinfstr(infstr, x_("refout"));        break;
-			case REFINPORT:   addstringtoinfstr(infstr, x_("refin"));         break;
-			case REFBASEPORT: addstringtoinfstr(infstr, x_("refbase"));       break;
+			case INPORT:      addstringtoinfstr(infstr, x_((char*)"input"));         break;
+			case OUTPORT:     addstringtoinfstr(infstr, x_((char*)"output"));        break;
+			case BIDIRPORT:   addstringtoinfstr(infstr, x_((char*)"bidirectional")); break;
+			case PWRPORT:     addstringtoinfstr(infstr, x_((char*)"power"));         break;
+			case GNDPORT:     addstringtoinfstr(infstr, x_((char*)"ground"));        break;
+			case CLKPORT:     addstringtoinfstr(infstr, x_((char*)"clock"));         break;
+			case C1PORT:      addstringtoinfstr(infstr, x_((char*)"clock1"));        break;
+			case C2PORT:      addstringtoinfstr(infstr, x_((char*)"clock2"));        break;
+			case C3PORT:      addstringtoinfstr(infstr, x_((char*)"clock3"));        break;
+			case C4PORT:      addstringtoinfstr(infstr, x_((char*)"clock4"));        break;
+			case C5PORT:      addstringtoinfstr(infstr, x_((char*)"clock5"));        break;
+			case C6PORT:      addstringtoinfstr(infstr, x_((char*)"clock6"));        break;
+			case REFOUTPORT:  addstringtoinfstr(infstr, x_((char*)"refout"));        break;
+			case REFINPORT:   addstringtoinfstr(infstr, x_((char*)"refin"));         break;
+			case REFBASEPORT: addstringtoinfstr(infstr, x_((char*)"refbase"));       break;
 				
 		}
 		added = TRUE;
@@ -1154,10 +1154,10 @@ CHAR *cli_makeportline(PORTPROTO *pp)
 		addstringtoinfstr(infstr, describevariable(var, -1, 1));
 		added = TRUE;
 	}
-	if (added) addstringtoinfstr(infstr, x_("] "));
+	if (added) addstringtoinfstr(infstr, x_((char*)"] "));
 
 	addstringtoinfstr(infstr, pp->protoname);
-	addstringtoinfstr(infstr, x_(" is "));
+	addstringtoinfstr(infstr, x_((char*)" is "));
 	addstringtoinfstr(infstr, cli_componentname(pp->subnodeinst));
 	if (!cli_uniqueport(pp->subnodeinst, pp->subportproto))
 	{
@@ -1174,7 +1174,7 @@ CHAR *cli_makeportline(PORTPROTO *pp)
  */
 BOOLEAN cli_uniqueport(NODEINST *ni, PORTPROTO *pp)
 {
-	REGISTER PORTPROTO *opp;
+	 PORTPROTO *opp;
 	static POLYGON *poly1 = NOPOLYGON, *poly2 = NOPOLYGON;
 
 	/* make sure polygons are allocated */
@@ -1204,10 +1204,10 @@ BOOLEAN cli_uniqueport(NODEINST *ni, PORTPROTO *pp)
  */
 BOOLEAN cli_uniquelayer(ARCINST *ai)
 {
-	REGISTER TECHNOLOGY *tech;
-	REGISTER ARCPROTO *ap;
-	REGISTER PORTPROTO *pp;
-	REGISTER INTBIG i;
+	 TECHNOLOGY *tech;
+	 ARCPROTO *ap;
+	 PORTPROTO *pp;
+	 INTBIG i;
 
 	/* clear all bits on arcs in this technology */
 	tech = ai->proto->tech;
@@ -1242,9 +1242,9 @@ BOOLEAN cli_uniquelayer(ARCINST *ai)
 INTBIG cli_addcomponentinfo(void *infstr, NODEINST *ni)
 {
 	CHAR line[50];
-	REGISTER CHAR *st;
-	REGISTER INTBIG added, i;
-	REGISTER VARIABLE *var;
+	 CHAR *st;
+	 INTBIG added, i;
+	 VARIABLE *var;
 	INTBIG plx, phx, ply, phy;
 
 	/* add in component size */
@@ -1311,7 +1311,7 @@ INTBIG cli_addcomponentinfo(void *infstr, NODEINST *ni)
 void cli_addcomponentdata(void *infstr, COMPONENT *compo)
 {
 	CHAR line[50];
-	REGISTER ATTR *a;
+	 ATTR *a;
 
 	if ((compo->flag&(COMPSIZE|COMPROT|COMPLOC|COMPATTR)) != 0)
 	{
@@ -1353,12 +1353,12 @@ void cli_addcomponentdata(void *infstr, COMPONENT *compo)
 CHAR *cli_componentname(NODEINST *ni)
 {
 	static CHAR line[50];
-	REGISTER VARIABLE *var;
+	 VARIABLE *var;
 
 	var = getvalkey((INTBIG)ni, VNODEINST, VSTRING, el_node_name_key);
 	if (var == NOVARIABLE)
 	{
-		(void)esnprintf(line, 50, x_("NODE%ld"), (INTBIG)ni);
+		(void)esnprintf(line, 50, x_((char*)"NODE%ld"), (INTBIG)ni);
 		return(line);
 	}
 	return((CHAR *)var->addr);
@@ -1366,15 +1366,15 @@ CHAR *cli_componentname(NODEINST *ni)
 
 void cli_addcomponentline(CHAR *str, WINDOWPART *win)
 {
-	REGISTER INTBIG i, total;
+	 INTBIG i, total;
 
-	total = asktool(us_tool, x_("edit-totallines"), (INTBIG)win);
+	total = asktool(us_tool, x_((char*)"edit-totallines"), (INTBIG)win);
 
 	/* search for the last line with a valid component declaration */
 	for(i = total-1; i >= 0; i--)
-		if (cli_linetype((CHAR *)asktool(us_tool, x_("edit-getline"), (INTBIG)win, i)) == LINEDECL) break;
+		if (cli_linetype((CHAR *)asktool(us_tool, x_((char*)"edit-getline"), (INTBIG)win, i)) == LINEDECL) break;
 	if (i < 0) i = 0;
-	(void)asktool(us_tool, x_("edit-addline"), (INTBIG)win, i+1, (INTBIG)str);
+	(void)asktool(us_tool, x_((char*)"edit-addline"), (INTBIG)win, i+1, (INTBIG)str);
 	cli_textlines++;
 }
 

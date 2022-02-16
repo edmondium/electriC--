@@ -34,34 +34,34 @@
 
 /* command completion table for this constraint solver */
 static COMCOMP cli_linconsp = {NOKEYWORD, topofcells, nextcells, NOPARAMS,
-	INPUTOPT, x_(" \t"), M_("cell to solve for linear inequalities"), 0};
+	INPUTOPT, x_((char*)" \t"), M_((char*)"cell to solve for linear inequalities"), 0};
 static KEYWORD linconiopt[] =
 {
-	{x_("on"),                   0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
-	{x_("off"),                  0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"on"),                   0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"off"),                  0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
 	TERMKEY
 };
 static COMCOMP cli_linconip = {linconiopt, NOTOPLIST, NONEXTLIST, NOPARAMS,
-	INPUTOPT, x_(" \t"), M_("mode that assumes manhattan wires"), 0};
+	INPUTOPT, x_((char*)" \t"), M_((char*)"mode that assumes manhattan wires"), 0};
 static KEYWORD lincontopt[] =
 {
-	{x_("go"),                   0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
-	{x_("name-nodes"),           0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
-	{x_("highlight-equivalent"), 0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"go"),                   0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"name-nodes"),           0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"highlight-equivalent"), 0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
 	TERMKEY
 };
 static COMCOMP cli_lincontp = {lincontopt, NOTOPLIST, NONEXTLIST, NOPARAMS,
-	INPUTOPT, x_(" \t"), M_("text-equivalent mode"), 0};
+	INPUTOPT, x_((char*)" \t"), M_((char*)"text-equivalent mode"), 0};
 static KEYWORD linconopt[] =
 {
-	{x_("solve"),                1,{&cli_linconsp,NOKEY,NOKEY,NOKEY,NOKEY}},
-	{x_("debug-toggle"),         0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
-	{x_("implicit-manhattan"),   1,{&cli_linconip,NOKEY,NOKEY,NOKEY,NOKEY}},
-	{x_("text-equivalence"),     1,{&cli_lincontp,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"solve"),                1,{&cli_linconsp,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"debug-toggle"),         0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"implicit-manhattan"),   1,{&cli_linconip,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"text-equivalence"),     1,{&cli_lincontp,NOKEY,NOKEY,NOKEY,NOKEY}},
 	TERMKEY
 };
 COMCOMP cli_linconp = {linconopt, NOTOPLIST, NONEXTLIST, NOPARAMS,
-	0, x_(" \t"), M_("linear constraint system option"), 0};
+	0, x_((char*)" \t"), M_((char*)"linear constraint system option"), 0};
 
 /* global data in linear constraints */
        CONSTRAINT *cli_constraint;	/* the constraint object for this solver */
@@ -71,7 +71,7 @@ COMCOMP cli_linconp = {linconopt, NOTOPLIST, NONEXTLIST, NOPARAMS,
        BOOLEAN     cli_ownchanges;	/* true if changes are internally generated */
        INTBIG      cli_textlines;	/* number of declaration/connection lines */
        BOOLEAN     cli_texton;		/* true if text/graphics system is on */
-static CHAR       *cli_linconops[] = {x_(">="), x_("=="), x_("<=")};
+static CHAR       *cli_linconops[] = {x_((char*)">="), x_((char*)"=="), x_((char*)"<=")};
 
 static BOOLEAN cli_conlindebug;
 static BOOLEAN cli_didsolve;
@@ -127,7 +127,7 @@ static void cli_nameallnodes(NODEPROTO*);
  */
 CONARC *cli_allocconarc(void)
 {
-	REGISTER CONARC *c;
+	 CONARC *c;
 
 	if (cli_conarcfree == NOCONARC)
 	{
@@ -155,7 +155,7 @@ void cli_freeconarc(CONARC *c)
  */
 CONNODE *cli_allocconnode(void)
 {
-	REGISTER CONNODE *c;
+	 CONNODE *c;
 
 	if (cli_connodefree == NOCONNODE)
 	{
@@ -193,7 +193,7 @@ void cli_linconinit(CONSTRAINT *con)
 		cli_manhattan = TRUE;
 
 		/* get the primary key for the properties variable */
-		cli_properties_key = makekey(x_("CONLIN_properties"));
+		cli_properties_key = makekey(x_((char*)"CONLIN_properties"));
 
 		/* initialize the text/graphics equivalence system */
 		cli_ownchanges = FALSE;
@@ -205,109 +205,109 @@ void cli_linconterm(void) {}
 
 void cli_linconsetmode(INTBIG count, CHAR *par[])
 {
-	REGISTER INTBIG l;
-	REGISTER CHAR *pp;
-	REGISTER NODEPROTO *np;
-	REGISTER GEOM *geom;
+	 INTBIG l;
+	 CHAR *pp;
+	 NODEPROTO *np;
+	 GEOM *geom;
 
 	if (count == 0)
 	{
-		ttyputusage(x_("constraint tell linear OPTION"));
+		ttyputusage(x_((char*)"constraint tell linear OPTION"));
 		return;
 	}
 
 	if (el_curconstraint != cli_constraint)
 	{
-		ttyputerr(M_("Must first switch to this solver with 'constraint use'"));
+		ttyputerr(M_((char*)"Must first switch to this solver with 'constraint use'"));
 		return;
 	}
 
 	l = estrlen(pp = par[0]);
 
-	if (namesamen(pp, x_("debug-toggle"), l) == 0 && l >= 1)
+	if (namesamen(pp, x_((char*)"debug-toggle"), l) == 0 && l >= 1)
 	{
 		cli_conlindebug = !cli_conlindebug;
-		if (cli_conlindebug) ttyputverbose(M_("Linear constraint debugging on")); else
-			ttyputverbose(M_("Linear constraint debugging off"));
+		if (cli_conlindebug) ttyputverbose(M_((char*)"Linear constraint debugging on")); else
+			ttyputverbose(M_((char*)"Linear constraint debugging off"));
 		return;
 	}
 
-	if (namesamen(pp, x_("text-equivalence"), l) == 0 && l >= 1)
+	if (namesamen(pp, x_((char*)"text-equivalence"), l) == 0 && l >= 1)
 	{
 		if (count < 2)
 		{
-			ttyputusage(x_("constraint tell linear text-equivalence OPTION"));
+			ttyputusage(x_((char*)"constraint tell linear text-equivalence OPTION"));
 			return;
 		}
 		l = estrlen(pp = par[1]);
-		if (namesamen(pp, x_("name-nodes"), l) == 0 && l >= 1)
+		if (namesamen(pp, x_((char*)"name-nodes"), l) == 0 && l >= 1)
 		{
 			np = getcurcell();
 			if (np == NONODEPROTO)
 			{
-				ttyputerr(M_("Must have a current cell to generate names"));
+				ttyputerr(M_((char*)"Must have a current cell to generate names"));
 				return;
 			}
 			cli_nameallnodes(np);
 			return;
 		}
-		if (namesamen(pp, x_("go"), l) == 0 && l >= 1)
+		if (namesamen(pp, x_((char*)"go"), l) == 0 && l >= 1)
 		{
 			np = getcurcell();
-			if (np == NONODEPROTO) ttyputverbose(M_("Enabling text/graphics association")); else
+			if (np == NONODEPROTO) ttyputverbose(M_((char*)"Enabling text/graphics association")); else
 			{
 				if (cli_texton)
 				{
 					if (np == cli_curcell)
-						ttyputverbose(M_("Reevaluating textual description")); else
-							ttyputverbose(M_("Switching association to cell %s"), describenodeproto(np));
-				} else ttyputverbose(M_("Text window will mirror cell %s"), describenodeproto(np));
+						ttyputverbose(M_((char*)"Reevaluating textual description")); else
+							ttyputverbose(M_((char*)"Switching association to cell %s"), describenodeproto(np));
+				} else ttyputverbose(M_((char*)"Text window will mirror cell %s"), describenodeproto(np));
 			}
 			cli_maketextcell(np);
 			return;
 		}
-		if (namesamen(pp, x_("highlight-equivalent"), l) == 0 && l >= 1)
+		if (namesamen(pp, x_((char*)"highlight-equivalent"), l) == 0 && l >= 1)
 		{
-			geom = (GEOM *)asktool(us_tool, x_("get-object"));
+			geom = (GEOM *)asktool(us_tool, x_((char*)"get-object"));
 			if (geom == NOGEOM)
 			{
-				ttyputerr(M_("Find a single object first"));
+				ttyputerr(M_((char*)"Find a single object first"));
 				return;
 			}
 			cli_highlightequivalent(geom);
 			return;
 		}
-		ttyputbadusage(x_("constraint tell linear text-equivalence"));
+		ttyputbadusage(x_((char*)"constraint tell linear text-equivalence"));
 		return;
 	}
 
-	if (namesamen(pp, x_("implicit-manhattan"), l) == 0 && l >= 1)
+	if (namesamen(pp, x_((char*)"implicit-manhattan"), l) == 0 && l >= 1)
 	{
-		if (count < 2) l = estrlen(pp = x_("X")); else l = estrlen(pp = par[1]);
-		if (namesame(pp, x_("on")) == 0)
+		if (count < 2) l = estrlen(pp = x_((char*)"X")); else l = estrlen(pp = par[1]);
+		if (namesame(pp, x_((char*)"on")) == 0)
 		{
 			cli_manhattan = TRUE;
-			ttyputverbose(M_("Manhattan arcs will be kept that way"));
+			ttyputverbose(M_((char*)"Manhattan arcs will be kept that way"));
 			return;
 		}
-		if (namesamen(pp, x_("off"), l) == 0 && l >= 2)
+		if (namesamen(pp, x_((char*)"off"), l) == 0 && l >= 2)
 		{
 			cli_manhattan = FALSE;
-			ttyputverbose(M_("No assumptions will be made about Manhattan arcs"));
+			ttyputverbose(M_((char*)"No assumptions will be made about Manhattan arcs"));
 			return;
 		}
-		ttyputusage(x_("constraint tell linear implicit-manhattan (on|off)"));
+		ttyputusage(x_((char*)"constraint tell linear implicit-manhattan (on|off)"));
 		return;
 	}
 
-	if (namesamen(pp, x_("solve"), l) == 0 && l >= 1)
+	if (namesamen(pp, x_((char*)"solve"), l) == 0 && l >= 1)
 	{
 		if (count < 2)
 		{
 			np = getcurcell();
 			if (np == NONODEPROTO)
 			{
-				ttyputerr(M_("No cell specified and no current cell"));
+				ttyputerr(M_((char*)"No cell specified and no current cell"));
 				return;
 			}
 		} else
@@ -315,12 +315,12 @@ void cli_linconsetmode(INTBIG count, CHAR *par[])
 			np = getnodeproto(par[1]);
 			if (np == NONODEPROTO)
 			{
-				ttyputerr(M_("No cell named %s"), par[1]);
+				ttyputerr(M_((char*)"No cell named %s"), par[1]);
 				return;
 			}
 			if (np->primindex != 0)
 			{
-				ttyputerr(M_("Must solve cells, not primitives"));
+				ttyputerr(M_((char*)"Must solve cells, not primitives"));
 				return;
 			}
 		}
@@ -330,7 +330,7 @@ void cli_linconsetmode(INTBIG count, CHAR *par[])
 		cli_didsolve = TRUE;
 		return;
 	}
-	ttyputbadusage(x_("constraint tell linear"));
+	ttyputbadusage(x_((char*)"constraint tell linear"));
 }
 
 /*
@@ -339,14 +339,14 @@ void cli_linconsetmode(INTBIG count, CHAR *par[])
  */
 INTBIG cli_linconrequest(CHAR *command, INTBIG arg1)
 {
-	REGISTER INTBIG i, len, l;
-	REGISTER VARIABLE *var;
-	REGISTER LINCON *conptr;
-	REGISTER void *infstr;
+	 INTBIG i, len, l;
+	 VARIABLE *var;
+	 LINCON *conptr;
+	 void *infstr;
 
 	l = estrlen(command);
 
-	if (namesamen(command, x_("describearc"), l) == 0)
+	if (namesamen(command, x_((char*)"describearc"), l) == 0)
 	{
 		infstr = initinfstr();
 		var = getvalkey(arg1, VARCINST, VINTEGER|VISARRAY, cli_properties_key);
@@ -356,7 +356,7 @@ INTBIG cli_linconrequest(CHAR *command, INTBIG arg1)
 			for(i=0; i<len; i++)
 			{
 				conptr = &((LINCON *)var->addr)[i];
-				if (i != 0) addstringtoinfstr(infstr, x_(", "));
+				if (i != 0) addstringtoinfstr(infstr, x_((char*)", "));
 				addtoinfstr(infstr, (CHAR)(conptr->variable<=1 ? 'X' : 'Y'));
 				addstringtoinfstr(infstr, cli_linconops[conptr->oper]);
 				addstringtoinfstr(infstr, frtoa(conptr->value));
@@ -369,8 +369,8 @@ INTBIG cli_linconrequest(CHAR *command, INTBIG arg1)
 
 void cli_linconsolve(NODEPROTO *np)
 {
-	REGISTER CHANGECELL *cc;
-	REGISTER CHANGEBATCH *curbatch;
+	 CHANGECELL *cc;
+	 CHANGEBATCH *curbatch;
 
 	if (np != NONODEPROTO)
 	{
@@ -390,11 +390,11 @@ void cli_linconsolve(NODEPROTO *np)
 void cli_dosolve(NODEPROTO *cell)
 {
 	INTBIG nlx, nhx, nly, nhy;
-	REGISTER NODEINST *ni;
-	REGISTER INTBIG dlx, dhx, dly, dhy;
+	 NODEINST *ni;
+	 INTBIG dlx, dhx, dly, dhy;
 
 	if (cli_conlindebug)
-		ttyputmsg(M_("Re-checking linear constraints for cell %s"), describenodeproto(cell));
+		ttyputmsg(M_((char*)"Re-checking linear constraints for cell %s"), describenodeproto(cell));
 	if (!cli_didsolve) cli_solvecell(cell, FALSE, FALSE);
 
 	/* get current boundary of cell */
@@ -422,7 +422,7 @@ void cli_dosolve(NODEPROTO *cell)
 
 void cli_linconnewobject(INTBIG addr, INTBIG type)
 {
-	REGISTER ARCINST *ai;
+	 ARCINST *ai;
 
 	switch (type&VTYPE)
 	{
@@ -442,7 +442,7 @@ void cli_linconnewobject(INTBIG addr, INTBIG type)
 
 void cli_linconkillobject(INTBIG addr, INTBIG type)
 {
-	REGISTER ARCINST *ai;
+	 ARCINST *ai;
 
 	switch (type&VTYPE)
 	{
@@ -463,14 +463,14 @@ void cli_linconkillobject(INTBIG addr, INTBIG type)
 void cli_linconmodifynodeinst(NODEINST *ni, INTBIG dlx, INTBIG dly, INTBIG dhx, INTBIG dhy,
 	INTBIG drot, INTBIG dtrans)
 {
-	REGISTER INTSML oldang, oldtrans;
-	REGISTER INTBIG oldlx, oldhx, oldly, oldhy, ox, oy, oldxA, oldyA, oldxB, oldyB, oldlen,
+	 INTSML oldang, oldtrans;
+	 INTBIG oldlx, oldhx, oldly, oldhy, ox, oy, oldxA, oldyA, oldxB, oldyB, oldlen,
 		thisend, thatend;
 	INTBIG ax[2], ay[2], onox, onoy, nox, noy;
 	XARRAY trans;
-	REGISTER PORTARCINST *pi;
-	REGISTER ARCINST *ai;
-	REGISTER CHANGE *cha;
+	 PORTARCINST *pi;
+	 ARCINST *ai;
+	 CHANGE *cha;
 
 	/* if simple rotation on transposed nodeinst, reverse rotation */
 	if (ni->transpose != 0 && dtrans == 0) drot = (3600 - drot) % 3600;
@@ -564,7 +564,7 @@ void cli_linconmodifynodeinst(NODEINST *ni, INTBIG dlx, INTBIG dly, INTBIG dhx, 
 void cli_linconmodifynodeinsts(INTBIG count, NODEINST **ni, INTBIG *dlx, INTBIG *dly,
 	INTBIG *dhx, INTBIG *dhy, INTBIG *drot, INTBIG *dtrans)
 {
-	REGISTER INTBIG i;
+	 INTBIG i;
 
 	for(i=0; i<count; i++)
 		cli_linconmodifynodeinst(ni[i], dlx[i], dly[i], dhx[i], dhy[i], drot[i], dtrans[i]);
@@ -587,12 +587,12 @@ void cli_linconmodifyarcinst(ARCINST *ai, INTBIG oldx0, INTBIG oldy0, INTBIG old
  */
 BOOLEAN cli_linconsetobject(INTBIG addr, INTBIG type, INTBIG changetype, INTBIG changedata)
 {
-	REGISTER ARCINST *ai;
-	REGISTER CHAR *str, *pack, *pt;
-	REGISTER BOOLEAN error;
-	REGISTER INTBIG variable, value, len, i, oper;
-	REGISTER LINCON *conptr;
-	REGISTER VARIABLE *var;
+	 ARCINST *ai;
+	 CHAR *str, *pack, *pt;
+	 BOOLEAN error;
+	 INTBIG variable, value, len, i, oper;
+	 LINCON *conptr;
+	 VARIABLE *var;
 
 	if ((type&VTYPE) != VARCINST) return(TRUE);
 	ai = (ARCINST *)addr;
@@ -601,14 +601,14 @@ BOOLEAN cli_linconsetobject(INTBIG addr, INTBIG type, INTBIG changetype, INTBIG 
 	if (changetype == 3)
 	{
 		var = getvalkey((INTBIG)ai, VARCINST, VINTEGER|VISARRAY, cli_properties_key);
-		if (var == NOVARIABLE) ttyputmsg(M_("No linear constraint properties")); else
+		if (var == NOVARIABLE) ttyputmsg(M_((char*)"No linear constraint properties")); else
 		{
 			len = getlength(var) / LINCONSIZE;
-			ttyputmsg(M_("%ld %s on this arc:"), len, makeplural(M_("constraint"), len));
+			ttyputmsg(M_((char*)"%ld %s on this arc:"), len, makeplural(M_((char*)"constraint"), len));
 			for(i=0; i<len; i++)
 			{
 				conptr = &((LINCON *)var->addr)[i];
-				ttyputmsg(M_("Constraint %ld: %s %s %s"), i+1, (conptr->variable<=1 ? x_("x") : x_("y")),
+				ttyputmsg(M_((char*)"Constraint %ld: %s %s %s"), i+1, (conptr->variable<=1 ? x_("x") : x_("y")),
 					cli_linconops[conptr->oper], frtoa(conptr->value));
 			}
 		}
@@ -621,7 +621,7 @@ BOOLEAN cli_linconsetobject(INTBIG addr, INTBIG type, INTBIG changetype, INTBIG 
 		var = getvalkey((INTBIG)ai, VARCINST, VINTEGER|VISARRAY, cli_properties_key);
 		if (var == NOVARIABLE)
 		{
-			ttyputerr(M_("No constraints on this arc"));
+			ttyputerr(M_((char*)"No constraints on this arc"));
 			return(TRUE);
 		}
 		len = getlength(var) / LINCONSIZE;
@@ -644,17 +644,17 @@ BOOLEAN cli_linconsetobject(INTBIG addr, INTBIG type, INTBIG changetype, INTBIG 
 	pt = str;
 
 	/* get the variable */
-	if (namesamen(pt, x_("x"), 1) == 0)
+	if (namesamen(pt, x_((char*)"x"), 1) == 0)
 	{
 		if (ai->end[0].xpos < ai->end[1].xpos) variable = 1; else
 			variable = 0;
-	} else if (namesamen(pt, x_("y"), 1) == 0)
+	} else if (namesamen(pt, x_((char*)"y"), 1) == 0)
 	{
 		if (ai->end[0].ypos < ai->end[1].ypos) variable = 3; else
 			variable = 2;
 	} else
 	{
-		ttyputerr(M_("Cannot parse variable (should be 'X' or 'Y')"));
+		ttyputerr(M_((char*)"Cannot parse variable (should be 'X' or 'Y')"));
 		error = TRUE;
 	}
 	pt++;
@@ -669,7 +669,7 @@ BOOLEAN cli_linconsetobject(INTBIG addr, INTBIG type, INTBIG changetype, INTBIG 
 		pt += estrlen(cli_linconops[i]);
 	} else
 	{
-		ttyputerr(M_("Cannot parse operator (must be '>=', '==', or '<=')"));
+		ttyputerr(M_((char*)"Cannot parse operator (must be '>=', '==', or '<=')"));
 		error = TRUE;
 	}
 
@@ -679,26 +679,26 @@ BOOLEAN cli_linconsetobject(INTBIG addr, INTBIG type, INTBIG changetype, INTBIG 
 		value = atofr(pt);
 		if (value < 0)
 		{
-			ttyputerr(M_("Values must be positive"));
+			ttyputerr(M_((char*)"Values must be positive"));
 			error = TRUE;
 		}
 	} else
 	{
-		ttyputerr(M_("Invalid number on right (%s)"), pt);
+		ttyputerr(M_((char*)"Invalid number on right (%s)"), pt);
 		error = TRUE;
 	}
 
 	if (error)
 	{
-		ttyputmsg(M_("Cannot accept linear constraint '%s'"), str);
+		ttyputmsg(M_((char*)"Cannot accept linear constraint '%s'"), str);
 		return(TRUE);
 	}
 
 	db_setchangecell(ai->parent);
 	db_forcehierarchicalanalysis(ai->parent);
 	if (cli_addarcconstraint(ai, variable, oper, value, changetype)) return(TRUE);
-	if (changetype == 0) ttyputverbose(M_("Constraint set")); else
-		ttyputverbose(M_("Constraint added"));
+	if (changetype == 0) ttyputverbose(M_((char*)"Constraint set")); else
+		ttyputverbose(M_((char*)"Constraint added"));
 	return(FALSE);
 }
 
@@ -712,10 +712,10 @@ BOOLEAN cli_linconsetobject(INTBIG addr, INTBIG type, INTBIG changetype, INTBIG 
 BOOLEAN cli_addarcconstraint(ARCINST *ai, INTBIG variable, INTBIG oper, INTBIG value,
 	INTBIG add)
 {
-	REGISTER VARIABLE *var;
+	 VARIABLE *var;
 	LINCON thiscon;
-	REGISTER LINCON *conptr, *conlist;
-	REGISTER INTBIG len, i;
+	 LINCON *conptr, *conlist;
+	 INTBIG len, i;
 
 	var = getvalkey((INTBIG)ai, VARCINST, VINTEGER|VISARRAY, cli_properties_key);
 	if (var == NOVARIABLE || add == 0)
@@ -760,9 +760,9 @@ BOOLEAN cli_addarcconstraint(ARCINST *ai, INTBIG variable, INTBIG oper, INTBIG v
  */
 void cli_deletearcconstraint(ARCINST *ai, INTBIG variable, INTBIG oper, INTBIG value)
 {
-	REGISTER VARIABLE *var;
-	REGISTER LINCON *conptr, *conlist;
-	REGISTER INTBIG len, i, j, k;
+	 VARIABLE *var;
+	 LINCON *conptr, *conlist;
+	 INTBIG len, i, j, k;
 
 	var = getvalkey((INTBIG)ai, VARCINST, VINTEGER|VISARRAY, cli_properties_key);
 	if (var == NOVARIABLE) return;
@@ -882,7 +882,7 @@ void cli_linconsetvariable(void) {}
 void cli_solvecell(NODEPROTO *np, BOOLEAN minimum, BOOLEAN noanchors)
 {
 	CONNODE *firstx, *firsty;
-	REGISTER BOOLEAN failure, xnotsolved, ynotsolved;
+	 BOOLEAN failure, xnotsolved, ynotsolved;
 
 	/* build constraint network in both axes */
 	xnotsolved = cli_buildconstraints(np, &firstx, FALSE, noanchors);
@@ -891,7 +891,7 @@ void cli_solvecell(NODEPROTO *np, BOOLEAN minimum, BOOLEAN noanchors)
 	/* quit now if all constraints are solved */
 	if (!xnotsolved && !ynotsolved && !minimum)
 	{
-		if (cli_conlindebug) ttyputmsg(M_("All constraints are met"));
+		if (cli_conlindebug) ttyputmsg(M_((char*)"All constraints are met"));
 		cli_deleteconstraints(firstx);
 		cli_deleteconstraints(firsty);
 		return;
@@ -903,29 +903,29 @@ void cli_solvecell(NODEPROTO *np, BOOLEAN minimum, BOOLEAN noanchors)
 
 	if (cli_conlindebug)
 	{
-		cli_printconstraints(firstx, M_("Horizontal constraints:"), x_("X"));
-		if (!xnotsolved) ttyputmsg(M_("HORIZONTAL CONSTRAINTS ARE ALL MET"));
-		cli_printconstraints(firsty, M_("Vertical constraints:"), x_("Y"));
-		if (!ynotsolved) ttyputmsg(M_("VERTICAL CONSTRAINTS ARE ALL MET"));
+		cli_printconstraints(firstx, M_((char*)"Horizontal constraints:"), x_((char*)"X"));
+		if (!xnotsolved) ttyputmsg(M_((char*)"HORIZONTAL CONSTRAINTS ARE ALL MET"));
+		cli_printconstraints(firsty, M_((char*)"Vertical constraints:"), x_((char*)"Y"));
+		if (!ynotsolved) ttyputmsg(M_((char*)"VERTICAL CONSTRAINTS ARE ALL MET"));
 	}
 
 	/* solve the networks and determine the success */
 	failure = FALSE;
 	if (xnotsolved || minimum)
 	{
-		if (cli_conlindebug) ttyputmsg(M_("Solving X constraints:"));
+		if (cli_conlindebug) ttyputmsg(M_((char*)"Solving X constraints:"));
 		if (cli_solveconstraints(firstx, minimum))
 		{
-			ttyputmsg(M_("X constraint network cannot be solved!"));
+			ttyputmsg(M_((char*)"X constraint network cannot be solved!"));
 			failure = TRUE;
 		}
 	}
 	if (ynotsolved || minimum)
 	{
-		if (cli_conlindebug) ttyputmsg(M_("Solving Y constraints:"));
+		if (cli_conlindebug) ttyputmsg(M_((char*)"Solving Y constraints:"));
 		if (cli_solveconstraints(firsty, minimum))
 		{
-			ttyputmsg(M_("Y constraint network cannot be solved!"));
+			ttyputmsg(M_((char*)"Y constraint network cannot be solved!"));
 			failure = TRUE;
 		}
 	}
@@ -952,14 +952,14 @@ void cli_solvecell(NODEPROTO *np, BOOLEAN minimum, BOOLEAN noanchors)
  */
 BOOLEAN cli_buildconstraints(NODEPROTO *np, CONNODE **first, BOOLEAN axis, BOOLEAN noanchors)
 {
-	REGISTER VARIABLE *var;
-	REGISTER ARCINST *ai;
-	REGISTER INTBIG i, rev, len, opf, opt, gothor, gotver;
+	 VARIABLE *var;
+	 ARCINST *ai;
+	 INTBIG i, rev, len, opf, opt, gothor, gotver;
 	BOOLEAN notsolved;
-	REGISTER INTBIG vaf, vat, lambda;
-	REGISTER LINCON *conptr;
-	REGISTER NODEINST *ni;
-	REGISTER CONNODE *cn;
+	 INTBIG vaf, vat, lambda;
+	 LINCON *conptr;
+	 NODEINST *ni;
+	 CONNODE *cn;
 
 	/* get the value of lambda */
 	lambda = lambdaofcell(np);
@@ -1126,10 +1126,10 @@ BOOLEAN cli_buildconstraints(NODEPROTO *np, CONNODE **first, BOOLEAN axis, BOOLE
 void cli_addconstraint(ARCINST *ai, CONNODE **first, INTBIG opf, INTBIG vaf, INTBIG opt,
 	INTBIG vat, BOOLEAN noanchors)
 {
-	REGISTER CONARC *caf, *cat;
-	REGISTER CONNODE *cnf, *cnt;
-	REGISTER CHANGE *ch;
-	REGISTER CHANGEBATCH *curbatch;
+	 CONARC *caf, *cat;
+	 CONNODE *cnf, *cnt;
+	 CHANGE *ch;
+	 CHANGEBATCH *curbatch;
 
 	/* store this constraint as two constraint arcs */
 	caf = cli_allocconarc();
@@ -1212,12 +1212,12 @@ void cli_addconstraint(ARCINST *ai, CONNODE **first, INTBIG opf, INTBIG vaf, INT
 
 void cli_adjustconstraints(CONNODE *first, BOOLEAN axis)
 {
-	REGISTER CONNODE *cn;
-	REGISTER CONARC *ca;
-	REGISTER ARCINST *ai;
-	REGISTER NODEINST *nif, *nit;
-	REGISTER INTBIG centerf, centert, diff;
-	REGISTER INTBIG fromend, toend;
+	 CONNODE *cn;
+	 CONARC *ca;
+	 ARCINST *ai;
+	 NODEINST *nif, *nit;
+	 INTBIG centerf, centert, diff;
+	 INTBIG fromend, toend;
 
 	for(cn = first; cn != NOCONNODE; cn = cn->nextconnode)
 	{
@@ -1275,9 +1275,9 @@ void cli_adjustconstraints(CONNODE *first, BOOLEAN axis)
  */
 BOOLEAN cli_solveconstraints(CONNODE *first, BOOLEAN minimum)
 {
-	REGISTER CONNODE *cn, *cno;
-	REGISTER CONARC *ca;
-	REGISTER BOOLEAN satisfied;
+	 CONNODE *cn, *cno;
+	 CONARC *ca;
+	 BOOLEAN satisfied;
 
 	/* if there are no constraints, all is well */
 	if (first == NOCONNODE) return(FALSE);
@@ -1305,7 +1305,7 @@ BOOLEAN cli_solveconstraints(CONNODE *first, BOOLEAN minimum)
 			cn->solved = TRUE;
 		}
 
-		if (cli_conlindebug) ttyputmsg(M_("  Working from node %s at %ld"),
+		if (cli_conlindebug) ttyputmsg(M_((char*)"  Working from node %s at %ld"),
 			describenodeinst(cn->realn), cn->value);
 
 		/* check all constraint arcs to other nodes */
@@ -1330,7 +1330,7 @@ BOOLEAN cli_solveconstraints(CONNODE *first, BOOLEAN minimum)
 			if (ca->other->value == cn->value + ca->value)
 			{
 				if (cli_conlindebug)
-					ttyputmsg(M_("    Constraint to %s is met perfectly"),
+					ttyputmsg(M_((char*)"    Constraint to %s is met perfectly"),
 						describenodeinst(ca->other->realn));
 				ca->other->solved = TRUE;
 				continue;
@@ -1340,7 +1340,7 @@ BOOLEAN cli_solveconstraints(CONNODE *first, BOOLEAN minimum)
 			if (satisfied && !minimum)
 			{
 				if (cli_conlindebug)
-					ttyputmsg(M_("    Constraint to %s is met adequately"),
+					ttyputmsg(M_((char*)"    Constraint to %s is met adequately"),
 						describenodeinst(ca->other->realn));
 				ca->other->solved = TRUE;
 				continue;
@@ -1351,7 +1351,7 @@ BOOLEAN cli_solveconstraints(CONNODE *first, BOOLEAN minimum)
 			{
 				ca->other->value = cn->value + ca->value;
 				if (cli_conlindebug)
-					ttyputmsg(M_("    Constraint to unsolved %s adjusts it to %ld"),
+					ttyputmsg(M_((char*)"    Constraint to unsolved %s adjusts it to %ld"),
 						describenodeinst(ca->other->realn), ca->other->value);
 				ca->other->solved = TRUE;
 				continue;
@@ -1362,7 +1362,7 @@ BOOLEAN cli_solveconstraints(CONNODE *first, BOOLEAN minimum)
 				cno->loopflag = FALSE;
 			cn->loopflag = TRUE;
 			if (cli_conlindebug)
-				ttyputmsg(M_("    Constraint to solved %s takes some work:"),
+				ttyputmsg(M_((char*)"    Constraint to solved %s takes some work:"),
 					describenodeinst(ca->other->realn));
 			if (cli_satisfy(cn, ca)) return(TRUE);
 		}
@@ -1376,9 +1376,9 @@ BOOLEAN cli_solveconstraints(CONNODE *first, BOOLEAN minimum)
  */
 BOOLEAN cli_satisfy(CONNODE *cn, CONARC *ca)
 {
-	REGISTER CONNODE *cno;
-	REGISTER CONARC *cao;
-	REGISTER BOOLEAN satisfied;
+	 CONNODE *cno;
+	 CONARC *cao;
+	 BOOLEAN satisfied;
 
 	/* get the constraint node on the other end */
 	cno = ca->other;
@@ -1386,7 +1386,7 @@ BOOLEAN cli_satisfy(CONNODE *cn, CONARC *ca)
 
 	/* set new value for that constraint node */
 	cno->value = cn->value + ca->value;
-	if (cli_conlindebug) ttyputmsg(M_("      Setting %s to %ld"),
+	if (cli_conlindebug) ttyputmsg(M_((char*)"      Setting %s to %ld"),
 		describenodeinst(cno->realn), cno->value);
 
 	/* see if that constraint node is now satisfied */
@@ -1420,11 +1420,11 @@ BOOLEAN cli_satisfy(CONNODE *cn, CONARC *ca)
 
 void cli_applyconstraints(NODEPROTO *np, CONNODE *first, BOOLEAN axis)
 {
-	REGISTER CONNODE *cn;
-	REGISTER ARCINST *ai;
-	REGISTER NODEINST *ni;
-	REGISTER PORTARCINST *pi;
-	REGISTER INTBIG lowestcon, lowestcir, center, adjust, oldlx, oldhx,
+	 CONNODE *cn;
+	 ARCINST *ai;
+	 NODEINST *ni;
+	 PORTARCINST *pi;
+	 INTBIG lowestcon, lowestcir, center, adjust, oldlx, oldhx,
 		oldly, oldhy, oldxA, oldyA, oldxB, oldyB, oldlen;
 
 	/* if there are no constraints, circuit is solved */
@@ -1498,8 +1498,8 @@ void cli_applyconstraints(NODEPROTO *np, CONNODE *first, BOOLEAN axis)
 
 void cli_deleteconstraints(CONNODE *first)
 {
-	REGISTER CONNODE *cn, *nextcn;
-	REGISTER CONARC *ca, *nextca;
+	 CONNODE *cn, *nextcn;
+	 CONARC *ca, *nextca;
 
 	for(cn = first; cn != NOCONNODE; cn = nextcn)
 	{
@@ -1515,16 +1515,16 @@ void cli_deleteconstraints(CONNODE *first)
 
 void cli_printconstraints(CONNODE *first, CHAR *message, CHAR *axis)
 {
-	REGISTER CONNODE *cn;
-	REGISTER CONARC *ca;
+	 CONNODE *cn;
+	 CONARC *ca;
 
-	ttyputmsg(x_("%s"), message);
+	ttyputmsg(x_((char*)"%s"), message);
 	for(cn = first; cn != NOCONNODE; cn = cn->nextconnode)
 	{
-		ttyputmsg(M_("  Node %s at %ld anchored=%d has these constraints:"),
+		ttyputmsg(M_((char*)"  Node %s at %ld anchored=%d has these constraints:"),
 			describenodeinst(cn->realn), cn->value, cn->solved);
 		for(ca = cn->firstconarc; ca != NOCONARC; ca = ca->nextconarc)
-			ttyputmsg(M_("    to node %s (%s %s %ld)"), describenodeinst(ca->other->realn), axis,
+			ttyputmsg(M_((char*)"    to node %s (%s %s %ld)"), describenodeinst(ca->other->realn), axis,
 				cli_linconops[ca->oper], ca->value);
 	}
 }
@@ -1543,13 +1543,13 @@ typedef struct Iabbrev
 
 void cli_nameallnodes(NODEPROTO *np)
 {
-	REGISTER NODEINST *ni;
-	REGISTER CHAR *pt;
-	REGISTER BOOLEAN upper;
-	REGISTER VARIABLE *var;
-	REGISTER ABBREV *firstabbrev, *a, *nexta;
+	 NODEINST *ni;
+	 CHAR *pt;
+	 BOOLEAN upper;
+	 VARIABLE *var;
+	 ABBREV *firstabbrev, *a, *nexta;
 	CHAR line[20], *newname;
-	REGISTER void *infstr;
+	 void *infstr;
 
 	firstabbrev = NOABBREV;
 	for(ni = np->firstnodeinst; ni != NONODEINST; ni = ni->nextnodeinst)
@@ -1563,7 +1563,7 @@ void cli_nameallnodes(NODEPROTO *np)
 		/* if the name is null, assign a name */
 		if (estrlen(pt) == 0)
 		{
-			if (ni->proto->primindex == 0) pt = M_("CELL"); else pt = M_("node");
+			if (ni->proto->primindex == 0) pt = M_((char*)"CELL"); else pt = M_((char*)"node");
 		}
 
 		/* find an abbreviation module for this */

@@ -65,11 +65,11 @@ static void cli_restoreline(CHAR*, INTBIG, WINDOWPART*);
  */
 WINDOWPART *cli_makeeditorwindow(CHAR *header, INTBIG *chars, INTBIG *lines)
 {
-	REGISTER WINDOWPART *win;
+	 WINDOWPART *win;
 
-	win = (WINDOWPART *)asktool(us_tool, x_("window-new"));
+	win = (WINDOWPART *)asktool(us_tool, x_((char*)"window-new"));
 	if (win == NOWINDOWPART) return(NOWINDOWPART);
-	if (asktool(us_tool, x_("edit-starteditor"), (INTBIG)win, (INTBIG)header,
+	if (asktool(us_tool, x_((char*)"edit-starteditor"), (INTBIG)win, (INTBIG)header,
 		(INTBIG)chars, (INTBIG)lines) != 0) return(NOWINDOWPART);
 
 	cli_realcharhandler = win->charhandler;
@@ -88,12 +88,12 @@ WINDOWPART *cli_makeeditorwindow(CHAR *header, INTBIG *chars, INTBIG *lines)
  */
 BOOLEAN cli_charhandler(WINDOWPART *win, INTSML i, INTBIG special)
 {
-	REGISTER CHAR *line;
-	REGISTER ARCINST *ai;
-	REGISTER NODEINST *ni;
-	REGISTER COMPONENTDEC *comd;
-	REGISTER COMPONENT *compo;
-	REGISTER INTBIG count, type;
+	 CHAR *line;
+	 ARCINST *ai;
+	 NODEINST *ni;
+	 COMPONENTDEC *comd;
+	 COMPONENT *compo;
+	 INTBIG count, type;
 
 	/* simply pass most characters to the real editor character handler */
 	if (special == 0 || (i != '=' && cli_realcharhandler != 0))
@@ -104,46 +104,46 @@ BOOLEAN cli_charhandler(WINDOWPART *win, INTSML i, INTBIG special)
 	/* M(=) typed: highlight the equivalent line */
 	if (cli_curcell == NONODEPROTO)
 	{
-		ttyputmsg(M_("No valid cell to associate"));
+		ttyputmsg(M_((char*)"No valid cell to associate"));
 		return(FALSE);
 	}
-	line = (CHAR *)asktool(us_tool, x_("edit-getline"), (INTBIG)win, -1);
+	line = (CHAR *)asktool(us_tool, x_((char*)"edit-getline"), (INTBIG)win, -1);
 	if (line == NOSTRING) type = LINEUNKN; else type = cli_linetype(line);
 
 	switch (type)
 	{
 		case LINECOMM:
-			ttyputmsg(M_("No graphic equivalent of comment line"));
+			ttyputmsg(M_((char*)"No graphic equivalent of comment line"));
 			break;
 		case LINEBEGIN:
-			ttyputmsg(M_("No graphic equivalent of BEGINCELL line"));
+			ttyputmsg(M_((char*)"No graphic equivalent of BEGINCELL line"));
 			break;
 		case LINEEND:
-			ttyputmsg(M_("No graphic equivalent of ENDCELL line"));
+			ttyputmsg(M_((char*)"No graphic equivalent of ENDCELL line"));
 			break;
 		case LINEEXPORT:
-			ttyputmsg(M_("No graphic equivalent of EXPORT line"));
+			ttyputmsg(M_((char*)"No graphic equivalent of EXPORT line"));
 			break;
 		case LINEUNKN:
-			ttyputmsg(M_("No graphic equivalent of this line"));
+			ttyputmsg(M_((char*)"No graphic equivalent of this line"));
 			break;
 
 		case LINECONN:
 			ai = cli_findarcname(line);
 			if (ai == NOARCINST)
 			{
-				ttyputmsg(M_("Cannot find equivalent arc for this line"));
+				ttyputmsg(M_((char*)"Cannot find equivalent arc for this line"));
 				return(0);
 			}
-			(void)asktool(us_tool, x_("clear"));
-			(void)asktool(us_tool, x_("show-object"), (INTBIG)ai->geom);
+			(void)asktool(us_tool, x_((char*)"clear"));
+			(void)asktool(us_tool, x_((char*)"show-object"), (INTBIG)ai->geom);
 			break;
 
 		case LINEDECL:
 			comd = cli_parsecomp(line, TRUE);
 			if (comd == NOCOMPONENTDEC)
 			{
-				ttyputmsg(M_("Cannot parse this declaration line"));
+				ttyputmsg(M_((char*)"Cannot parse this declaration line"));
 				return(FALSE);
 			}
 			count = 0;
@@ -151,13 +151,13 @@ BOOLEAN cli_charhandler(WINDOWPART *win, INTSML i, INTBIG special)
 			{
 				ni = cli_findnodename(compo->name);
 				if (ni == NONODEINST) continue;
-				if (count == 0) (void)asktool(us_tool, x_("clear"));
-				(void)asktool(us_tool, x_("show-object"), (INTBIG)ni->geom);
+				if (count == 0) (void)asktool(us_tool, x_((char*)"clear"));
+				(void)asktool(us_tool, x_((char*)"show-object"), (INTBIG)ni->geom);
 				count++;
 			}
 			if (count == 0)
 			{
-				ttyputmsg(M_("Cannot find equivalent node(s) for this line"));
+				ttyputmsg(M_((char*)"Cannot find equivalent node(s) for this line"));
 				return(FALSE);
 			}
 			break;
@@ -182,24 +182,24 @@ void cli_changehandler(WINDOWPART *win, INTBIG nature, CHAR *oldline, CHAR *newl
 	INTBIG changed)
 {
 	CHAR *newpar[3];
-	REGISTER CHAR *oldname, *newname, **newlist;
-	REGISTER INTBIG otype, ntype;
-	REGISTER INTBIG i, count;
-	REGISTER NODEPROTO *np;
-	REGISTER WINDOWPART *w;
-	REGISTER void *infstr;
+	 CHAR *oldname, *newname, **newlist;
+	 INTBIG otype, ntype;
+	 INTBIG i, count;
+	 NODEPROTO *np;
+	 WINDOWPART *w;
+	 void *infstr;
 
 	switch (nature)
 	{
 		case REPLACETEXTLINE:                break;
-		case DELETETEXTLINE: newline = x_("");   break;
-		case INSERTTEXTLINE: oldline = x_("");   break;
+		case DELETETEXTLINE: newline = x_((char*)"");   break;
+		case INSERTTEXTLINE: oldline = x_((char*)"");   break;
 		case REPLACEALLTEXT:
 			/* this is not totally correct, because it ignores the former line values!!! */
 			newlist = (CHAR **)newline;
 			count = changed;
 			for(i=0; i<count; i++)
-				cli_changehandler(win, REPLACETEXTLINE, x_(""), newlist[i], i);
+				cli_changehandler(win, REPLACETEXTLINE, x_((char*)""), newlist[i], i);
 			return;
 	}
 
@@ -210,7 +210,7 @@ void cli_changehandler(WINDOWPART *win, INTBIG nature, CHAR *oldline, CHAR *newl
 	/* comment out an unknown line type */
 	if (ntype == LINEUNKN)
 	{
-		ttyputerr(M_("Unrecognized line '%s' commented out"), newline);
+		ttyputerr(M_((char*)"Unrecognized line '%s' commented out"), newline);
 		if (otype == LINEUNKN || otype == LINECOMM) cli_commentline(changed, win); else
 			cli_restoreline(oldline, changed, win);
 		return;
@@ -240,12 +240,12 @@ void cli_changehandler(WINDOWPART *win, INTBIG nature, CHAR *oldline, CHAR *newl
 				{
 					if (namesame(oldname, newname) != 0)
 					{
-						(void)setval((INTBIG)cli_curcell, VNODEPROTO, x_("protoname"), (INTBIG)newname, VSTRING);
-						ttyputmsg(M_("Cell name changed from %s to %s"), oldname, newname);
+						(void)setval((INTBIG)cli_curcell, VNODEPROTO, x_((char*)"protoname"), (INTBIG)newname, VSTRING);
+						ttyputmsg(M_((char*)"Cell name changed from %s to %s"), oldname, newname);
 					}
 				} else if (newname == NOSTRING)
 				{
-					ttyputmsg(M_("Erroneous BEGINCELL line"));
+					ttyputmsg(M_((char*)"Erroneous BEGINCELL line"));
 					cli_restoreline(oldline, changed, win);
 				}
 				if (oldname != NOSTRING) efree(oldname);
@@ -313,7 +313,7 @@ void cli_changehandler(WINDOWPART *win, INTBIG nature, CHAR *oldline, CHAR *newl
 				/* must be the first line entered */
 				if (cli_textlines > 0)
 				{
-					ttyputmsg(M_("Already a valid cell definition"));
+					ttyputmsg(M_((char*)"Already a valid cell definition"));
 					cli_commentline(changed, win);
 					return;
 				}
@@ -322,7 +322,7 @@ void cli_changehandler(WINDOWPART *win, INTBIG nature, CHAR *oldline, CHAR *newl
 				newname = cli_parsebegincell(newline, FALSE);
 				if (newname == NOSTRING)
 				{
-					ttyputmsg(M_("Erroneous BEGINCELL line removed"));
+					ttyputmsg(M_((char*)"Erroneous BEGINCELL line removed"));
 					cli_commentline(changed, win);
 					return;
 				}
@@ -331,7 +331,7 @@ void cli_changehandler(WINDOWPART *win, INTBIG nature, CHAR *oldline, CHAR *newl
 				np = getnodeproto(newname);
 				if (np != NONODEPROTO && np->primindex != 0)
 				{
-					newpar[0] = x_("killcell");
+					newpar[0] = x_((char*)"killcell");
 					newpar[1] = newname;
 					telltool(us_tool, 2, newpar);
 				}
@@ -348,11 +348,11 @@ void cli_changehandler(WINDOWPART *win, INTBIG nature, CHAR *oldline, CHAR *newl
 				/* create the specified cell */
 				if (w != NOWINDOWPART)
 				{
-					newpar[0] = x_("window");
-					newpar[1] = x_("use");
+					newpar[0] = x_((char*)"window");
+					newpar[1] = x_((char*)"use");
 					newpar[2] = w->location;
 					telltool(us_tool, 3, newpar);
-					newpar[0] = x_("editcell");
+					newpar[0] = x_((char*)"editcell");
 					newpar[1] = newname;
 					telltool(us_tool, 2, newpar);
 					cli_curcell = getcurcell();
@@ -363,8 +363,8 @@ void cli_changehandler(WINDOWPART *win, INTBIG nature, CHAR *oldline, CHAR *newl
 			case LINEEND:
 				/* put the line at the bottom of the file */
 				infstr = initinfstr();
-				addstringtoinfstr(infstr, (CHAR *)asktool(us_tool, x_("edit-getline"), (INTBIG)win, changed));
-				(void)asktool(us_tool, x_("edit-deleteline"), (INTBIG)win, changed);
+				addstringtoinfstr(infstr, (CHAR *)asktool(us_tool, x_((char*)"edit-getline"), (INTBIG)win, changed));
+				(void)asktool(us_tool, x_((char*)"edit-deleteline"), (INTBIG)win, changed);
 				cli_replaceendcell(returninfstr(infstr), win);
 				break;
 		}
@@ -380,9 +380,9 @@ void cli_changehandler(WINDOWPART *win, INTBIG nature, CHAR *oldline, CHAR *newl
  */
 void cli_changeexport(CHAR *oldline, CHAR *newline, INTBIG changed, WINDOWPART *win)
 {
-	REGISTER EXPORT *olde, *newe;
-	REGISTER NODEINST *oldni, *newni;
-	REGISTER PORTPROTO *oldpp, *oldsubpp, *newsubpp;
+	 EXPORT *olde, *newe;
+	 NODEINST *oldni, *newni;
+	 PORTPROTO *oldpp, *oldsubpp, *newsubpp;
 
 	/* parse the old line */
 	olde = cli_parseexport(oldline, FALSE);
@@ -403,7 +403,7 @@ void cli_changeexport(CHAR *oldline, CHAR *newline, INTBIG changed, WINDOWPART *
 	oldpp = getportproto(cli_curcell, olde->portname);
 	if (oldpp == NOPORTPROTO)
 	{
-		ttyputerr(M_("Cannot parse old port name"));
+		ttyputerr(M_((char*)"Cannot parse old port name"));
 		cli_restoreline(oldline, changed, win);
 		cli_deleteexport(olde);   cli_deleteexport(newe);
 		return;
@@ -414,7 +414,7 @@ void cli_changeexport(CHAR *oldline, CHAR *newline, INTBIG changed, WINDOWPART *
 	newni = cli_findnodename(newe->component);
 	if (oldni == NONODEINST || newni == NONODEINST)
 	{
-		ttyputerr(M_("Cannot parse subnode name"));
+		ttyputerr(M_((char*)"Cannot parse subnode name"));
 		cli_restoreline(oldline, changed, win);
 		cli_deleteexport(olde);   cli_deleteexport(newe);
 		return;
@@ -425,7 +425,7 @@ void cli_changeexport(CHAR *oldline, CHAR *newline, INTBIG changed, WINDOWPART *
 	newsubpp = cli_getexportsubport(newe, newni);
 	if (oldsubpp == NOPORTPROTO || newsubpp == NOPORTPROTO)
 	{
-		ttyputerr(M_("Cannot parse subport name"));
+		ttyputerr(M_((char*)"Cannot parse subport name"));
 		cli_restoreline(oldline, changed, win);
 		cli_deleteexport(olde);   cli_deleteexport(newe);
 		return;
@@ -446,7 +446,7 @@ void cli_changeexport(CHAR *oldline, CHAR *newline, INTBIG changed, WINDOWPART *
 	{
 		if (getportproto(cli_curcell, newe->portname) != NOPORTPROTO)
 		{
-			ttyputerr(M_("New port name not unique"));
+			ttyputerr(M_((char*)"New port name not unique"));
 			cli_restoreline(oldline, changed, win);
 			cli_deleteexport(olde);   cli_deleteexport(newe);
 			return;
@@ -475,12 +475,12 @@ void cli_changeexport(CHAR *oldline, CHAR *newline, INTBIG changed, WINDOWPART *
 void cli_changedeclaration(CHAR *oldline, CHAR *newline, INTBIG changed,
 	WINDOWPART *win)
 {
-	REGISTER COMPONENTDEC *oldcd, *newcd;
-	REGISTER COMPONENT *newcomp, *oldcomp;
-	REGISTER NODEPROTO *newnp, *oldnp;
-	REGISTER NODEINST *ni;
-	REGISTER INTBIG newun, oldun;
-	REGISTER VARIABLE *var;
+	 COMPONENTDEC *oldcd, *newcd;
+	 COMPONENT *newcomp, *oldcomp;
+	 NODEPROTO *newnp, *oldnp;
+	 NODEINST *ni;
+	 INTBIG newun, oldun;
+	 VARIABLE *var;
 	INTBIG newlx, newly, newhx, newhy, oldlx, oldly, oldhx, oldhy, lx, hx, ly, hy;
 	INTBIG newrot, oldrot, newtrans, oldtrans, rot, trn;
 
@@ -503,7 +503,7 @@ void cli_changedeclaration(CHAR *oldline, CHAR *newline, INTBIG changed,
 	newnp = getnodeproto(newcd->protoname);
 	if (newnp == NONODEPROTO)
 	{
-		ttyputerr(M_("Unknown component: %s"), newcd->protoname);
+		ttyputerr(M_((char*)"Unknown component: %s"), newcd->protoname);
 		cli_restoreline(oldline, changed, win);
 		cli_deletecomponentdec(oldcd);   cli_deletecomponentdec(newcd);
 		return;
@@ -511,7 +511,7 @@ void cli_changedeclaration(CHAR *oldline, CHAR *newline, INTBIG changed,
 	oldnp = getnodeproto(oldcd->protoname);
 	if (oldnp == NONODEPROTO)
 	{
-		ttyputerr(M_("Unknown old component: %s"), oldcd->protoname);
+		ttyputerr(M_((char*)"Unknown old component: %s"), oldcd->protoname);
 		cli_restoreline(oldline, changed, win);
 		cli_deletecomponentdec(oldcd);   cli_deletecomponentdec(newcd);
 		return;
@@ -620,7 +620,7 @@ void cli_changedeclaration(CHAR *oldline, CHAR *newline, INTBIG changed,
 		ni = cli_findnodename(newcomp->name);
 		if (ni != NONODEINST)
 		{
-			ttyputerr(M_("Already a component called '%s'"), newcomp->name);
+			ttyputerr(M_((char*)"Already a component called '%s'"), newcomp->name);
 			cli_restoreline(oldline, changed, win);
 			cli_deletecomponentdec(oldcd);   cli_deletecomponentdec(newcd);
 			return;
@@ -667,7 +667,7 @@ void cli_changedeclaration(CHAR *oldline, CHAR *newline, INTBIG changed,
 				 * worked and this one failed.  Then the replacement of the
 				 * original line will not be correct!!!
 				 */
-				ttyputerr(M_("New component type cannot be replaced"));
+				ttyputerr(M_((char*)"New component type cannot be replaced"));
 				cli_deletecomponentdec(oldcd);   cli_deletecomponentdec(newcd);
 				cli_restoreline(oldline, changed, win);
 				return;
@@ -679,7 +679,7 @@ void cli_changedeclaration(CHAR *oldline, CHAR *newline, INTBIG changed,
 		{
 			if (cli_findnodename(newcomp->name) != NONODEINST)
 			{
-				ttyputerr(M_("Already a component called '%s'"), newcomp->name);
+				ttyputerr(M_((char*)"Already a component called '%s'"), newcomp->name);
 				cli_deletecomponentdec(oldcd);   cli_deletecomponentdec(newcd);
 				cli_restoreline(oldline, changed, win);
 				return;
@@ -726,18 +726,18 @@ void cli_changedeclaration(CHAR *oldline, CHAR *newline, INTBIG changed,
  */
 void cli_changeconnection(CHAR *oldline, CHAR *newline, INTBIG changed, WINDOWPART *win)
 {
-	REGISTER CONNECTION *oldcon, *newcon;
-	REGISTER ARCINST *ai, *newai;
+	 CONNECTION *oldcon, *newcon;
+	 ARCINST *ai, *newai;
 	ARCPROTO *newap, *oldap;
 	NODEINST *oldend1, *oldend2, *newend1, *newend2;
 	PORTPROTO *oldport1, *oldport2, *newport1, *newport2;
-	REGISTER INTBIG newxoff, newyoff, lambda;
-	REGISTER VARIABLE *var;
-	REGISTER BOOLEAN resolve, offchanged;
-	REGISTER INTBIG variable, varx, vary;
+	 INTBIG newxoff, newyoff, lambda;
+	 VARIABLE *var;
+	 BOOLEAN resolve, offchanged;
+	 INTBIG variable, varx, vary;
 	INTBIG x1, y1, x2, y2, widnew, widold;
 	BOOLEAN ret;
-	REGISTER CONS *oldcons, *newcons;
+	 CONS *oldcons, *newcons;
 
 	/* parse the old line */
 	oldcon = cli_parseconn(oldline, FALSE);
@@ -758,7 +758,7 @@ void cli_changeconnection(CHAR *oldline, CHAR *newline, INTBIG changed, WINDOWPA
 	ai = cli_findarcname(oldline);
 	if (ai == NOARCINST)
 	{
-		ttyputerr(M_("Cannot figure out which wire changed"));
+		ttyputerr(M_((char*)"Cannot figure out which wire changed"));
 		cli_restoreline(oldline, changed, win);
 		cli_deleteconnection(oldcon);   cli_deleteconnection(newcon);
 		return;
@@ -828,7 +828,7 @@ void cli_changeconnection(CHAR *oldline, CHAR *newline, INTBIG changed, WINDOWPA
 	{
 		if (cli_findnodename(newcon->end1) != NONODEINST)
 		{
-			ttyputerr(M_("Already a component called '%s'"), newcon->end1);
+			ttyputerr(M_((char*)"Already a component called '%s'"), newcon->end1);
 			cli_restoreline(oldline, changed, win);
 			cli_deleteconnection(oldcon);   cli_deleteconnection(newcon);
 			return;
@@ -851,7 +851,7 @@ void cli_changeconnection(CHAR *oldline, CHAR *newline, INTBIG changed, WINDOWPA
 	{
 		if (cli_findnodename(newcon->end2) != NONODEINST)
 		{
-			ttyputerr(M_("Already a component called '%s'"), newcon->end2);
+			ttyputerr(M_((char*)"Already a component called '%s'"), newcon->end2);
 			cli_restoreline(oldline, changed, win);
 			cli_deleteconnection(oldcon);   cli_deleteconnection(newcon);
 			return;
@@ -882,7 +882,7 @@ void cli_changeconnection(CHAR *oldline, CHAR *newline, INTBIG changed, WINDOWPA
 		cli_ownchanges = FALSE;
 		if (newai == NOARCINST)
 		{
-			ttyputerr(M_("Cannot create this new wire"));
+			ttyputerr(M_((char*)"Cannot create this new wire"));
 			cli_restoreline(oldline, changed, win);
 			cli_deleteconnection(oldcon);   cli_deleteconnection(newcon);
 			return;
@@ -919,7 +919,7 @@ void cli_changeconnection(CHAR *oldline, CHAR *newline, INTBIG changed, WINDOWPA
 		cli_ownchanges = FALSE;
 		if (ai == NOARCINST)
 		{
-			ttyputerr(M_("Cannot change the type of this wire"));
+			ttyputerr(M_((char*)"Cannot change the type of this wire"));
 			cli_restoreline(oldline, changed, win);
 			cli_deleteconnection(oldcon);   cli_deleteconnection(newcon);
 			return;
@@ -940,7 +940,7 @@ void cli_changeconnection(CHAR *oldline, CHAR *newline, INTBIG changed, WINDOWPA
 		cli_ownchanges = FALSE;
 		if (ret)
 		{
-			ttyputerr(M_("Cannot change the width of this wire"));
+			ttyputerr(M_((char*)"Cannot change the width of this wire"));
 			cli_restoreline(oldline, changed, win);
 			cli_deleteconnection(oldcon);   cli_deleteconnection(newcon);
 			return;
@@ -952,10 +952,10 @@ void cli_changeconnection(CHAR *oldline, CHAR *newline, INTBIG changed, WINDOWPA
 	{
 		if (oldcons->assoc != NOCONS) continue;
 		resolve = TRUE;
-		if (namesame(oldcons->direction, x_("left")) == 0) variable = CLLEFT; else
-			if (namesame(oldcons->direction, x_("right")) == 0) variable = CLRIGHT; else
-				if (namesame(oldcons->direction, x_("down")) == 0) variable = CLDOWN; else
-					if (namesame(oldcons->direction, x_("up")) == 0) variable = CLUP;
+		if (namesame(oldcons->direction, x_((char*)"left")) == 0) variable = CLLEFT; else
+			if (namesame(oldcons->direction, x_((char*)"right")) == 0) variable = CLRIGHT; else
+				if (namesame(oldcons->direction, x_((char*)"down")) == 0) variable = CLDOWN; else
+					if (namesame(oldcons->direction, x_((char*)"up")) == 0) variable = CLUP;
 		cli_ownchanges = TRUE;
 		cli_deletearcconstraint(ai, variable, oldcons->flag, oldcons->amount);
 		cli_ownchanges = FALSE;
@@ -966,10 +966,10 @@ void cli_changeconnection(CHAR *oldline, CHAR *newline, INTBIG changed, WINDOWPA
 	{
 		if (newcons->assoc != NOCONS) continue;
 		resolve = TRUE;
-		if (namesame(newcons->direction, x_("left")) == 0) variable = CLLEFT; else
-			if (namesame(newcons->direction, x_("right")) == 0) variable = CLRIGHT; else
-				if (namesame(newcons->direction, x_("down")) == 0) variable = CLDOWN; else
-					if (namesame(newcons->direction, x_("up")) == 0) variable = CLUP;
+		if (namesame(newcons->direction, x_((char*)"left")) == 0) variable = CLLEFT; else
+			if (namesame(newcons->direction, x_((char*)"right")) == 0) variable = CLRIGHT; else
+				if (namesame(newcons->direction, x_((char*)"down")) == 0) variable = CLDOWN; else
+					if (namesame(newcons->direction, x_((char*)"up")) == 0) variable = CLUP;
 		cli_ownchanges = TRUE;
 		(void)cli_addarcconstraint(ai, variable, newcons->flag, newcons->amount, 1);
 		cli_ownchanges = FALSE;
@@ -1025,7 +1025,7 @@ void cli_changeconnection(CHAR *oldline, CHAR *newline, INTBIG changed, WINDOWPA
  */
 void cli_updateattrs(ATTR *oldlist, ATTR *newlist, INTBIG addr, INTBIG type)
 {
-	REGISTER ATTR *a, *b;
+	 ATTR *a, *b;
 
 	/* stop now if both lists are empty */
 	if (oldlist == NOATTR && newlist == NOATTR) return;
@@ -1092,10 +1092,10 @@ void cli_updateattrs(ATTR *oldlist, ATTR *newlist, INTBIG addr, INTBIG type)
  */
 void cli_deletedeclaration(CHAR *oldline)
 {
-	REGISTER COMPONENTDEC *dec;
-	REGISTER COMPONENT *compo;
-	REGISTER NODEPROTO *np;
-	REGISTER NODEINST *ni;
+	 COMPONENTDEC *dec;
+	 COMPONENT *compo;
+	 NODEPROTO *np;
+	 NODEINST *ni;
 
 	/* parse the declaration statement */
 	dec = cli_parsecomp(oldline, FALSE);
@@ -1105,7 +1105,7 @@ void cli_deletedeclaration(CHAR *oldline)
 	np = getnodeproto(dec->protoname);
 	if (np == NONODEPROTO)
 	{
-		ttyputerr(M_("Unknown component type: %s"), dec->protoname);
+		ttyputerr(M_((char*)"Unknown component type: %s"), dec->protoname);
 		cli_deletecomponentdec(dec);
 		return;
 	}
@@ -1129,7 +1129,7 @@ void cli_deletedeclaration(CHAR *oldline)
  */
 void cli_deletewire(CHAR *oldline)
 {
-	REGISTER ARCINST *ai;
+	 ARCINST *ai;
 
 	ai = cli_findarcname(oldline);
 	if (ai == NOARCINST) return;
@@ -1144,8 +1144,8 @@ void cli_deletewire(CHAR *oldline)
  */
 void cli_deleteexportline(CHAR *oldline)
 {
-	REGISTER EXPORT *e;
-	REGISTER PORTPROTO *pp;
+	 EXPORT *e;
+	 PORTPROTO *pp;
 
 	/* parse the export statement */
 	e = cli_parseexport(oldline, FALSE);
@@ -1155,7 +1155,7 @@ void cli_deleteexportline(CHAR *oldline)
 	pp = getportproto(cli_curcell, e->portname);
 	if (pp == NOPORTPROTO)
 	{
-		ttyputerr(M_("Unknown port: %s"), e->portname);
+		ttyputerr(M_((char*)"Unknown port: %s"), e->portname);
 		cli_deleteexport(e);
 		return;
 	}
@@ -1176,11 +1176,11 @@ void cli_deleteexportline(CHAR *oldline)
  */
 BOOLEAN cli_adddeclaration(CHAR *newline, INTBIG changed, WINDOWPART *win)
 {
-	REGISTER COMPONENTDEC *dec;
-	REGISTER COMPONENT *compo, *ocomp;
-	REGISTER NODEPROTO *np;
-	REGISTER NODEINST *ni;
-	REGISTER VARIABLE *var;
+	 COMPONENTDEC *dec;
+	 COMPONENT *compo, *ocomp;
+	 NODEPROTO *np;
+	 NODEINST *ni;
+	 VARIABLE *var;
 	INTBIG lx, hx, ly, hy;
 	INTBIG rot, trn;
 
@@ -1196,7 +1196,7 @@ BOOLEAN cli_adddeclaration(CHAR *newline, INTBIG changed, WINDOWPART *win)
 	np = getnodeproto(dec->protoname);
 	if (np == NONODEPROTO)
 	{
-		ttyputerr(M_("Unknown component type: %s"), dec->protoname);
+		ttyputerr(M_((char*)"Unknown component type: %s"), dec->protoname);
 		cli_commentline(changed, win);
 		cli_deletecomponentdec(dec);
 		return(TRUE);
@@ -1209,7 +1209,7 @@ BOOLEAN cli_adddeclaration(CHAR *newline, INTBIG changed, WINDOWPART *win)
 		ni = cli_findnodename(compo->name);
 		if (ni != NONODEINST)
 		{
-			ttyputerr(M_("Already a component called '%s'"), compo->name);
+			ttyputerr(M_((char*)"Already a component called '%s'"), compo->name);
 			cli_commentline(changed, win);
 			cli_deletecomponentdec(dec);
 			return(TRUE);
@@ -1220,7 +1220,7 @@ BOOLEAN cli_adddeclaration(CHAR *newline, INTBIG changed, WINDOWPART *win)
 		{
 			if (namesame(compo->name, ocomp->name) == 0)
 			{
-				ttyputerr(M_("Duplicate component name '%s'"), compo->name);
+				ttyputerr(M_((char*)"Duplicate component name '%s'"), compo->name);
 				cli_commentline(changed, win);
 				cli_deletecomponentdec(dec);
 				return(TRUE);
@@ -1257,15 +1257,15 @@ BOOLEAN cli_adddeclaration(CHAR *newline, INTBIG changed, WINDOWPART *win)
  */
 BOOLEAN cli_addwire(CHAR *newline, INTBIG changed, WINDOWPART *win)
 {
-	REGISTER CONNECTION *dcl;
-	REGISTER CONS *cons;
+	 CONNECTION *dcl;
+	 CONS *cons;
 	NODEINST *nA, *nB;
 	PORTPROTO *pA, *pB;
 	ARCPROTO *ap;
-	REGISTER ARCINST *ai;
+	 ARCINST *ai;
 	INTBIG xA, yA, xB, yB, wid;
-	REGISTER INTBIG variable;
-	REGISTER BOOLEAN gothor, gotver, addedmanhattan;
+	 INTBIG variable;
+	 BOOLEAN gothor, gotver, addedmanhattan;
 
 	/* parse the line and get the endpoints */
 	dcl = cli_parseconn(newline, FALSE);
@@ -1290,7 +1290,7 @@ BOOLEAN cli_addwire(CHAR *newline, INTBIG changed, WINDOWPART *win)
 	cli_ownchanges = FALSE;
 	if (ai == NOARCINST)
 	{
-		ttyputerr(M_("Cannot make the wire"));
+		ttyputerr(M_((char*)"Cannot make the wire"));
 		cli_commentline(changed, win);
 		cli_deleteconnection(dcl);
 		return(TRUE);
@@ -1300,19 +1300,19 @@ BOOLEAN cli_addwire(CHAR *newline, INTBIG changed, WINDOWPART *win)
 	gothor = gotver = FALSE;
 	for(cons = dcl->firstcons; cons != NOCONS; cons = cons->nextcons)
 	{
-		if (namesame(cons->direction, x_("left")) == 0)
+		if (namesame(cons->direction, x_((char*)"left")) == 0)
 		{
 			variable = CLLEFT;
 			gothor = TRUE;
-		} else if (namesame(cons->direction, x_("right")) == 0)
+		} else if (namesame(cons->direction, x_((char*)"right")) == 0)
 		{
 			variable = CLRIGHT;
 			gothor = TRUE;
-		} else if (namesame(cons->direction, x_("down")) == 0)
+		} else if (namesame(cons->direction, x_((char*)"down")) == 0)
 		{
 			variable = CLDOWN;
 			gotver = TRUE;
-		} else if (namesame(cons->direction, x_("up")) == 0)
+		} else if (namesame(cons->direction, x_((char*)"up")) == 0)
 		{
 			variable = CLUP;
 			gotver = TRUE;
@@ -1346,9 +1346,9 @@ BOOLEAN cli_addwire(CHAR *newline, INTBIG changed, WINDOWPART *win)
  */
 void cli_addexport(CHAR *newline, INTBIG changed, WINDOWPART *win)
 {
-	REGISTER EXPORT *e;
-	REGISTER PORTPROTO *pp, *newpp;
-	REGISTER NODEINST *ni;
+	 EXPORT *e;
+	 PORTPROTO *pp, *newpp;
+	 NODEINST *ni;
 
 	/* parse the export statement */
 	e = cli_parseexport(newline, FALSE);
@@ -1362,7 +1362,7 @@ void cli_addexport(CHAR *newline, INTBIG changed, WINDOWPART *win)
 	pp = getportproto(cli_curcell, e->portname);
 	if (pp != NOPORTPROTO)
 	{
-		ttyputerr(M_("Already an export called %s"), pp->protoname);
+		ttyputerr(M_((char*)"Already an export called %s"), pp->protoname);
 		cli_commentline(changed, win);
 		cli_deleteexport(e);
 		return;
@@ -1372,7 +1372,7 @@ void cli_addexport(CHAR *newline, INTBIG changed, WINDOWPART *win)
 	ni = cli_findnodename(e->component);
 	if (ni == NONODEINST)
 	{
-		ttyputerr(M_("Cannot find node %s"), e->component);
+		ttyputerr(M_((char*)"Cannot find node %s"), e->component);
 		cli_commentline(changed, win);
 		cli_deleteexport(e);
 		return;
@@ -1393,7 +1393,7 @@ void cli_addexport(CHAR *newline, INTBIG changed, WINDOWPART *win)
 	cli_ownchanges = FALSE;
 	if (newpp == NOPORTPROTO)
 	{
-		ttyputerr(M_("Could not create the port"));
+		ttyputerr(M_((char*)"Could not create the port"));
 		cli_commentline(changed, win);
 		cli_deleteexport(e);
 		return;
@@ -1402,19 +1402,19 @@ void cli_addexport(CHAR *newline, INTBIG changed, WINDOWPART *win)
 
 PORTPROTO *cli_getexportsubport(EXPORT *e, NODEINST *ni)
 {
-	REGISTER PORTPROTO *pp;
+	 PORTPROTO *pp;
 
 	if (e->subport != 0)
 	{
 		pp = getportproto(ni->proto, e->subport);
 		if (pp == NOPORTPROTO)
-			ttyputerr(M_("No such port %s on node %s"), e->subport, e->component);
+			ttyputerr(M_((char*)"No such port %s on node %s"), e->subport, e->component);
 	} else
 	{
 		pp = ni->proto->firstportproto;
 		if (!cli_uniqueport(ni, pp))
 		{
-			ttyputerr(M_("Ambiguous port on node %s"), e->component);
+			ttyputerr(M_((char*)"Ambiguous port on node %s"), e->component);
 			pp = NOPORTPROTO;
 		}
 	}
@@ -1432,7 +1432,7 @@ PORTPROTO *cli_getexportsubport(EXPORT *e, NODEINST *ni)
 void cli_getfactors(NODEINST *ni, NODEPROTO *np, COMPONENT *compo, INTBIG *lx,
 	INTBIG *hx, INTBIG *ly, INTBIG *hy, INTBIG *rot, INTBIG *trn, INTBIG defcx, INTBIG defcy)
 {
-	REGISTER INTBIG xc, yc, xs, ys;
+	 INTBIG xc, yc, xs, ys;
 	INTBIG plx, phx, ply, phy;
 
 	/* get the size of the component */
@@ -1503,10 +1503,10 @@ void cli_getfactors(NODEINST *ni, NODEPROTO *np, COMPONENT *compo, INTBIG *lx,
  */
 void cli_killthenode(NODEINST *ni)
 {
-	REGISTER PORTARCINST *pi, *nextpi;
-	REGISTER ARCINST *ai;
-	REGISTER INTBIG i;
-	REGISTER NODEINST *oni;
+	 PORTARCINST *pi, *nextpi;
+	 ARCINST *ai;
+	 INTBIG i;
+	 NODEINST *oni;
 
 	for(pi = ni->firstportarcinst; pi != NOPORTARCINST; pi = nextpi)
 	{
@@ -1539,12 +1539,12 @@ void cli_killthenode(NODEINST *ni)
  */
 void cli_commentline(INTBIG cindex, WINDOWPART *win)
 {
-	REGISTER void *infstr;
+	 void *infstr;
 
 	infstr = initinfstr();
-	addstringtoinfstr(infstr, x_("; "));
-	addstringtoinfstr(infstr, (CHAR *)asktool(us_tool, x_("edit-getline"), (INTBIG)win, cindex));
-	(void)asktool(us_tool, x_("edit-replaceline"), (INTBIG)win, cindex, (INTBIG)returninfstr(infstr));
+	addstringtoinfstr(infstr, x_((char*)"; "));
+	addstringtoinfstr(infstr, (CHAR *)asktool(us_tool, x_((char*)"edit-getline"), (INTBIG)win, cindex));
+	(void)asktool(us_tool, x_((char*)"edit-replaceline"), (INTBIG)win, cindex, (INTBIG)returninfstr(infstr));
 }
 
 /*
@@ -1553,36 +1553,36 @@ void cli_commentline(INTBIG cindex, WINDOWPART *win)
  */
 void cli_restoreline(CHAR *str, INTBIG cindex, WINDOWPART *win)
 {
-	REGISTER void *infstr;
+	 void *infstr;
 
 	/* first insert this old line */
-	(void)asktool(us_tool, x_("edit-addline"), (INTBIG)win, cindex+1, (INTBIG)str);
+	(void)asktool(us_tool, x_((char*)"edit-addline"), (INTBIG)win, cindex+1, (INTBIG)str);
 
 	/* now comment out line "cindex" */
 	infstr = initinfstr();
-	addstringtoinfstr(infstr, x_("; "));
-	addstringtoinfstr(infstr, (CHAR *)asktool(us_tool, x_("edit-getline"), (INTBIG)win, cindex));
-	(void)asktool(us_tool, x_("edit-replaceline"), (INTBIG)win, cindex, (INTBIG)returninfstr(infstr));
+	addstringtoinfstr(infstr, x_((char*)"; "));
+	addstringtoinfstr(infstr, (CHAR *)asktool(us_tool, x_((char*)"edit-getline"), (INTBIG)win, cindex));
+	(void)asktool(us_tool, x_((char*)"edit-replaceline"), (INTBIG)win, cindex, (INTBIG)returninfstr(infstr));
 }
 
 void cli_replaceendcell(CHAR *str, WINDOWPART *win)
 {
-	REGISTER INTBIG i, maxlines, type;
+	 INTBIG i, maxlines, type;
 
-	maxlines = asktool(us_tool, x_("edit-totallines"), (INTBIG)win);
+	maxlines = asktool(us_tool, x_((char*)"edit-totallines"), (INTBIG)win);
 
 	/* search for all other "begincell" lines */
 	for(i = 0; i < maxlines; i++)
 	{
-		type = cli_linetype((CHAR *)asktool(us_tool, x_("edit-getline"), (INTBIG)win, i));
+		type = cli_linetype((CHAR *)asktool(us_tool, x_((char*)"edit-getline"), (INTBIG)win, i));
 		if (type != LINEEND) continue;
 
 		/* found another "begincell", delete the text */
-		(void)asktool(us_tool, x_("edit-deleteline"), (INTBIG)win, i);
+		(void)asktool(us_tool, x_((char*)"edit-deleteline"), (INTBIG)win, i);
 		i--;
 		maxlines--;
 	}
 
 	/* place this line at the beginning */
-	(void)asktool(us_tool, x_("edit-addline"), (INTBIG)win, maxlines, (INTBIG)str);
+	(void)asktool(us_tool, x_((char*)"edit-addline"), (INTBIG)win, maxlines, (INTBIG)str);
 }

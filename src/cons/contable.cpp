@@ -59,7 +59,7 @@ static void db_nullconsetvariable(void);
 
 CONSTRAINT el_constraints[] =
 {
-	{x_("null"), N_("Null constraints"), NOCOMCOMP, NOCLUSTER, NOVARIABLE, 0,
+	{x_((char*)"null"), N_((char*)"Null constraints"), NOCOMCOMP, NOCLUSTER, NOVARIABLE, 0,
 	db_nullconinit, db_nullconterm,						/* control */
 	db_nullconsetmode, db_nullconrequest,				/* action */
 	db_nullconsolve,									/* solution */
@@ -74,7 +74,7 @@ CONSTRAINT el_constraints[] =
 	db_nullconmodifyvariable, db_nullconinsertvariable,
 	db_nullcondeletevariable, db_nullconsetvariable},
 
-	{x_("layout"), N_("Hierarchical layout constraints"), &cla_layconp, NOCLUSTER,
+	{x_((char*)"layout"), N_((char*)"Hierarchical layout constraints"), &cla_layconp, NOCLUSTER,
 		NOVARIABLE, 0,
 	cla_layconinit, cla_layconterm,						/* control */
 	cla_layconsetmode, cla_layconrequest,				/* action */
@@ -90,7 +90,7 @@ CONSTRAINT el_constraints[] =
 	cla_layconmodifyvariable, cla_layconinsertvariable,
 	cla_laycondeletevariable, cla_layconsetvariable},
 
-	{x_("linear"), N_("Linear constraints"), &cli_linconp, NOCLUSTER, NOVARIABLE, 0,
+	{x_((char*)"linear"), N_((char*)"Linear constraints"), &cli_linconp, NOCLUSTER, NOVARIABLE, 0,
 	cli_linconinit, cli_linconterm,						/* control */
 	cli_linconsetmode, cli_linconrequest,				/* action */
 	cli_linconsolve,									/* solution */
