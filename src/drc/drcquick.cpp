@@ -308,15 +308,15 @@ static void        dr_quickreporterror(INTBIG errtype, TECHNOLOGY *tech, CHAR *m
 void dr_quickcheck(NODEPROTO *cell, INTBIG count, NODEINST **nodestocheck, BOOLEAN *validity,
 	BOOLEAN justarea)
 {
-	REGISTER NODEPROTO *np, *snp;
-	REGISTER NODEINST *ni;
-	REGISTER CHECKINST *ci;
-	REGISTER CHECKPROTO *cp, *ocp;
-	REGISTER LIBRARY *lib;
-	REGISTER NETWORK *net;
-	REGISTER TECHNOLOGY *tech;
-	REGISTER VARIABLE *var;
-	REGISTER INTBIG totalnetworks, i, l, *netnumbers, errorcount;
+	 NODEPROTO *np, *snp;
+	 NODEINST *ni;
+	 CHECKINST *ci;
+	 CHECKPROTO *cp, *ocp;
+	 LIBRARY *lib;
+	 NETWORK *net;
+	 TECHNOLOGY *tech;
+	 VARIABLE *var;
+	 INTBIG totalnetworks, i, l, *netnumbers, errorcount;
 	INTBIG lx, hx, ly, hy;
 	float t;
 	NODEPROTO *cellarray[MAXHIERARCHYDEPTH];
@@ -398,7 +398,7 @@ void dr_quickcheck(NODEPROTO *cell, INTBIG count, NODEINST **nodestocheck, BOOLE
 	if (dr_quickfindparameters(cell))
 	{
 		/* parameters found: cannot use multiple processors */
-		ttyputmsg(_("Parameterized layout being used: multiprocessor decomposition disabled"));
+		ttyputmsg(_((char*)"Parameterized layout being used: multiprocessor decomposition disabled"));
 		dr_quicknumprocesses = 1;
 	}
 
@@ -481,7 +481,7 @@ void dr_quickcheck(NODEPROTO *cell, INTBIG count, NODEINST **nodestocheck, BOOLE
 					netnumbers = (INTBIG *)net->temp1;
 					for(i=0; i<cp->hierinstancecount; i++)
 						if (netnumbers[i] == 0)
-							ttyputmsg(x_("Missing network numbers on network %s in cell %s"),
+							ttyputmsg(x_((char*)"Missing network numbers on network %s in cell %s"),
 								describenetwork(net), describenodeproto(np));
 				}
 			}
@@ -492,7 +492,7 @@ void dr_quickcheck(NODEPROTO *cell, INTBIG count, NODEINST **nodestocheck, BOOLE
 	if (count <= 0)
 	{
 		t = endtimer();
-		ttyputmsg(_("Found %ld networks, allocated %ld bytes for network numbering (took %s)"),
+		ttyputmsg(_((char*)"Found %ld networks, allocated %ld bytes for network numbering (took %s)"),
 			dr_quickchecknetnumber, totalnetworks*SIZEOFINTBIG, explainduration(t));
 	}
 
@@ -508,7 +508,7 @@ void dr_quickcheck(NODEPROTO *cell, INTBIG count, NODEINST **nodestocheck, BOOLE
 		snp = us_getareabounds(&lx, &hx, &ly, &hy);
 		if (snp != cell)
 		{
-			ttyputmsg(_("Cannot check selection: it is not in the current cell"));
+			ttyputmsg(_((char*)"Cannot check selection: it is not in the current cell"));
 			justarea = FALSE;
 		}
 	} else lx = hx = ly = hy = 0;
@@ -525,7 +525,7 @@ void dr_quickcheck(NODEPROTO *cell, INTBIG count, NODEINST **nodestocheck, BOOLE
 	}
 
 	/* now do the DRC */
-	initerrorlogging(_("DRC"));
+	initerrorlogging(_((char*)"DRC"));
 	if (count == 0)
 	{
 		/* just do standard DRC here */
@@ -546,7 +546,7 @@ void dr_quickcheck(NODEPROTO *cell, INTBIG count, NODEINST **nodestocheck, BOOLE
 		t = endtimer();
 		if (t > 60.0 && (us_useroptions&BEEPAFTERLONGJOB) != 0)
 			ttybeep(SOUNDBEEP, TRUE);
-		ttyputmsg(_("%ld errors found (took %s)"), errorcount, explainduration(t));
+		ttyputmsg(_((char*)"%ld errors found (took %s)"), errorcount, explainduration(t));
 	}
 	termerrorlogging(TRUE);
 
@@ -586,10 +586,10 @@ void dr_quickcheck(NODEPROTO *cell, INTBIG count, NODEINST **nodestocheck, BOOLE
  */
 void dr_quickterm(void)
 {
-	REGISTER INTBIG i;
-	REGISTER INSTINTER *dii;
-	REGISTER CHECKPROTO *cp;
-	REGISTER CHECKINST *ci;
+	 INTBIG i;
+	 INSTINTER *dii;
+	 CHECKPROTO *cp;
+	 CHECKINST *ci;
 
 	if (dr_quicklayerinternodehashsize > 0)
 	{
@@ -667,15 +667,15 @@ void dr_quickterm(void)
 INTBIG dr_quickcheckthiscell(NODEPROTO *cell, INTBIG globalindex, INTBIG lx, INTBIG hx,
 	INTBIG ly, INTBIG hy, BOOLEAN justarea)
 {
-	REGISTER CHECKPROTO *cp;
-	REGISTER CHECKINST *ci;
-	REGISTER NODEPROTO *np;
-	REGISTER BOOLEAN allsubcellsstillok;
-	REGISTER NODEINST *ni;
-	REGISTER VARIABLE *var;
-	REGISTER INTBIG localindex, retval, errcount, localerrors, i;
+	 CHECKPROTO *cp;
+	 CHECKINST *ci;
+	 NODEPROTO *np;
+	 BOOLEAN allsubcellsstillok;
+	 NODEINST *ni;
+	 VARIABLE *var;
+	 INTBIG localindex, retval, errcount, localerrors, i;
 	float elapsed;
-	REGISTER UINTBIG lastgooddate, lastchangedate;
+	 UINTBIG lastgooddate, lastchangedate;
 
 	/* first check all subcells */
 	allsubcellsstillok = TRUE;
@@ -724,7 +724,7 @@ INTBIG dr_quickcheckthiscell(NODEPROTO *cell, INTBIG globalindex, INTBIG lx, INT
 	}
 
 	/* announce progress */
-	ttyputmsg(_("Checking cell %s"), describenodeproto(cell));
+	ttyputmsg(_((char*)"Checking cell %s"), describenodeproto(cell));
 
 	/* remember how many errors there are on entry */
 	errcount = numerrors();
@@ -782,10 +782,10 @@ INTBIG dr_quickcheckthiscell(NODEPROTO *cell, INTBIG globalindex, INTBIG lx, INT
 	{
 		(void)setvalkey((INTBIG)cell, VNODEPROTO, dr_lastgooddrckey,
 			(INTBIG)getcurrenttime(), VINTEGER);
-		ttyputmsg(_("   No errors found (%s so far)"), explainduration(elapsed));
+		ttyputmsg(_((char*)"   No errors found (%s so far)"), explainduration(elapsed));
 	} else
 	{
-		ttyputmsg(_("   FOUND %ld ERRORS (%s so far)"), localerrors,
+		ttyputmsg(_((char*)"   FOUND %ld ERRORS (%s so far)"), localerrors,
 			explainduration(elapsed));
 	}
 
@@ -800,14 +800,14 @@ INTBIG dr_quickcheckthiscell(NODEPROTO *cell, INTBIG globalindex, INTBIG lx, INT
  */
 BOOLEAN dr_quickchecknodeinst(NODEINST *ni, INTBIG globalindex, CHECKSTATE *state)
 {
-	REGISTER INTBIG tot, j, actual, minsize, fun;
-	REGISTER NODEPROTO *cell;
-	REGISTER BOOLEAN ret, errorsfound;
+	 INTBIG tot, j, actual, minsize, fun;
+	 NODEPROTO *cell;
+	 BOOLEAN ret, errorsfound;
 	XARRAY trans;
 	CHAR *rule;
 	INTBIG minx, miny, lx, hx, ly, hy;
-	REGISTER INTBIG net;
-	REGISTER POLYGON *poly;
+	 INTBIG net;
+	 POLYGON *poly;
 
 	cell = ni->parent;
 	makerot(ni, trans);
@@ -893,10 +893,10 @@ BOOLEAN dr_quickchecknodeinst(NODEINST *ni, INTBIG globalindex, CHECKSTATE *stat
  */
 BOOLEAN dr_quickcheckarcinst(ARCINST *ai, INTBIG globalindex, CHECKSTATE *state)
 {
-	REGISTER INTBIG tot, j;
-	REGISTER BOOLEAN ret, errorsfound;
-	REGISTER INTBIG net;
-	REGISTER POLYGON *poly;
+	 INTBIG tot, j;
+	 BOOLEAN ret, errorsfound;
+	 INTBIG net;
+	 POLYGON *poly;
 
 	/* ignore arcs with no topology */
 	if (ai->network == NONETWORK) return(FALSE);
@@ -943,12 +943,12 @@ BOOLEAN dr_quickcheckarcinst(ARCINST *ai, INTBIG globalindex, CHECKSTATE *state)
  */
 BOOLEAN dr_quickcheckcellinst(NODEINST *ni, INTBIG globalindex, CHECKSTATE *state)
 {
-	REGISTER INTBIG lx, hx, ly, hy, search, localindex;
+	 INTBIG lx, hx, ly, hy, search, localindex;
 	INTBIG sublx, subhx, subly, subhy;
-	REGISTER GEOM *geom;
-	REGISTER NODEINST *oni;
+	 GEOM *geom;
+	 NODEINST *oni;
 	XARRAY rtrans, ttrans, downtrans, uptrans;
-	REGISTER CHECKINST *ci;
+	 CHECKINST *ci;
 	INSTINTER *dii;
 
 	/* get current position in traversal hierarchy */
@@ -1009,15 +1009,15 @@ BOOLEAN dr_quickcheckcellinst(NODEINST *ni, INTBIG globalindex, CHECKSTATE *stat
 BOOLEAN dr_quickcheckcellinstcontents(INTBIG lx, INTBIG hx, INTBIG ly, INTBIG hy, NODEPROTO *np,
 	XARRAY uptrans, INTBIG globalindex, NODEINST *oni, INTBIG topglobalindex, CHECKSTATE *state)
 {
-	REGISTER INTBIG subsearch, tot, j, net, localindex;
+	 INTBIG subsearch, tot, j, net, localindex;
 	INTBIG sublx, subhx, subly, subhy;
-	REGISTER GEOM *geom;
-	REGISTER NODEINST *ni;
-	REGISTER ARCINST *ai;
-	REGISTER BOOLEAN errorsfound, ret;
+	 GEOM *geom;
+	 NODEINST *ni;
+	 ARCINST *ai;
+	 BOOLEAN errorsfound, ret;
 	XARRAY rtrans, ttrans, trans, subuptrans;
-	REGISTER CHECKINST *ci;
-	REGISTER POLYGON *poly;
+	 CHECKINST *ci;
+	 POLYGON *poly;
 
 	errorsfound = FALSE;
 	subsearch = initsearch(lx, hx, ly, hy, np);
@@ -1112,11 +1112,11 @@ BOOLEAN dr_quickcheckcellinstcontents(INTBIG lx, INTBIG hx, INTBIG ly, INTBIG hy
 BOOLEAN dr_quickbadsubbox(POLYGON *poly, INTBIG layer, INTBIG net, TECHNOLOGY *tech, GEOM *geom, XARRAY trans,
 	INTBIG globalindex, NODEPROTO *cell, NODEINST *oni, INTBIG topglobalindex, CHECKSTATE *state)
 {
-	REGISTER BOOLEAN basemulti, retval;
-	REGISTER INTBIG minsize, bound, lxbound, hxbound, lybound, hybound, localindex;
+	 BOOLEAN basemulti, retval;
+	 INTBIG minsize, bound, lxbound, hxbound, lybound, hybound, localindex;
 	INTBIG lx, hx, ly, hy;
 	XARRAY rtrans, ttrans, downtrans, uptrans;
-	REGISTER CHECKINST *ci;
+	 CHECKINST *ci;
 
 	/* see how far around the box it is necessary to search */
 	bound = maxdrcsurround(tech, cell->lib, layer);
@@ -1168,8 +1168,8 @@ BOOLEAN dr_quickbadsubbox(POLYGON *poly, INTBIG layer, INTBIG net, TECHNOLOGY *t
 BOOLEAN dr_quickbadbox(POLYGON *poly, INTBIG layer, INTBIG net, TECHNOLOGY *tech, GEOM *geom,
 	XARRAY trans, NODEPROTO *cell, INTBIG globalindex, CHECKSTATE *state)
 {
-	REGISTER BOOLEAN basemulti;
-	REGISTER INTBIG minsize, bound, lxbound, hxbound, lybound, hybound;
+	 BOOLEAN basemulti;
+	 INTBIG minsize, bound, lxbound, hxbound, lybound, hybound;
 	INTBIG lx, hx, ly, hy;
 
 	/* see how far around the box it is necessary to search */
@@ -1212,20 +1212,20 @@ BOOLEAN dr_quickbadboxinarea(POLYGON *poly, INTBIG layer, TECHNOLOGY *tech, INTB
 	NODEPROTO *topcell, INTBIG topglobalindex, XARRAY toptrans, INTBIG minsize, BOOLEAN basemulti,
 	CHECKSTATE *state, BOOLEAN sameinstance)
 {
-	REGISTER GEOM *ngeom;
-	REGISTER NODEPROTO *np;
-	REGISTER ARCINST *ai;
-	REGISTER NODEINST *ni;
-	REGISTER ARCPROTO *ap;
-	REGISTER BOOLEAN touch, ret, multi;
-	REGISTER INTBIG nnet, search, dist, j, tot, nminsize,
+	 GEOM *ngeom;
+	 NODEPROTO *np;
+	 ARCINST *ai;
+	 NODEINST *ni;
+	 ARCPROTO *ap;
+	 BOOLEAN touch, ret, multi;
+	 INTBIG nnet, search, dist, j, tot, nminsize,
 		localindex, count;
-	REGISTER POLYGON *npoly;
+	 POLYGON *npoly;
 	XARRAY rtrans, ttrans, subtrans, temptrans;
 	CHAR *rule;
-	REGISTER BOOLEAN con;
+	 BOOLEAN con;
 	INTBIG edge, slx, shx, sly, shy, rlxbound, rhxbound, rlybound, rhybound;
-	REGISTER CHECKINST *ci;
+	 CHECKINST *ci;
 
 	rlxbound = lxbound;   rhxbound = hxbound;
 	rlybound = lybound;   rhybound = hybound;
@@ -1409,12 +1409,12 @@ BOOLEAN dr_quickcheckdist(TECHNOLOGY *tech, NODEPROTO *cell, INTBIG globalindex,
 	POLYGON *poly2, INTBIG layer2, INTBIG net2, GEOM *geom2, XARRAY trans2, INTBIG globalindex2,
 	BOOLEAN con, INTBIG dist, INTBIG edge, CHAR *rule, CHECKSTATE *state)
 {
-	REGISTER BOOLEAN isbox1, isbox2, needboth, maytouch;
+	 BOOLEAN isbox1, isbox2, needboth, maytouch;
 	INTBIG lx1, hx1, ly1, hy1, lx2, hx2, ly2, hy2, xf1, yf1, xf2, yf2;
 	CHAR *msg, *sizerule;
 	void *infstr;
-	REGISTER POLYGON *origpoly1, *origpoly2;
-	REGISTER INTBIG pdx, pdy, pd, pdedge, fun, errtype, minwidth,
+	 POLYGON *origpoly1, *origpoly2;
+	 INTBIG pdx, pdy, pd, pdedge, fun, errtype, minwidth,
 		lxb, hxb, lyb, hyb, actual, intervening;
 #ifdef DEBUGDRC
 	REGISTER BOOLEAN debug;
@@ -1760,7 +1760,7 @@ if (debug) ttygetline("Touching rules didn't help.  THIS IS AN ERROR");
 			infstr = initinfstr();
 			if (dr_quickparalleldrc)
 				emutexlock(dr_quickmutexio);	/* BEGIN critical section */
-			formatinfstr(infstr, _("%s is too small for the %s"),
+			formatinfstr(infstr, _((char*)"%s is too small for the %s"),
 				describenodeinst(state->tinynodeinst), geomname(state->tinyobj));
 			if (dr_quickparalleldrc)
 				emutexunlock(dr_quickmutexio);	/* END critical section */
@@ -1786,13 +1786,13 @@ if (debug) ttygetline("Touching rules didn't help.  THIS IS AN ERROR");
  */
 void dr_quickchecktheseinstances(NODEPROTO *cell, INTBIG count, NODEINST **nodestocheck, BOOLEAN *validity)
 {
-	REGISTER INTBIG lx, hx, ly, hy, search, globalindex, localindex, i, j;
+	 INTBIG lx, hx, ly, hy, search, globalindex, localindex, i, j;
 	INTBIG sublx, subhx, subly, subhy;
-	REGISTER GEOM *geom;
-	REGISTER NODEINST *ni, *oni;
+	 GEOM *geom;
+	 NODEINST *ni, *oni;
 	XARRAY rtrans, ttrans, downtrans, uptrans;
-	REGISTER CHECKINST *ci;
-	REGISTER CHECKSTATE *state;
+	 CHECKINST *ci;
+	 CHECKSTATE *state;
 
 	globalindex = 0;
 	state = dr_quickstate[0];
@@ -1878,16 +1878,16 @@ void dr_quickchecktheseinstances(NODEPROTO *cell, INTBIG count, NODEINST **nodes
  */
 BOOLEAN dr_quickcheckgeomagainstinstance(GEOM *geom, NODEINST *ni, CHECKSTATE *state)
 {
-	REGISTER NODEPROTO *np, *subcell;
-	REGISTER ARCINST *oai;
-	REGISTER NODEINST *oni;
-	REGISTER TECHNOLOGY *tech;
-	REGISTER BOOLEAN basemulti;
-	REGISTER INTBIG tot, j, bound, net, minsize, localindex, globalindex;
+	 NODEPROTO *np, *subcell;
+	 ARCINST *oai;
+	 NODEINST *oni;
+	 TECHNOLOGY *tech;
+	 BOOLEAN basemulti;
+	 INTBIG tot, j, bound, net, minsize, localindex, globalindex;
 	INTBIG lx, hx, ly, hy, slx, shx, sly, shy;
 	XARRAY rtrans, ttrans, temptrans, subtrans, trans;
-	REGISTER POLYGON *poly;
-	REGISTER CHECKINST *ci;
+	 POLYGON *poly;
+	 CHECKINST *ci;
 
 	np = ni->proto;
 	globalindex = 0;
@@ -1965,12 +1965,12 @@ BOOLEAN dr_quickcheckgeomagainstinstance(GEOM *geom, NODEINST *ni, CHECKSTATE *s
  */
 BOOLEAN dr_quickcheckinteraction(NODEINST *ni1, NODEINST *ni2, INSTINTER **thedii)
 {
-	REGISTER NODEINST *swapni;
-	REGISTER INSTINTER **newlist, **oldlist;
+	 NODEINST *swapni;
+	 INSTINTER **newlist, **oldlist;
 	INSTINTER *dii;
-	REGISTER BOOLEAN found;
-	REGISTER INTBIG newtotal, oldtotal, i;
-	REGISTER CHECKPROTO *cp;
+	 BOOLEAN found;
+	 INTBIG newtotal, oldtotal, i;
+	 CHECKPROTO *cp;
 
 	/* must recheck parameterized instances always */
 	*thedii = NOINSTINTER;
@@ -2070,7 +2070,7 @@ BOOLEAN dr_quickcheckinteraction(NODEINST *ni1, NODEINST *ni2, INSTINTER **thedi
  */
 void dr_quickclearinstancecache(void)
 {
-	REGISTER INTBIG i;
+	 INTBIG i;
 
 	for(i=0; i<dr_quickinstintertotal; i++)
 	{
@@ -2086,8 +2086,8 @@ void dr_quickclearinstancecache(void)
  */ 
 INSTINTER *dr_quickfindinteraction(INSTINTER *dii)
 {
-	REGISTER INTBIG hash, i;
-	REGISTER INSTINTER *diientry;
+	 INTBIG hash, i;
+	 INSTINTER *diientry;
 
 	if (dr_quickinstintertotal == 0) return(NOINSTINTER);
 	hash = abs(((INTBIG)dii->cell1 + dii->rot1 + dii->trn1 +
@@ -2112,7 +2112,7 @@ INSTINTER *dr_quickfindinteraction(INSTINTER *dii)
  */ 
 BOOLEAN dr_quickinsertinteraction(INSTINTER *dii)
 {
-	REGISTER INTBIG hash, i;
+	 INTBIG hash, i;
 
 	hash = abs(((INTBIG)dii->cell1 + dii->rot1 + dii->trn1 +
 		(INTBIG)dii->cell2 + dii->rot2 + dii->trn2 + dii->dx + dii->dy) %
@@ -2133,7 +2133,7 @@ BOOLEAN dr_quickinsertinteraction(INSTINTER *dii)
 
 INSTINTER *dr_quickallocinstinter(void)
 {
-	REGISTER INSTINTER *dii;
+	 INSTINTER *dii;
 
 	if (dr_quickinstinterfree == NOINSTINTER)
 	{
@@ -2164,9 +2164,9 @@ void dr_quickfreeinstinter(INSTINTER *dii)
  */
 BOOLEAN dr_quickmakestateblocks(INTBIG numstates)
 {
-	REGISTER INTBIG i;
-	REGISTER CHECKSTATE **newstates;
-	REGISTER void **newlocks;
+	 INTBIG i;
+	 CHECKSTATE **newstates;
+	 void **newlocks;
 
 	/* code cannot be called by multiple procesors: uses globals */
 	NOT_REENTRANT;
@@ -2239,9 +2239,9 @@ BOOLEAN dr_quickmakestateblocks(INTBIG numstates)
  */
 INTBIG dr_quickgetnextparallelgeoms(GEOM **list, CHECKSTATE *state)
 {
-	REGISTER NODEINST *ni;
-	REGISTER ARCINST *ai;
-	REGISTER INTBIG i;
+	 NODEINST *ni;
+	 ARCINST *ai;
+	 INTBIG i;
 
 	/* grab a bunch of primitive nodes first */
 	i = 0;
@@ -2396,13 +2396,13 @@ INTBIG dr_quickgetnextparallelgeoms(GEOM **list, CHECKSTATE *state)
  */
 void *dr_quickdothread(void *argument)
 {
-	REGISTER NODEINST *ni;
-	REGISTER ARCINST *ai;
-	REGISTER GEOM *geom;
-	REGISTER BOOLEAN ret;
+	 NODEINST *ni;
+	 ARCINST *ai;
+	 GEOM *geom;
+	 BOOLEAN ret;
 	GEOM *list[MAXCHECKOBJECTS];
-	REGISTER INTBIG i, count, globalindex;
-	REGISTER CHECKSTATE *state;
+	 INTBIG i, count, globalindex;
+	 CHECKSTATE *state;
 
 	state = dr_quickstate[(INTBIG)argument];
 	globalindex = state->globalindex;
@@ -2450,9 +2450,9 @@ void *dr_quickdothread(void *argument)
  */
 void dr_quickcheckenumerateinstances(NODEPROTO *cell)
 {
-	REGISTER NODEINST *ni;
-	REGISTER CHECKINST *ci;
-	REGISTER CHECKPROTO *cp, *firstcp;
+	 NODEINST *ni;
+	 CHECKINST *ci;
+	 CHECKPROTO *cp, *firstcp;
 
 	/* number all of the instances in this cell */
 	dr_quickchecktimestamp++;
@@ -2504,20 +2504,20 @@ void dr_quickcheckenumerateinstances(NODEPROTO *cell)
 
 void dr_quickcheckenumeratenetworks(NODEPROTO *cell, INTBIG globalindex)
 {
-	REGISTER NODEINST *ni;
-	REGISTER NODEPROTO *subcell;
-	REGISTER CHECKINST *ci;
-	REGISTER PORTARCINST *pi;
-	REGISTER PORTEXPINST *pe;
-	REGISTER ARCINST *ai;
-	REGISTER NETWORK *net;
-	REGISTER INTBIG localindex, *netnumbers;
+	 NODEINST *ni;
+	 NODEPROTO *subcell;
+	 CHECKINST *ci;
+	 PORTARCINST *pi;
+	 PORTEXPINST *pe;
+	 ARCINST *ai;
+	 NETWORK *net;
+	 INTBIG localindex, *netnumbers;
 
 #ifdef VALIDATENETWORKS	/* assert: index must be valid */
-	REGISTER CHECKPROTO *cp;
+	 CHECKPROTO *cp;
 	cp = (CHECKPROTO *)cell->temp1;
 	if (globalindex >= cp->hierinstancecount)
-		ttyputmsg(x_("Invalid global index (%d) in cell %s (limit is %d)"), globalindex,
+		ttyputmsg(x_((char*)"Invalid global index (%d) in cell %s (limit is %d)"), globalindex,
 			describenodeproto(cell), cp->hierinstancecount);
 #endif
 
@@ -2528,7 +2528,7 @@ void dr_quickcheckenumeratenetworks(NODEPROTO *cell, INTBIG globalindex)
 
 #ifdef VALIDATENETWORKS	/* assert: must only fill each entry once */
 	if (netnumbers[globalindex] != 0)
-		ttyputmsg(x_("Duplicate network index (%d) on network %s in cell %s"), globalindex,
+		ttyputmsg(x_((char*)"Duplicate network index (%d) on network %s in cell %s"), globalindex,
 			describenetwork(net), describenodeproto(cell));
 #endif
 		netnumbers[globalindex] = net->temp2;
@@ -2571,7 +2571,7 @@ void dr_quickcheckenumeratenetworks(NODEPROTO *cell, INTBIG globalindex)
  */
 CHECKINST *dr_quickalloccheckinst(void)
 {
-	REGISTER CHECKINST *ci;
+	 CHECKINST *ci;
 
 	if (dr_quickcheckinstfree == NOCHECKINST)
 	{
@@ -2599,7 +2599,7 @@ void dr_quickfreecheckinst(CHECKINST *ci)
  */
 CHECKPROTO *dr_quickalloccheckproto(void)
 {
-	REGISTER CHECKPROTO *cp;
+	 CHECKPROTO *cp;
 
 	if (dr_quickcheckprotofree == NOCHECKPROTO)
 	{
@@ -2632,14 +2632,14 @@ void dr_quickfreecheckproto(CHECKPROTO *cp)
  */
 BOOLEAN dr_quickcheckminwidth(GEOM *geom, INTBIG layer, POLYGON *poly, TECHNOLOGY *tech, CHECKSTATE *state)
 {
-	REGISTER INTBIG minwidth, actual;
+	 INTBIG minwidth, actual;
 	INTBIG lx, hx, ly, hy, ix, iy;
 	CHAR *rule;
 	double rang, roang, fdx, fdy;
 	BOOLEAN p1found, p2found, p3found;
-	REGISTER double ang, oang, perpang;
-	REGISTER NODEPROTO *cell;
-	REGISTER INTBIG xl1, yl1, xl2, yl2, xl3, yl3, xr1, yr1, xr2, yr2, xr3, yr3,
+	 double ang, oang, perpang;
+	 NODEPROTO *cell;
+	 INTBIG xl1, yl1, xl2, yl2, xl3, yl3, xr1, yr1, xr2, yr2, xr3, yr3,
 		cx, cy, fx, fy, tx, ty, ofx, ofy, otx, oty, i, j;
 
 	cell = geomparent(geom);
@@ -2781,9 +2781,9 @@ BOOLEAN dr_quickcheckminwidth(GEOM *geom, INTBIG layer, POLYGON *poly, TECHNOLOG
  */
 BOOLEAN dr_quickfindparameters(NODEPROTO *cell)
 {
-	REGISTER NODEINST *ni;
-	REGISTER NODEPROTO *np;
-	REGISTER CHECKPROTO *cp;
+	 NODEINST *ni;
+	 NODEPROTO *np;
+	 CHECKPROTO *cp;
 
 	cp = (CHECKPROTO *)cell->temp1;
 	if (cp->cellparameterized) return(TRUE);
@@ -2802,8 +2802,8 @@ BOOLEAN dr_quickfindparameters(NODEPROTO *cell)
  */
 BOOLEAN dr_quickismulticut(NODEINST *ni)
 {
-	REGISTER NODEPROTO *np;
-	REGISTER TECHNOLOGY *tech;
+	 NODEPROTO *np;
+	 TECHNOLOGY *tech;
 	TECH_NODES *thistn;
 	INTBIG fewer, cutcount;
 	POLYLOOP mypl;
@@ -2826,10 +2826,10 @@ BOOLEAN dr_quickismulticut(NODEINST *ni)
  */
 BOOLEAN dr_quickobjtouch(GEOM *geom1, GEOM *geom2)
 {
-	REGISTER GEOM *temp;
-	REGISTER NODEINST *ni;
-	REGISTER ARCINST *ai;
-	REGISTER INTBIG i;
+	 GEOM *temp;
+	 NODEINST *ni;
+	 ARCINST *ai;
+	 INTBIG i;
 
 	if (geom1->entryisnode)
 	{
@@ -2858,9 +2858,9 @@ BOOLEAN dr_quickobjtouch(GEOM *geom1, GEOM *geom2)
 INTBIG dr_quickfindinterveningpoints(POLYGON *poly1, POLYGON *poly2, INTBIG *xf1, INTBIG *yf1,
 	INTBIG *xf2, INTBIG *yf2)
 {
-	REGISTER BOOLEAN isbox1, isbox2;
+	 BOOLEAN isbox1, isbox2;
 	INTBIG lx1, hx1, ly1, hy1, lx2, hx2, ly2, hy2;
-	REGISTER INTBIG xc, yc;
+	 INTBIG xc, yc;
 
 	isbox1 = isbox(poly1, &lx1, &hx1, &ly1, &hy1);
 	isbox2 = isbox(poly2, &lx2, &hx2, &ly2, &hy2);
@@ -2987,14 +2987,14 @@ BOOLEAN dr_quicklookforlayer(NODEPROTO *cell, INTBIG layer, XARRAY moretrans, CH
 	INTBIG lx, INTBIG hx, INTBIG ly, INTBIG hy, INTBIG xf1, INTBIG yf1, BOOLEAN *p1found,
 		INTBIG xf2, INTBIG yf2, BOOLEAN *p2found, INTBIG xf3, INTBIG yf3, BOOLEAN *p3found)
 {
-	REGISTER INTBIG sea, i, tot;
-	REGISTER GEOM *g;
-	REGISTER NODEINST *ni;
-	REGISTER ARCINST *ai;
-	REGISTER BOOLEAN reasonable;
+	 INTBIG sea, i, tot;
+	 GEOM *g;
+	 NODEINST *ni;
+	 ARCINST *ai;
+	 BOOLEAN reasonable;
 	INTBIG newlx, newhx, newly, newhy;
 	XARRAY trans, rot, bound;
-	REGISTER POLYGON *poly;
+	 POLYGON *poly;
 
 	sea = initsearch(lx, hx, ly, hy, cell);
 	for(;;)
@@ -3070,7 +3070,7 @@ BOOLEAN dr_quicklookforlayer(NODEPROTO *cell, INTBIG layer, XARRAY moretrans, CH
 BOOLEAN dr_quickactiveontransistor(POLYGON *poly1, INTBIG layer1, INTBIG net1,
 	POLYGON *poly2, INTBIG layer2, INTBIG net2, TECHNOLOGY *tech, NODEPROTO *cell, INTBIG globalindex)
 {
-	REGISTER INTBIG blx, bhx, bly, bhy, fun;
+	 INTBIG blx, bhx, bly, bhy, fun;
 	INTBIG lx1, hx1, ly1, hy1, lx2, hx2, ly2, hy2;
 
 	/* networks must be different */
@@ -3099,16 +3099,16 @@ BOOLEAN dr_quickactiveontransistor(POLYGON *poly1, INTBIG layer1, INTBIG net1,
 BOOLEAN dr_quickactiveontransistorrecurse(INTBIG blx, INTBIG bhx, INTBIG bly, INTBIG bhy,
 	INTBIG net1, INTBIG net2, NODEPROTO *cell, INTBIG globalindex, XARRAY trans)
 {
-	REGISTER INTBIG sea, net, cx, cy, localindex;
-	REGISTER BOOLEAN on1, on2, ret;
-	REGISTER GEOM *g;
-	REGISTER NODEINST *ni;
-	REGISTER NODEPROTO *np;
-	REGISTER PORTPROTO *badport;
-	REGISTER PORTARCINST *pi;
+	 INTBIG sea, net, cx, cy, localindex;
+	 BOOLEAN on1, on2, ret;
+	 GEOM *g;
+	 NODEINST *ni;
+	 NODEPROTO *np;
+	 PORTPROTO *badport;
+	 PORTARCINST *pi;
 	INTBIG slx, shx, sly, shy;
 	XARRAY rtrans, ttrans, temptrans;
-	REGISTER CHECKINST *ci;
+	 CHECKINST *ci;
 
 	sea = initsearch(blx, bhx, bly, bhy, cell);
 	if (sea < 0) return(FALSE);
@@ -3185,7 +3185,7 @@ BOOLEAN dr_quickactiveontransistorrecurse(INTBIG blx, INTBIG bhx, INTBIG bly, IN
 INTBIG dr_quickcropbox(INTBIG *lx, INTBIG *hx, INTBIG *ly, INTBIG *hy, INTBIG bx, INTBIG ux, INTBIG by,
 	INTBIG uy, INTBIG nlx, INTBIG nhx, INTBIG nly, INTBIG nhy)
 {
-	REGISTER INTBIG xoverlap, yoverlap;
+	 INTBIG xoverlap, yoverlap;
 
 	/* if the two boxes don't touch, just return */
 	if (bx >= *hx || by >= *hy || ux <= *lx || uy <= *ly) return(0);
@@ -3231,8 +3231,8 @@ INTBIG dr_quickcropbox(INTBIG *lx, INTBIG *hx, INTBIG *ly, INTBIG *hy, INTBIG bx
 INTBIG dr_quickhalfcropbox(INTBIG *lx, INTBIG *hx, INTBIG *ly, INTBIG *hy,
 	INTBIG bx, INTBIG ux, INTBIG by, INTBIG uy)
 {
-	REGISTER BOOLEAN crops;
-	REGISTER INTBIG lxe, hxe, lye, hye, biggestext;
+	 BOOLEAN crops;
+	 INTBIG lxe, hxe, lye, hye, biggestext;
 
 	/* if the two boxes don't touch, just return */
 	if (bx >= *hx || by >= *hy || ux <= *lx || uy <= *ly) return(0);
@@ -3303,10 +3303,10 @@ BOOLEAN dr_quickcropnodeinst(NODEINST *ni, INTBIG globalindex, CHECKSTATE *state
 	INTBIG nlayer, INTBIG nnet, GEOM *ngeom, INTBIG *lx, INTBIG *hx, INTBIG *ly, INTBIG *hy)
 {
 	INTBIG xl, xh, yl, yh;
-	REGISTER INTBIG tot, j, isconnected, net;
-	REGISTER BOOLEAN allgone;
-	REGISTER INTBIG temp;
-	REGISTER POLYGON *poly;
+	 INTBIG tot, j, isconnected, net;
+	 BOOLEAN allgone;
+	 INTBIG temp;
+	 POLYGON *poly;
 
 	dr_quickgetnodeEpolys(ni, state->cropnodepolylist, trans);
 	tot = state->cropnodepolylist->polylistcount;
@@ -3383,12 +3383,12 @@ BOOLEAN dr_quickcroparcinst(ARCINST *ai, INTBIG lay, XARRAY transin, INTBIG *lx,
 {
 	INTBIG xl, xh, yl, yh;
 	XARRAY trans, ttrans, rtrans, xtemp;
-	REGISTER INTBIG i, j, tot;
-	REGISTER INTBIG temp;
-	REGISTER NODEINST *ni;
-	REGISTER NODEPROTO *np;
-	REGISTER PORTPROTO *pp;
-	REGISTER POLYGON *poly;
+	 INTBIG i, j, tot;
+	 INTBIG temp;
+	 NODEINST *ni;
+	 NODEPROTO *np;
+	 PORTPROTO *pp;
+	 POLYGON *poly;
 
 	for(i=0; i<2; i++)
 	{
@@ -3433,11 +3433,11 @@ BOOLEAN dr_quickcroparcinst(ARCINST *ai, INTBIG lay, XARRAY transin, INTBIG *lx,
  */
 void dr_quickcropactivearc(ARCINST *ai, POLYLIST *plist, CHECKSTATE *state)
 {
-	REGISTER INTBIG i, j, k, fun, tot, ntot;
+	 INTBIG i, j, k, fun, tot, ntot;
 	INTBIG lx, hx, ly, hy, nlx, nhx, nly, nhy;
-	REGISTER NODEINST *ni;
-	REGISTER POLYGON *poly, *npoly, *swappoly;
-	REGISTER BOOLEAN cropped;
+	 NODEINST *ni;
+	 POLYGON *poly, *npoly, *swappoly;
+	 BOOLEAN cropped;
 	XARRAY trans;
 
 	/* look for an active layer in this arc */
@@ -3490,9 +3490,9 @@ void dr_quickcropactivearc(ARCINST *ai, POLYLIST *plist, CHECKSTATE *state)
  */
 void dr_quickgetnodeEpolys(NODEINST *ni, POLYLIST *plist, XARRAY trans)
 {
-	REGISTER INTBIG j;
+	 INTBIG j;
 	BOOLEAN convertpseudo, onlyreasonable;
-	REGISTER POLYGON *poly;
+	 POLYGON *poly;
 
 	convertpseudo = FALSE;
 	if (((ni->proto->userbits&NFUNCTION) >> NFUNCTIONSH) == NPPIN)
@@ -3516,8 +3516,8 @@ void dr_quickgetnodeEpolys(NODEINST *ni, POLYLIST *plist, XARRAY trans)
 
 void dr_quickgetnodepolys(NODEINST *ni, POLYLIST *plist, XARRAY trans)
 {
-	REGISTER INTBIG j;
-	REGISTER POLYGON *poly;
+	 INTBIG j;
+	 POLYGON *poly;
 	BOOLEAN onlyreasonable;
 
 	if ((dr_quickoptions&DRCREASONABLE) != 0) onlyreasonable = TRUE; else
@@ -3533,8 +3533,8 @@ void dr_quickgetnodepolys(NODEINST *ni, POLYLIST *plist, XARRAY trans)
 
 void dr_quickgetarcpolys(ARCINST *ai, POLYLIST *plist, XARRAY trans)
 {
-	REGISTER INTBIG j;
-	REGISTER POLYGON *poly;
+	 INTBIG j;
+	 POLYGON *poly;
 
 	plist->polylistcount = allarcpolys(ai, plist, NOWINDOWPART);
 	for(j = 0; j < plist->polylistcount; j++)
@@ -3547,14 +3547,14 @@ void dr_quickgetarcpolys(ARCINST *ai, POLYLIST *plist, XARRAY trans)
 
 void dr_cachevalidlayers(TECHNOLOGY *tech)
 {
-	REGISTER NODEPROTO *np;
-	REGISTER NODEINST *ni;
-	REGISTER ARCPROTO *ap;
-	REGISTER ARCINST *ai;
-	REGISTER INTBIG i, tot;
+	 NODEPROTO *np;
+	 NODEINST *ni;
+	 ARCPROTO *ap;
+	 ARCINST *ai;
+	 INTBIG i, tot;
 	NODEINST node;
 	ARCINST arc;
-	REGISTER POLYGON *poly;
+	 POLYGON *poly;
 
 	if (tech == NOTECHNOLOGY) return;
 	if (dr_curtech == tech) return;
@@ -3644,9 +3644,9 @@ INTBIG dr_adjustedmindist(TECHNOLOGY *tech, LIBRARY *lib, INTBIG layer1, INTBIG 
  */
 INTBIG dr_quickgetnetnumber(PORTPROTO *pp, NODEINST *ni, INTBIG globalindex)
 {
-	REGISTER PORTARCINST *pi;
-	REGISTER PORTEXPINST *pe;
-	REGISTER INTBIG netnumber;
+	 PORTARCINST *pi;
+	 PORTEXPINST *pe;
+	 INTBIG netnumber;
 
 	if (pp == NOPORTPROTO) return(-1);
 
@@ -3675,15 +3675,15 @@ INTBIG dr_quickgetnetnumber(PORTPROTO *pp, NODEINST *ni, INTBIG globalindex)
  */
 void dr_quickbuildlayerinteractions(TECHNOLOGY *tech)
 {
-	REGISTER INTBIG i, tot, index, tablesize, dist, layer;
+	 INTBIG i, tot, index, tablesize, dist, layer;
 	INTBIG edge;
-	REGISTER NODEPROTO *np;
-	REGISTER NODEINST *ni;
-	REGISTER ARCPROTO *ap;
-	REGISTER ARCINST *ai;
+	 NODEPROTO *np;
+	 NODEINST *ni;
+	 ARCPROTO *ap;
+	 ARCINST *ai;
 	NODEINST node;
 	ARCINST arc;
-	REGISTER POLYGON *poly;
+	 POLYGON *poly;
 
 	/* code cannot be called by multiple procesors: uses globals */
 	NOT_REENTRANT;
@@ -3824,7 +3824,7 @@ void dr_quickbuildlayerinteractions(TECHNOLOGY *tech)
  */
 BOOLEAN dr_quickchecklayerwithnode(INTBIG layer, NODEPROTO *np)
 {
-	REGISTER INTBIG index, i;
+	 INTBIG index, i;
 
 	if (np->primindex == 0) return(FALSE);
 	if (np->tech != dr_quicklayerintertech)
@@ -3851,7 +3851,7 @@ BOOLEAN dr_quickchecklayerwithnode(INTBIG layer, NODEPROTO *np)
  */
 BOOLEAN dr_quickchecklayerwitharc(INTBIG layer, ARCPROTO *ap)
 {
-	REGISTER INTBIG index, i;
+	 INTBIG index, i;
 
 	if (ap->tech != dr_quicklayerintertech)
 	{
@@ -3877,11 +3877,11 @@ BOOLEAN dr_quickchecklayerwitharc(INTBIG layer, ARCPROTO *ap)
  */
 void dr_quickaccumulateexclusion(INTBIG depth, NODEPROTO **celllist, XARRAY *translist)
 {
-	REGISTER NODEINST *ni;
-	REGISTER NODEPROTO *cell;
-	REGISTER INTBIG i, j, k, newtotal;
-	REGISTER POLYGON *poly;
-	REGISTER DRCEXCLUSION *newlist;
+	 NODEINST *ni;
+	 NODEPROTO *cell;
+	 INTBIG i, j, k, newtotal;
+	 POLYGON *poly;
+	 DRCEXCLUSION *newlist;
 	XARRAY transr, transt, transtemp;
 
 	cell = celllist[depth-1];
@@ -3951,7 +3951,7 @@ void dr_quickaccumulateexclusion(INTBIG depth, NODEPROTO **celllist, XARRAY *tra
 			if (depth >= MAXHIERARCHYDEPTH)
 			{
 				if (!dr_quickexclusionwarned)
-					ttyputerr(_("Depth of circuit exceeds %ld: unable to locate all DRC exclusion areas"),
+					ttyputerr(_((char*)"Depth of circuit exceeds %ld: unable to locate all DRC exclusion areas"),
 						MAXHIERARCHYDEPTH);
 				dr_quickexclusionwarned = TRUE;
 				continue;
@@ -3971,14 +3971,14 @@ void dr_quickreporterror(INTBIG errtype, TECHNOLOGY *tech, CHAR *msg,
 	POLYGON *poly1, GEOM *geom1, INTBIG layer1, INTBIG net1,
 	POLYGON *poly2, GEOM *geom2, INTBIG layer2, INTBIG net2)
 {
-	REGISTER NODEPROTO *np1, *np2;
-	REGISTER VARIABLE *var;
-	REGISTER INTBIG i, len, sortlayer, lambda;
-	REGISTER BOOLEAN showgeom;
-	REGISTER GEOM *p1, *p2;
-	REGISTER void *err, *infstr;
-	REGISTER CHAR *errmsg;
-	REGISTER POLYGON *poly;
+	 NODEPROTO *np1, *np2;
+	 VARIABLE *var;
+	 INTBIG i, len, sortlayer, lambda;
+	 BOOLEAN showgeom;
+	 GEOM *p1, *p2;
+	 void *err, *infstr;
+	 CHAR *errmsg;
+	 POLYGON *poly;
 	INTBIG lx, hx, ly, hy, lx2, hx2, ly2, hy2;
 
 	/* if this error is being ignored, don't record it */
@@ -4028,40 +4028,40 @@ if (dr_quickparalleldrc) emutexlock(dr_quickmutexio);
 	if (errtype == SPACINGERROR || errtype == NOTCHERROR)
 	{
 		/* describe spacing width error */
-		if (errtype == SPACINGERROR) addstringtoinfstr(infstr, _("Spacing")); else
-			addstringtoinfstr(infstr, _("Notch"));
+		if (errtype == SPACINGERROR) addstringtoinfstr(infstr, _((char*)"Spacing")); else
+			addstringtoinfstr(infstr, _((char*)"Notch"));
 		if (layer1 == layer2)
-			formatinfstr(infstr, _(" (layer %s)"), layername(tech, layer1));
-		addstringtoinfstr(infstr, x_(": "));
+			formatinfstr(infstr, _((char*)" (layer %s)"), layername(tech, layer1));
+		addstringtoinfstr(infstr, x_((char*)": "));
 		np2 = geomparent(geom2);
 		if (np1 != np2)
 		{
-			formatinfstr(infstr, _("cell %s, "), describenodeproto(np1));
+			formatinfstr(infstr, _((char*)"cell %s, "), describenodeproto(np1));
 		} else if (np1 != cell)
 		{
-			formatinfstr(infstr, _("[in cell %s] "), describenodeproto(np1));
+			formatinfstr(infstr, _((char*)"[in cell %s] "), describenodeproto(np1));
 		}
 		if (geom1->entryisnode)
-			formatinfstr(infstr, _("node %s"), describenodeinst(geom1->entryaddr.ni)); else
-				formatinfstr(infstr, _("arc %s"), describearcinst(geom1->entryaddr.ai));
+			formatinfstr(infstr, _((char*)"node %s"), describenodeinst(geom1->entryaddr.ni)); else
+				formatinfstr(infstr, _((char*)"arc %s"), describearcinst(geom1->entryaddr.ai));
 		if (layer1 != layer2)
-			formatinfstr(infstr, _(", layer %s"), layername(tech, layer1));
+			formatinfstr(infstr, _((char*)", layer %s"), layername(tech, layer1));
 
-		if (actual < 0) addstringtoinfstr(infstr, _(" OVERLAPS ")); else
-			if (actual == 0) addstringtoinfstr(infstr, _(" TOUCHES ")); else
-				formatinfstr(infstr, _(" LESS (BY %s) THAN %s TO "), latoa(limit-actual, lambda),
+		if (actual < 0) addstringtoinfstr(infstr, _((char*)" OVERLAPS ")); else
+			if (actual == 0) addstringtoinfstr(infstr, _((char*)" TOUCHES ")); else
+				formatinfstr(infstr, _((char*)" LESS (BY %s) THAN %s TO "), latoa(limit-actual, lambda),
 					latoa(limit, lambda));
 
 		if (np1 != np2)
-			formatinfstr(infstr, _("cell %s, "), describenodeproto(np2));
+			formatinfstr(infstr, _((char*)"cell %s, "), describenodeproto(np2));
 		if (geom2->entryisnode)
-			formatinfstr(infstr, _("node %s"), describenodeinst(geom2->entryaddr.ni)); else
-				formatinfstr(infstr, _("arc %s"), describearcinst(geom2->entryaddr.ai));
+			formatinfstr(infstr, _((char*)"node %s"), describenodeinst(geom2->entryaddr.ni)); else
+				formatinfstr(infstr, _((char*)"arc %s"), describearcinst(geom2->entryaddr.ai));
 		if (layer1 != layer2)
-			formatinfstr(infstr, _(", layer %s"), layername(tech, layer2));
+			formatinfstr(infstr, _((char*)", layer %s"), layername(tech, layer2));
 		if (msg != NULL)
 		{
-			addstringtoinfstr(infstr, x_("; "));
+			addstringtoinfstr(infstr, x_((char*)"; "));
 			addstringtoinfstr(infstr, msg);
 		}
 		sortlayer = mini(layer1, layer2);
@@ -4071,44 +4071,44 @@ if (dr_quickparalleldrc) emutexlock(dr_quickmutexio);
 		switch (errtype)
 		{
 			case MINWIDTHERROR:
-				addstringtoinfstr(infstr, _("Minimum width error:"));
+				addstringtoinfstr(infstr, _((char*)"Minimum width error:"));
 				break;
 			case MINSIZEERROR:
-				addstringtoinfstr(infstr, _("Minimum size error:"));
+				addstringtoinfstr(infstr, _((char*)"Minimum size error:"));
 				break;
 			case BADLAYERERROR:
-				formatinfstr(infstr, _("Invalid layer (%s):"), layername(tech, layer1));
+				formatinfstr(infstr, _((char*)"Invalid layer (%s):"), layername(tech, layer1));
 				break;
 			case LAYERSURROUNDERROR:
-				addstringtoinfstr(infstr, _("Layer surround error:"));
+				addstringtoinfstr(infstr, _((char*)"Layer surround error:"));
 				break;
 		}
-		formatinfstr(infstr, _(" cell %s"), describenodeproto(np1));
+		formatinfstr(infstr, _((char*)" cell %s"), describenodeproto(np1));
 		if (geom1->entryisnode)
 		{
-			formatinfstr(infstr, _(", node %s"), describenodeinst(geom1->entryaddr.ni));
+			formatinfstr(infstr, _((char*)", node %s"), describenodeinst(geom1->entryaddr.ni));
 		} else
 		{
-			formatinfstr(infstr, _(", arc %s"), describearcinst(geom1->entryaddr.ai));
+			formatinfstr(infstr, _((char*)", arc %s"), describearcinst(geom1->entryaddr.ai));
 		}
 		if (errtype == MINWIDTHERROR)
 		{
-			formatinfstr(infstr, _(", layer %s"), layername(tech, layer1));
-			formatinfstr(infstr, _(" LESS THAN %s WIDE (IS %s)"),
+			formatinfstr(infstr, _((char*)", layer %s"), layername(tech, layer1));
+			formatinfstr(infstr, _((char*)" LESS THAN %s WIDE (IS %s)"),
 				latoa(limit, lambda), latoa(actual, lambda));
 		} else if (errtype == MINSIZEERROR)
 		{
-			formatinfstr(infstr, _(" LESS THAN %s IN SIZE (IS %s)"),
+			formatinfstr(infstr, _((char*)" LESS THAN %s IN SIZE (IS %s)"),
 				latoa(limit, lambda), latoa(actual, lambda));
 		} else if (errtype == LAYERSURROUNDERROR)
 		{
-			formatinfstr(infstr, _(", layer %s"), layername(tech, layer1));
-			formatinfstr(infstr, _(" NEEDS SURROUND OF LAYER %s BY %s"),
+			formatinfstr(infstr, _((char*)", layer %s"), layername(tech, layer1));
+			formatinfstr(infstr, _((char*)" NEEDS SURROUND OF LAYER %s BY %s"),
 				layername(tech, layer2), latoa(limit, lambda));
 		}
 		sortlayer = layer1;
 	}
-	if (rule != 0) formatinfstr(infstr, _(" [rule %s]"), rule);
+	if (rule != 0) formatinfstr(infstr, _((char*)" [rule %s]"), rule);
 	errmsg = returninfstr(infstr);
 	if (dr_logerrors)
 	{
@@ -4120,7 +4120,7 @@ if (dr_quickparalleldrc) emutexlock(dr_quickmutexio);
 		if (geom2 != NOGEOM) addgeomtoerror(err, geom2, showgeom, 0, 0);
 	} else
 	{
-		ttyputerr(x_("%s"), errmsg);
+		ttyputerr(x_((char*)"%s"), errmsg);
 	}
 
 /* END critical section */

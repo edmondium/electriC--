@@ -293,7 +293,7 @@ static INTBIG     drcb_cropbox(INTBIG *lx, INTBIG *hx, INTBIG *ly, INTBIG *hy, I
 
 BOOLEAN drcb_initonce(void)
 {
-	REGISTER INTBIG i;
+	 INTBIG i;
 
 	/* code cannot be called by multiple procesors: uses globals */
 	NOT_REENTRANT;
@@ -311,9 +311,9 @@ BOOLEAN drcb_initonce(void)
 
 BOOLEAN drcb_makestateblocks(INTBIG numstates)
 {
-	REGISTER INTBIG i;
-	REGISTER STATE **newstates;
-	REGISTER void **newlocks;
+	 INTBIG i;
+	 STATE **newstates;
+	 void **newlocks;
 
 	/* code cannot be called by multiple procesors: uses globals */
 	NOT_REENTRANT;
@@ -384,10 +384,10 @@ BOOLEAN drcb_makestateblocks(INTBIG numstates)
 
 void drcb_term(void)
 {
-	REGISTER INTBIG i;
-	REGISTER CHAR **list;
-	REGISTER HASHTABLE *ht;
-	REGISTER SHAPE *shape;
+	 INTBIG i;
+	 CHAR **list;
+	 HASHTABLE *ht;
+	 SHAPE *shape;
 
 	for(i=0; i<drcb_statecount; i++)
 	{
@@ -458,8 +458,8 @@ void drcb_term(void)
  */
 BOOLEAN drcb_init(NODEPROTO *cell)
 {
-	REGISTER TECHNOLOGY *tech;
-	REGISTER INTBIG i, l;
+	 TECHNOLOGY *tech;
+	 INTBIG i, l;
 
 	/* do one-time allocation */
 	if (drcb_initonce()) return(TRUE);
@@ -494,7 +494,7 @@ BOOLEAN drcb_init(NODEPROTO *cell)
 	}
 
 	/* clear errors */
-	initerrorlogging(_("DRC"));
+	initerrorlogging(_((char*)"DRC"));
 
 	/* mark that this will be a hierarchical check */
 	drcb_hierarchicalcheck = TRUE;
@@ -507,8 +507,8 @@ BOOLEAN drcb_init(NODEPROTO *cell)
  */
 void drcb_initincrementalcheck(NODEPROTO *cell)
 {
-	REGISTER NODEINST *ni;
-	REGISTER HASHTABLE *h;
+	 NODEINST *ni;
+	 HASHTABLE *h;
 
 	/* do one-time allocation */
 	if (drcb_initonce()) return;
@@ -555,7 +555,7 @@ void drcb_initincrementalcheck(NODEPROTO *cell)
 				h, &drcb_state[0]->netindex);
 			if (drcb_hashinsert(drcb_incrementalhni, (CHAR *)ni, (CHAR *)h, 0) != 0)
 			{
-				ttyputerr(x_("DRC error 1 inserting node %s into hash table"),
+				ttyputerr(x_((char*)"DRC error 1 inserting node %s into hash table"),
 					describenodeinst(ni));
 				return;
 			}
@@ -577,9 +577,9 @@ void drcb_initincrementalcheck(NODEPROTO *cell)
  */
 void drcb_checkincremental(GEOM *geom, BOOLEAN partial)
 {
-	REGISTER NODEINST *ni;
-	REGISTER ARCINST *ai;
-	REGISTER HASHTABLE *h;
+	 NODEINST *ni;
+	 ARCINST *ai;
+	 HASHTABLE *h;
 
 	if (geom->entryisnode)
 	{
@@ -589,7 +589,7 @@ void drcb_checkincremental(GEOM *geom, BOOLEAN partial)
 		h = (HASHTABLE *)drcb_hashsearch(drcb_incrementalhni, (CHAR *)ni);
 		if (h == NULL)
 		{
-			ttyputerr(x_("DRC error 2 locating node %s in hash table"),
+			ttyputerr(x_((char*)"DRC error 2 locating node %s in hash table"),
 				describenodeinst(ni));
 			return;
 		}
@@ -611,11 +611,11 @@ void drcb_checkincremental(GEOM *geom, BOOLEAN partial)
  */
 INTBIG drcb_check(NODEPROTO *cell, BOOLEAN report, BOOLEAN justarea)
 {
-	REGISTER NODEPROTO *np, *snp;
-	REGISTER LIBRARY *lib;
-	REGISTER INTBIG errorcount, i;
+	 NODEPROTO *np, *snp;
+	 LIBRARY *lib;
+	 INTBIG errorcount, i;
 	INTBIG lx, hx, ly, hy;
-	REGISTER float elapsed;
+	 float elapsed;
 
 	/* code cannot be called by multiple procesors: uses globals */
 	NOT_REENTRANT;
@@ -624,7 +624,7 @@ INTBIG drcb_check(NODEPROTO *cell, BOOLEAN report, BOOLEAN justarea)
 	if (report) starttimer();
 	if (drcb_init(cell)) return(0);
 
-	ttyputmsg(x_("Maximum interaction distance is %s"),
+	ttyputmsg(x_((char*)"Maximum interaction distance is %s"),
 		latoa(drcb_interactiondistance, 0));
 
 	/* mark all cells unchecked */
@@ -650,7 +650,7 @@ INTBIG drcb_check(NODEPROTO *cell, BOOLEAN report, BOOLEAN justarea)
 		snp = us_getareabounds(&lx, &hx, &ly, &hy);
 		if (snp != cell)
 		{
-			ttyputmsg(_("Cannot check selection: it is not in the current cell"));
+			ttyputmsg(_((char*)"Cannot check selection: it is not in the current cell"));
 			justarea = FALSE;
 		}
 	} else lx = hx = ly = hy = 0;
@@ -666,7 +666,7 @@ INTBIG drcb_check(NODEPROTO *cell, BOOLEAN report, BOOLEAN justarea)
 		elapsed = endtimer();
 		if (elapsed > 60.0 && (us_useroptions&BEEPAFTERLONGJOB) != 0)
 			ttybeep(SOUNDBEEP, TRUE);
-		ttyputmsg(_("%ld errors found (took %s)"), errorcount, explainduration(elapsed));
+		ttyputmsg(_((char*)"%ld errors found (took %s)"), errorcount, explainduration(elapsed));
 	}
 	termerrorlogging(report);
 	return(errorcount);
@@ -681,16 +681,16 @@ INTBIG drcb_check(NODEPROTO *cell, BOOLEAN report, BOOLEAN justarea)
  */
 INTBIG drcb_checkallprotocontents(STATE *state, NODEPROTO *np, BOOLEAN justarea, INTBIG lx, INTBIG hx, INTBIG ly, INTBIG hy)
 {
-	REGISTER HASHTABLE *nhpp, *nhai;
-	REGISTER NODEINST *ni;
-	REGISTER NODEPROTO *savetop;
-	REGISTER VARIABLE *var;
+	 HASHTABLE *nhpp, *nhai;
+	 NODEINST *ni;
+	 NODEPROTO *savetop;
+	 VARIABLE *var;
 	float elapsed;
-	REGISTER INTBIG ret, localerrors, errcount;
-	REGISTER BOOLEAN allsubcellsstillok;
+	 INTBIG ret, localerrors, errcount;
+	 BOOLEAN allsubcellsstillok;
 	INTBIG slx, shx, sly, shy;
 	XARRAY xrot, xtrn, trans;
-	REGISTER UINTBIG lastgooddate, lastchangedate;
+	 UINTBIG lastgooddate, lastchangedate;
 	NODEINST top;	/* Dummy node instance for node */
 	GEOM topgeom;	/* Dummy geometry module for dummy top node */
 
@@ -743,7 +743,7 @@ INTBIG drcb_checkallprotocontents(STATE *state, NODEPROTO *np, BOOLEAN justarea,
 	}
 
 	/* announce progress */
-	ttyputmsg(_("Checking cell %s"), describenodeproto(np));
+	ttyputmsg(_((char*)"Checking cell %s"), describenodeproto(np));
 
 	/* get information about this cell */
 	state->netindex = 1;    /* !! per-processor initialization */
@@ -793,10 +793,10 @@ INTBIG drcb_checkallprotocontents(STATE *state, NODEPROTO *np, BOOLEAN justarea,
 	{
 		(void)setvalkey((INTBIG)np, VNODEPROTO, dr_lastgooddrckey,
 			(INTBIG)getcurrenttime(), VINTEGER);
-		ttyputmsg(_("   No errors found (%s so far)"), explainduration(elapsed));
+		ttyputmsg(_((char*)"   No errors found (%s so far)"), explainduration(elapsed));
 	} else
 	{
-		ttyputmsg(_("   %ld errors found (%s so far)"), localerrors,
+		ttyputmsg(_((char*)"   %ld errors found (%s so far)"), localerrors,
 			explainduration(elapsed));
 	}
 	return(0);
@@ -819,11 +819,11 @@ INTBIG drcb_checkallprotocontents(STATE *state, NODEPROTO *np, BOOLEAN justarea,
 BOOLEAN drcb_checkprotocontents(STATE *state, NODEPROTO *np, HASHTABLE *hpp, HASHTABLE *hai,
 	BOOLEAN justarea, INTBIG lx, INTBIG hx, INTBIG ly, INTBIG hy)
 {
-	REGISTER NODEINST *ni;
-	REGISTER ARCINST *ai;
-	REGISTER INTBIG freq;
-	REGISTER BOOLEAN ret, wanttostop;
-	REGISTER HASHTABLE *hni, *nhpp, *h;
+	 NODEINST *ni;
+	 ARCINST *ai;
+	 INTBIG freq;
+	 BOOLEAN ret, wanttostop;
+	 HASHTABLE *hni, *nhpp, *h;
 
 	hni = drcb_hashcreate(HTABLE_NODEARC, 2, np);
 	if (hni == NOHASHTABLE) return(TRUE);
@@ -838,7 +838,7 @@ BOOLEAN drcb_checkprotocontents(STATE *state, NODEPROTO *np, HASHTABLE *hpp, HAS
 			drcb_getnodenetworks(ni, hpp, hai, nhpp, &state->netindex);
 			if (drcb_hashinsert(hni, (CHAR *)ni, (CHAR *)nhpp, 0) != 0)
 			{
-				ttyputerr(x_("DRC error 3 inserting node %s into hash table"),
+				ttyputerr(x_((char*)"DRC error 3 inserting node %s into hash table"),
 					describenodeinst(ni));
 			}
 		}
@@ -865,7 +865,7 @@ BOOLEAN drcb_checkprotocontents(STATE *state, NODEPROTO *np, HASHTABLE *hpp, HAS
 			h = (HASHTABLE *)drcb_hashsearch(hni, (CHAR *)ni);
 			if (h == NULL)
 			{
-				ttyputerr(x_("DRC error 4 locating node %s in hash table"),
+				ttyputerr(x_((char*)"DRC error 4 locating node %s in hash table"),
 					describenodeinst(ni));
 			}
 			state->nhpp = h;
@@ -910,14 +910,14 @@ BOOLEAN drcb_checkprotocontents(STATE *state, NODEPROTO *np, HASHTABLE *hpp, HAS
  */
 BOOLEAN drcb_checknodeinst(STATE *state, NODEINST *ni, HASHTABLE *nhpp, BOOLEAN partial)
 {
-	REGISTER INTBIG tot, j, actual, minsize;
-	REGISTER BOOLEAN ret, errorsfound;
+	 INTBIG tot, j, actual, minsize;
+	 BOOLEAN ret, errorsfound;
 	XARRAY trans;
 	CHAR *rule;
 	INTBIG minx, miny, lx, hx, ly, hy;
-	REGISTER INTBIG net;
-	REGISTER POLYLIST *polylist;
-	REGISTER POLYGON *poly;
+	 INTBIG net;
+	 POLYLIST *polylist;
+	 POLYGON *poly;
 
 	makerot(ni, trans);
 
@@ -986,11 +986,11 @@ BOOLEAN drcb_checknodeinst(STATE *state, NODEINST *ni, HASHTABLE *nhpp, BOOLEAN 
  */
 BOOLEAN drcb_checkarcinst(STATE *state, ARCINST *ai, BOOLEAN partial)
 {
-	REGISTER INTBIG tot, j;
-	REGISTER BOOLEAN ret, errorsfound;
-	REGISTER INTBIG net;
-	REGISTER POLYLIST *polylist;
-	REGISTER POLYGON *poly;
+	 INTBIG tot, j;
+	 BOOLEAN ret, errorsfound;
+	 INTBIG net;
+	 POLYLIST *polylist;
+	 POLYGON *poly;
 
 	/* get all of the polygons on this arc */
 	polylist = state->polylist;
@@ -1039,13 +1039,13 @@ BOOLEAN drcb_checkarcinst(STATE *state, ARCINST *ai, BOOLEAN partial)
 BOOLEAN drcb_checkminwidth(STATE *state, GEOM *geom, INTBIG layer, POLYGON *poly,
 	TECHNOLOGY *tech, BOOLEAN withincell)
 {
-	REGISTER INTBIG minwidth, actual;
+	 INTBIG minwidth, actual;
 	INTBIG lx, hx, ly, hy, ix, iy;
 	CHAR *rule;
 	BOOLEAN p1found, p2found, p3found;
-	REGISTER INTBIG ang, oang, perpang;
-	REGISTER NODEPROTO *cell;
-	REGISTER INTBIG xl1, yl1, xl2, yl2, xl3, yl3, xr1, yr1, xr2, yr2, xr3, yr3,
+	 INTBIG ang, oang, perpang;
+	 NODEPROTO *cell;
+	 INTBIG xl1, yl1, xl2, yl2, xl3, yl3, xr1, yr1, xr2, yr2, xr3, yr3,
 		cx, cy, fx, fy, tx, ty, ofx, ofy, otx, oty, i, j;
 
 	cell = geomparent(geom);
@@ -1199,9 +1199,9 @@ INTBIG drcb_checknodeinteractions(STATE *state, NODEINST *nodeinst, XARRAY mytra
 	HASHTABLE *hpp, HASHTABLE *hai, NODEPROTO *intersect_list, BOOLEAN justarea,
 	INTBIG lx, INTBIG hx, INTBIG ly, INTBIG hy)
 {
-	REGISTER NODEINST *ni;
-	REGISTER INTBIG ret, i, numprocesses, numtasks;
-	REGISTER BOOLEAN errorsfound;
+	 NODEINST *ni;
+	 INTBIG ret, i, numprocesses, numtasks;
+	 BOOLEAN errorsfound;
 
 	/* see if multiple processes should be invoked here */
 	if (intersect_list == NONODEPROTO && drcb_paralleldrc)
@@ -1339,9 +1339,9 @@ NODEINST *drcb_getnextparallelnodeinst(STATE *state)
  */
 void *drcb_dothread(void *argument)
 {
-	REGISTER NODEINST *ni;
-	REGISTER INTBIG ret;
-	REGISTER STATE *state;
+	 NODEINST *ni;
+	 INTBIG ret;
+	 STATE *state;
 
 	state = drcb_state[(INTBIG)argument];
 	for(;;)
@@ -1374,12 +1374,12 @@ INTBIG drcb_analyzenode(STATE *state, NODEINST *ni, XARRAY mytrans,
 	HASHTABLE *hpp, HASHTABLE *hai, NODEPROTO *intersect_list,
 	BOOLEAN justarea, INTBIG arealx, INTBIG areahx, INTBIG arealy, INTBIG areahy)
 {
-	REGISTER NODEPROTO *child_intersects;
+	 NODEPROTO *child_intersects;
 	XARRAY subtrans, temptrans1, temptrans2;
 	INTBIG lx, hx, ly, hy;
-	REGISTER INTBIG ret;
-	REGISTER BOOLEAN errorsfound;
-	REGISTER HASHTABLE *nhai, *nhpp;
+	 INTBIG ret;
+	 BOOLEAN errorsfound;
+	 HASHTABLE *nhai, *nhpp;
 
 	/* cell: recursively check it */
 	nhpp = drcb_hashcreate(HTABLE_PORT, 1, ni->proto);
@@ -1471,11 +1471,11 @@ void drcb_box(NODEINST *ni, INTBIG *lxp, INTBIG *hxp, INTBIG *lyp, INTBIG *hyp)
 INTBIG drcb_checkintersections(STATE *state, NODEINST *nip, NODEPROTO *intersect_list,
 	HASHTABLE *hpp, HASHTABLE *hai, XARRAY mytrans)
 {
-	REGISTER NODEINST *ni;
-	REGISTER NODEPROTO *niproto;
-	REGISTER HASHTABLE *hni, *nhpp;
+	 NODEINST *ni;
+	 NODEPROTO *niproto;
+	 HASHTABLE *hni, *nhpp;
 	CHECKSHAPEARG csa;
-	REGISTER BOOLEAN ret;
+	 BOOLEAN ret;
 
 	niproto = nip->proto;
 	hni = drcb_hashcreate(HTABLE_NODEARC, 2, niproto);
@@ -1496,7 +1496,7 @@ INTBIG drcb_checkintersections(STATE *state, NODEINST *nip, NODEPROTO *intersect
 			drcb_getnodenetworks(ni, hpp, hai, nhpp, &state->netindex);
 			if (drcb_hashinsert(hni, (CHAR *)ni, (CHAR *)nhpp, 0) != 0)
 			{
-				ttyputerr(x_("DRC error 5 inserting node %s into hash table"),
+				ttyputerr(x_((char*)"DRC error 5 inserting node %s into hash table"),
 					describenodeinst(ni));
 			}
 		}
@@ -1535,8 +1535,8 @@ INTBIG drcb_checkintersections(STATE *state, NODEINST *nip, NODEPROTO *intersect
 BOOLEAN drcb_walkrtree(RTNODE *rtn, BOOLEAN (*func)(GEOM*, CHECKSHAPEARG*),
 	CHECKSHAPEARG *arg)
 {
-	REGISTER BOOLEAN ret, errorsfound;
-	REGISTER INTBIG j;
+	 BOOLEAN ret, errorsfound;
+	 INTBIG j;
 
 	errorsfound = FALSE;
 	for(j = 0; j < rtn->total; j++)
@@ -1563,11 +1563,11 @@ BOOLEAN drcb_walkrtree(RTNODE *rtn, BOOLEAN (*func)(GEOM*, CHECKSHAPEARG*),
  */
 BOOLEAN drcb_checkshape(GEOM *g, CHECKSHAPEARG *csap)
 {
-	REGISTER NODEINST *sni, *ni;
-	REGISTER BOOLEAN ret;
-	REGISTER ARCINST *sai;
-	REGISTER SHAPE *shape;
-	REGISTER POLYGON *poly;
+	 NODEINST *sni, *ni;
+	 BOOLEAN ret;
+	 ARCINST *sai;
+	 SHAPE *shape;
+	 POLYGON *poly;
 
 	/*
 	 * Check shape against all intersecting elements in the nodeinst.
@@ -1644,11 +1644,11 @@ NODEPROTO *drcb_findintersectingelements(STATE *state, NODEINST *nodeinst,
 	INTBIG lowx, INTBIG highx, INTBIG lowy, INTBIG highy, XARRAY mytrans,
 		HASHTABLE *hpp, HASHTABLE *hai, NODEPROTO *parentintersectcell)
 {
-	REGISTER HASHTABLE *nhpp;
-	REGISTER INTBIG searchkey, foundmore;
-	REGISTER NODEPROTO *intersect_list;
-	REGISTER NODEINST *ni;
-	REGISTER GEOM *geom;
+	 HASHTABLE *nhpp;
+	 INTBIG searchkey, foundmore;
+	 NODEPROTO *intersect_list;
+	 NODEINST *ni;
+	 GEOM *geom;
 	XARRAY itrans, subtrans, temptrans1, temptrans2, temptrans3;
 	INTBIG lx, hx, ly, hy;
 
@@ -1754,7 +1754,7 @@ NODEPROTO *drcb_findintersectingelements(STATE *state, NODEINST *nodeinst,
 			searchkey = initsearch(lowx, highx, lowy, highy, parentintersectcell);
 			while((geom = nextobject(searchkey)) != NOGEOM)
 			{
-				REGISTER GEOM *g;
+				 GEOM *g;
 				SHAPE *oldshape, *newshape;
 
 				/* we're only interested if the shape intersects the drc box */
@@ -1769,7 +1769,7 @@ NODEPROTO *drcb_findintersectingelements(STATE *state, NODEINST *nodeinst,
 				newshape = drcb_allocshape(state);
 				if (newshape == 0)
 				{
-					ttyputerr(_("DRC error allocating memory for shape"));
+					ttyputerr(_((char*)"DRC error allocating memory for shape"));
 					continue;
 				}
 				*newshape = *oldshape;
@@ -1810,12 +1810,12 @@ BOOLEAN drcb_intersectsubtree(STATE *state, NODEPROTO *intersect_list,
 	NODEPROTO *np, XARRAY itrans, XARRAY mytrans, INTBIG lowx, INTBIG highx,
 		INTBIG lowy, INTBIG highy, HASHTABLE *hpp)
 {
-	REGISTER HASHTABLE *nhpp, *hai;
-	REGISTER INTBIG searchkey;
-	REGISTER GEOM *geom;
+	 HASHTABLE *nhpp, *hai;
+	 INTBIG searchkey;
+	 GEOM *geom;
 	XARRAY subtrans, temptrans1, temptrans2, temptrans3;
 	INTBIG lx, hx, ly, hy;
-	REGISTER NODEINST *ni;
+	 NODEINST *ni;
 
 	hai = drcb_getarcnetworks(np, hpp, &state->netindex);
 	if (hai == NOHASHTABLE) return(TRUE);
@@ -1892,13 +1892,13 @@ BOOLEAN drcb_getnodeinstshapes(STATE *state, NODEPROTO *intersect_list, NODEINST
 {
 	XARRAY rtrans, trans;
 	INTBIG lx, hx, ly, hy, net;
-	REGISTER INTBIG j, n;
-	REGISTER LIBRARY *lib;
-	REGISTER POLYLIST *polylist;
-	REGISTER POLYGON *poly;
-	REGISTER GEOM *geom;
-	REGISTER TECHNOLOGY *tech;
-	REGISTER SHAPE *shape;
+	 INTBIG j, n;
+	 LIBRARY *lib;
+	 POLYLIST *polylist;
+	 POLYGON *poly;
+	 GEOM *geom;
+	 TECHNOLOGY *tech;
+	 SHAPE *shape;
 
 	makerot(ni, rtrans);
 	transmult(rtrans, itrans, trans);
@@ -1976,13 +1976,13 @@ BOOLEAN drcb_getarcinstshapes(STATE *state, NODEPROTO *intersect_list, ARCINST *
 	XARRAY trans, INTBIG lowx, INTBIG highx, INTBIG lowy, INTBIG highy, HASHTABLE *hai)
 {
 	INTBIG lx, hx, ly, hy;
-	REGISTER INTBIG j, n;
-	REGISTER POLYGON *poly;
-	REGISTER POLYLIST *polylist;
-	REGISTER GEOM *geom;
-	REGISTER LIBRARY *lib;
-	REGISTER TECHNOLOGY *tech;
-	REGISTER SHAPE *shape;
+	 INTBIG j, n;
+	 POLYGON *poly;
+	 POLYLIST *polylist;
+	 GEOM *geom;
+	 LIBRARY *lib;
+	 TECHNOLOGY *tech;
+	 SHAPE *shape;
 
 	polylist = state->polylist;
 	drcb_getarcpolys(ai, polylist);
@@ -2048,9 +2048,9 @@ BOOLEAN drcb_getarcinstshapes(STATE *state, NODEPROTO *intersect_list, ARCINST *
  */
 void drcb_linkgeom(GEOM *geom, NODEPROTO *parnt)
 {
-	REGISTER RTNODE *rtn;
-	REGISTER INTBIG i, bestsubnode;
-	REGISTER INTBIG bestexpand, area, newarea, expand, scaledown;
+	 RTNODE *rtn;
+	 INTBIG i, bestsubnode;
+	 INTBIG bestexpand, area, newarea, expand, scaledown;
 	INTBIG lxv, hxv, lyv, hyv;
 
 	/* find the leaf that would expand least by adding this node */
@@ -2101,7 +2101,7 @@ void drcb_linkgeom(GEOM *geom, NODEPROTO *parnt)
 
 INTBIG drcb_network(HASHTABLE *ht, CHAR *cp, INTBIG type)
 {
-	REGISTER CHAR *net;
+	 CHAR *net;
 
 	if (ht == 0) return(NONET);
 	net = drcb_hashsearch(ht, cp);
@@ -2109,11 +2109,11 @@ INTBIG drcb_network(HASHTABLE *ht, CHAR *cp, INTBIG type)
 	{
 		if (type != 0)
 		{
-			ttyputmsg(x_("DRC error locating port %s in hashtable"),
+			ttyputmsg(x_((char*)"DRC error locating port %s in hashtable"),
 				((PORTPROTO *)cp)->protoname);
 		} else
 		{
-			ttyputmsg(x_("DRC error locating arc %s in hashtable"),
+			ttyputmsg(x_((char*)"DRC error locating arc %s in hashtable"),
 				describearcinst((ARCINST *)cp));
 		}
 		return(NONET);
@@ -2148,20 +2148,20 @@ BOOLEAN drcb_badbox(CHECKSHAPEARG *csap, STATE *state, GEOM *geom,
 	INTBIG layer, TECHNOLOGY *tech, NODEPROTO *cell, POLYGON *poly, INTBIG net,
 		BOOLEAN partial)
 {
-	REGISTER GEOM *ngeom;
-	REGISTER NODEINST *ni;
-	REGISTER NODEPROTO *np;
-	REGISTER ARCINST *ai;
-	REGISTER ARCPROTO *ap;
-	REGISTER BOOLEAN touch, ret, multi, basemulti;
-	REGISTER INTBIG nnet, bound, search, dist, j, tot, minsize, nminsize,
+	 GEOM *ngeom;
+	 NODEINST *ni;
+	 NODEPROTO *np;
+	 ARCINST *ai;
+	 ARCPROTO *ap;
+	 BOOLEAN touch, ret, multi, basemulti;
+	 INTBIG nnet, bound, search, dist, j, tot, minsize, nminsize,
 		lxbound, hxbound, lybound, hybound, count;
-	REGISTER POLYLIST *subpolylist;
-	REGISTER POLYGON *npoly;
+	 POLYLIST *subpolylist;
+	 POLYGON *npoly;
 	XARRAY trans;
 	CHAR *rule;
-	REGISTER BOOLEAN con;
-	REGISTER HASHTABLE *pihpp;
+	 BOOLEAN con;
+	 HASHTABLE *pihpp;
 	INTBIG lx, hx, ly, hy, edge;
 
 	/* see how far around the box it is necessary to search */
@@ -2222,7 +2222,7 @@ BOOLEAN drcb_badbox(CHECKSHAPEARG *csap, STATE *state, GEOM *geom,
 			pihpp = (HASHTABLE *)drcb_hashsearch(state->hni, (CHAR *)ni);
 			if (pihpp == NULL)
 			{
-				ttyputerr(x_("DRC error 6 locating node %s in hash table"),
+				ttyputerr(x_((char*)"DRC error 6 locating node %s in hash table"),
 					describenodeinst(ni));
 				continue;
 			}
@@ -2318,8 +2318,8 @@ BOOLEAN drcb_badbox(CHECKSHAPEARG *csap, STATE *state, GEOM *geom,
  */
 BOOLEAN drcb_ismulticut(NODEINST *ni)
 {
-	REGISTER NODEPROTO *np;
-	REGISTER TECHNOLOGY *tech;
+	 NODEPROTO *np;
+	 TECHNOLOGY *tech;
 	TECH_NODES *thistn;
 	INTBIG fewer, cutcount;
 	POLYLOOP mypl;
@@ -2360,14 +2360,14 @@ BOOLEAN drcb_checkdist(CHECKSHAPEARG *csap, STATE *state, TECHNOLOGY *tech,
 	INTBIG layer2, INTBIG net2, GEOM *geom2, POLYGON *poly2, HASHTABLE *hpp2,
 	BOOLEAN con, INTBIG dist, INTBIG edge, CHAR *rule, NODEPROTO *cell)
 {
-	REGISTER BOOLEAN isbox1, isbox2, needboth, withincell, maytouch;
+	 BOOLEAN isbox1, isbox2, needboth, withincell, maytouch;
 	INTBIG lx1, hx1, ly1, hy1, lx2, hx2, ly2, hy2, xf1, yf1, xf2, yf2;
 	CHAR *msg, *sizerule;
-	REGISTER POLYGON *origpoly1, *origpoly2;
-	REGISTER INTBIG pdx, pdy, pd, pdedge, fun, errtype, minwidth,
+	 POLYGON *origpoly1, *origpoly2;
+	 INTBIG pdx, pdy, pd, pdedge, fun, errtype, minwidth,
 		lxb, hxb, lyb, hyb, actual, intervening;
 	XARRAY trans1, trans2;
-	REGISTER void *infstr;
+	 void *infstr;
 
 	/* turn off flag that the nodeinst may be undersized */
 	state->tinynodeinst = NONODEINST;
@@ -2615,7 +2615,7 @@ BOOLEAN drcb_checkdist(CHECKSHAPEARG *csap, STATE *state, TECHNOLOGY *tech,
 			infstr = initinfstr();
 			if (drcb_paralleldrc)
 				emutexlock(drcb_mutexio);	/* BEGIN critical section */
-			formatinfstr(infstr, _("%s is too small for the %s"),
+			formatinfstr(infstr, _((char*)"%s is too small for the %s"),
 				describenodeinst(state->tinynodeinst), geomname(state->tinyobj));
 			if (drcb_paralleldrc)
 				emutexunlock(drcb_mutexio);	/* END critical section */
@@ -2652,9 +2652,9 @@ BOOLEAN drcb_lookforpoints(STATE *state, GEOM *geom1, GEOM *geom2, INTBIG layer,
 {
 	INTBIG xf3, yf3, flx, fhx, fly, fhy, lx1, hx1, ly1, hy1;
 	BOOLEAN p1found, p2found, p3found, allfound;
-	REGISTER GEOM *g;
-	REGISTER INTBIG sea;
-	REGISTER SHAPE *shape;
+	 GEOM *g;
+	 INTBIG sea;
+	 SHAPE *shape;
 
 	xf3 = (xf1+xf2) / 2;
 	yf3 = (yf1+yf2) / 2;
@@ -2733,9 +2733,9 @@ BOOLEAN drcb_lookforpoints(STATE *state, GEOM *geom1, GEOM *geom2, INTBIG layer,
 INTBIG drcb_findinterveningpoints(POLYGON *poly1, POLYGON *poly2, INTBIG *xf1, INTBIG *yf1,
 	INTBIG *xf2, INTBIG *yf2)
 {
-	REGISTER BOOLEAN isbox1, isbox2;
+	 BOOLEAN isbox1, isbox2;
 	INTBIG lx1, hx1, ly1, hy1, lx2, hx2, ly2, hy2;
-	REGISTER INTBIG xc, yc;
+	 INTBIG xc, yc;
 
 	isbox1 = isbox(poly1, &lx1, &hx1, &ly1, &hy1);
 	isbox2 = isbox(poly2, &lx2, &hx2, &ly2, &hy2);
@@ -2829,15 +2829,15 @@ BOOLEAN drcb_lookforlayer(STATE *state, NODEPROTO *cell, INTBIG layer, XARRAY mo
 	INTBIG lx, INTBIG hx, INTBIG ly, INTBIG hy, INTBIG xf1, INTBIG yf1, BOOLEAN *p1found,
 		INTBIG xf2, INTBIG yf2, BOOLEAN *p2found, INTBIG xf3, INTBIG yf3, BOOLEAN *p3found)
 {
-	REGISTER INTBIG sea, i, tot;
-	REGISTER GEOM *g;
-	REGISTER NODEINST *ni;
-	REGISTER ARCINST *ai;
-	REGISTER BOOLEAN reasonable;
+	 INTBIG sea, i, tot;
+	 GEOM *g;
+	 NODEINST *ni;
+	 ARCINST *ai;
+	 BOOLEAN reasonable;
 	INTBIG newlx, newhx, newly, newhy;
 	XARRAY trans, rot, bound;
-	REGISTER POLYGON *poly;
-	REGISTER POLYLIST *plist;
+	 POLYGON *poly;
+	 POLYLIST *plist;
 
 	plist = state->lookforlayerpolylist;
 	sea = initsearch(lx, hx, ly, hy, cell);
@@ -2912,15 +2912,15 @@ BOOLEAN drcb_activeontransistor(CHECKSHAPEARG *csap, GEOM *geom1, INTBIG layer1,
 	INTBIG net1, POLYGON *poly1, GEOM *geom2, INTBIG layer2, INTBIG net2,
 		POLYGON *poly2, STATE *state, TECHNOLOGY *tech)
 {
-	REGISTER INTBIG fun, sea, xf3, yf3, net, cx, cy, blx, bhx, bly, bhy;
+	 INTBIG fun, sea, xf3, yf3, net, cx, cy, blx, bhx, bly, bhy;
 	INTBIG lx1, hx1, ly1, hy1, lx2, hx2, ly2, hy2, xf1, yf1, xf2, yf2;
-	REGISTER BOOLEAN on1, on2, p1found, p2found, p3found;
-	REGISTER GEOM *g;
-	REGISTER SHAPE *shape;
-	REGISTER NODEINST *ni;
-	REGISTER PORTPROTO *badport;
-	REGISTER PORTARCINST *pi;
-	REGISTER HASHTABLE *hpp;
+	 BOOLEAN on1, on2, p1found, p2found, p3found;
+	 GEOM *g;
+	 SHAPE *shape;
+	 NODEINST *ni;
+	 PORTPROTO *badport;
+	 PORTARCINST *pi;
+	 HASHTABLE *hpp;
 
 	/* networks must be different */
 	if (net1 == net2) return(FALSE);
@@ -2962,7 +2962,7 @@ BOOLEAN drcb_activeontransistor(CHECKSHAPEARG *csap, GEOM *geom1, INTBIG layer1,
 		hpp = (HASHTABLE *)drcb_hashsearch(state->hni, (CHAR *)ni);
 		if (hpp == NULL)
 		{
-			ttyputerr(x_("DRC error 7 locating node %s in hash table (csap=%ld)"),
+			ttyputerr(x_((char*)"DRC error 7 locating node %s in hash table (csap=%ld)"),
 				describenodeinst(ni), csap);
 			continue;
 		}
@@ -3038,11 +3038,11 @@ BOOLEAN drcb_activeontransistor(CHECKSHAPEARG *csap, GEOM *geom1, INTBIG layer1,
  */
 void drcb_cropactivearc(STATE *state, ARCINST *ai, POLYLIST *plist)
 {
-	REGISTER INTBIG i, j, k, fun, tot, ntot;
+	 INTBIG i, j, k, fun, tot, ntot;
 	INTBIG lx, hx, ly, hy, nlx, nhx, nly, nhy;
-	REGISTER NODEINST *ni;
-	REGISTER POLYGON *poly, *npoly, *swappoly;
-	REGISTER BOOLEAN cropped;
+	 NODEINST *ni;
+	 POLYGON *poly, *npoly, *swappoly;
+	 BOOLEAN cropped;
 	XARRAY trans;
 
 	/* look for an active layer in this arc */
@@ -3102,11 +3102,11 @@ BOOLEAN drcb_cropnodeinst(CHECKSHAPEARG *csap, STATE *state, NODEINST *ni,
 	INTBIG nlayer, INTBIG nnet, GEOM *ngeom, INTBIG *lx, INTBIG *hx, INTBIG *ly, INTBIG *hy)
 {
 	INTBIG xl, xh, yl, yh;
-	REGISTER INTBIG tot, j, isconnected;
-	REGISTER BOOLEAN allgone;
-	REGISTER INTBIG temp, net;
-	REGISTER POLYLIST *polylist;
-	REGISTER POLYGON *poly;
+	 INTBIG tot, j, isconnected;
+	 BOOLEAN allgone;
+	 INTBIG temp, net;
+	 POLYLIST *polylist;
+	 POLYGON *poly;
 
 	polylist = state->croppolylist;
 	drcb_getnodeEpolys(ni, polylist, el_matid);
@@ -3160,7 +3160,7 @@ BOOLEAN drcb_cropnodeinst(CHECKSHAPEARG *csap, STATE *state, NODEINST *ni,
 INTBIG drcb_cropbox(INTBIG *lx, INTBIG *hx, INTBIG *ly, INTBIG *hy, INTBIG bx, INTBIG ux, INTBIG by,
 	INTBIG uy, INTBIG nlx, INTBIG nhx, INTBIG nly, INTBIG nhy)
 {
-	REGISTER INTBIG xoverlap, yoverlap;
+	 INTBIG xoverlap, yoverlap;
 
 	/* if the two boxes don't touch, just return */
 	if (bx >= *hx || by >= *hy || ux <= *lx || uy <= *ly) return(0);
@@ -3216,13 +3216,13 @@ BOOLEAN drcb_croparcinst(STATE *state, ARCINST *ai, INTBIG lay,
 {
 	INTBIG xl, xh, yl, yh;
 	XARRAY trans;
-	REGISTER INTBIG i, j, tot;
-	REGISTER INTBIG temp;
-	REGISTER NODEINST *ni;
-	REGISTER NODEPROTO *np;
-	REGISTER PORTPROTO *pp;
-	REGISTER POLYLIST *polylist;
-	REGISTER POLYGON *poly;
+	 INTBIG i, j, tot;
+	 INTBIG temp;
+	 NODEINST *ni;
+	 NODEPROTO *np;
+	 PORTPROTO *pp;
+	 POLYLIST *polylist;
+	 POLYGON *poly;
 
 	polylist = state->croppolylist;
 	for(i=0; i<2; i++)
@@ -3266,8 +3266,8 @@ BOOLEAN drcb_croparcinst(STATE *state, ARCINST *ai, INTBIG lay,
 INTBIG drcb_halfcropbox(INTBIG *lx, INTBIG *hx, INTBIG *ly, INTBIG *hy,
 	INTBIG bx, INTBIG ux, INTBIG by, INTBIG uy)
 {
-	REGISTER BOOLEAN crops;
-	REGISTER INTBIG lxe, hxe, lye, hye, biggestext;
+	 BOOLEAN crops;
+	 INTBIG lxe, hxe, lye, hye, biggestext;
 
 	/* if the two boxes don't touch, just return */
 	if (bx >= *hx || by >= *hy || ux <= *lx || uy <= *ly) return(0);
@@ -3331,10 +3331,10 @@ INTBIG drcb_halfcropbox(INTBIG *lx, INTBIG *hx, INTBIG *ly, INTBIG *hy,
  */
 BOOLEAN drcb_objtouch(GEOM *geom1, GEOM *geom2)
 {
-	REGISTER GEOM *temp;
-	REGISTER NODEINST *ni;
-	REGISTER ARCINST *ai;
-	REGISTER INTBIG i;
+	 GEOM *temp;
+	 NODEINST *ni;
+	 ARCINST *ai;
+	 INTBIG i;
 
 	if (geom1->entryisnode)
 	{
@@ -3362,9 +3362,9 @@ BOOLEAN drcb_objtouch(GEOM *geom1, GEOM *geom2)
  */
 HASHTABLE *drcb_getinitnets(NODEPROTO *np, INTBIG *netindex)
 {
-	REGISTER PORTPROTO *pp, *spp;
-	REGISTER CHAR *cp;
-	REGISTER HASHTABLE *ht;
+	 PORTPROTO *pp, *spp;
+	 CHAR *cp;
+	 HASHTABLE *ht;
 
 	ht = drcb_hashcreate(HTABLE_PORT, 1, np);
 	if (ht == NOHASHTABLE) return(NOHASHTABLE);
@@ -3380,12 +3380,12 @@ HASHTABLE *drcb_getinitnets(NODEPROTO *np, INTBIG *netindex)
 			cp = drcb_hashsearch(ht, (CHAR *)spp);
 			if (cp == NULL)
 			{
-				ttyputerr(x_("DRC error 8 locating port %s in hash table"), spp->protoname);
+				ttyputerr(x_((char*)"DRC error 8 locating port %s in hash table"), spp->protoname);
 				return(NOHASHTABLE);
 			}
 			if (drcb_hashinsert(ht, (CHAR *)pp, cp, 0) != 0)
 			{
-				ttyputerr(x_("DRC error 9 inserting port %s into hash table"), pp->protoname);
+				ttyputerr(x_((char*)"DRC error 9 inserting port %s into hash table"), pp->protoname);
 				return(NOHASHTABLE);
 			}
 			break;
@@ -3397,7 +3397,7 @@ HASHTABLE *drcb_getinitnets(NODEPROTO *np, INTBIG *netindex)
 			cp = (CHAR *)*netindex;
 			if (drcb_hashinsert(ht, (CHAR *)pp, cp, 0) != 0)
 			{
-				ttyputerr(x_("DRC error 10 inserting port %s into hash table"), pp->protoname);
+				ttyputerr(x_((char*)"DRC error 10 inserting port %s into hash table"), pp->protoname);
 				return(NOHASHTABLE);
 			}
 			(*netindex)++;
@@ -3415,11 +3415,11 @@ HASHTABLE *drcb_getinitnets(NODEPROTO *np, INTBIG *netindex)
  */
 HASHTABLE *drcb_getarcnetworks(NODEPROTO *np, HASHTABLE *hpp, INTBIG *netindex)
 {
-	REGISTER CHAR *cp;
-	REGISTER ARCINST *ai;
-	REGISTER PORTPROTO *pp;
-	REGISTER PORTARCINST *pi;
-	REGISTER HASHTABLE *hai;
+	 CHAR *cp;
+	 ARCINST *ai;
+	 PORTPROTO *pp;
+	 PORTARCINST *pi;
+	 HASHTABLE *hai;
 
 	hai = drcb_hashcreate(HTABLE_NODEARC, 3, np);
 	if (hai == NOHASHTABLE) return(NOHASHTABLE);
@@ -3436,7 +3436,7 @@ HASHTABLE *drcb_getarcnetworks(NODEPROTO *np, HASHTABLE *hpp, INTBIG *netindex)
 			cp = drcb_hashsearch(hpp, (CHAR *)pp);
 			if (cp == NULL)
 			{
-				ttyputerr(x_("DRC error 11 locating port %s in hash table"), pp->protoname);
+				ttyputerr(x_((char*)"DRC error 11 locating port %s in hash table"), pp->protoname);
 				return(NOHASHTABLE);
 			}
 			drcb_flatprop2(ai, hai, cp);
@@ -3463,15 +3463,15 @@ HASHTABLE *drcb_getarcnetworks(NODEPROTO *np, HASHTABLE *hpp, INTBIG *netindex)
  */
 void drcb_flatprop2(ARCINST *ai, HASHTABLE *hai, CHAR *cindex)
 {
-	REGISTER ARCINST *oai;
-	REGISTER NODEINST *ni;
-	REGISTER PORTARCINST *pi;
-	REGISTER INTBIG i;
+	 ARCINST *oai;
+	 NODEINST *ni;
+	 PORTARCINST *pi;
+	 INTBIG i;
 
 	/* set this arcinst to the current node number */
 	if (drcb_hashinsert(hai, (CHAR *)ai, cindex, 0) != 0)
 	{
-		ttyputerr(x_("DRC error 12 inserting arc %s into hash table"), describearcinst(ai));
+		ttyputerr(x_((char*)"DRC error 12 inserting arc %s into hash table"), describearcinst(ai));
 		return;
 	}
 
@@ -3509,10 +3509,10 @@ void drcb_flatprop2(ARCINST *ai, HASHTABLE *hai, CHAR *cindex)
 void drcb_getnodenetworks(NODEINST *ni, HASHTABLE *hpp, HASHTABLE *hai,
 	HASHTABLE *nhpp, INTBIG *netindex)
 {
-	REGISTER CHAR *cp;
-	REGISTER PORTPROTO *pp, *spp;
-	REGISTER PORTARCINST *pi;
-	REGISTER PORTEXPINST *pe;
+	 CHAR *cp;
+	 PORTPROTO *pp, *spp;
+	 PORTARCINST *pi;
+	 PORTEXPINST *pe;
 
 	for(pi = ni->firstportarcinst; pi != NOPORTARCINST; pi = pi->nextportarcinst)
 	{
@@ -3521,13 +3521,13 @@ void drcb_getnodenetworks(NODEINST *ni, HASHTABLE *hpp, HASHTABLE *hai,
 		cp = drcb_hashsearch(hai, (CHAR *)pi->conarcinst);
 		if (cp == 0)
 		{
-			ttyputerr(x_("DRC error 13 locating arc %s in hash table"),
+			ttyputerr(x_((char*)"DRC error 13 locating arc %s in hash table"),
 				describearcinst(pi->conarcinst));
 			return;
 		}
 		if (drcb_hashinsert(nhpp, (CHAR *)pp, cp, 0) != 0)
 		{
-			ttyputerr(x_("DRC error 14 inserting port %s into hash table"), pp->protoname);
+			ttyputerr(x_((char*)"DRC error 14 inserting port %s into hash table"), pp->protoname);
 			return;
 		}
 	}
@@ -3538,13 +3538,13 @@ void drcb_getnodenetworks(NODEINST *ni, HASHTABLE *hpp, HASHTABLE *hai,
 		cp = drcb_hashsearch(hpp, (CHAR *)pe->exportproto);
 		if (cp == 0)
 		{
-			ttyputerr(x_("DRC error 15 locating port %s in hash table"),
+			ttyputerr(x_((char*)"DRC error 15 locating port %s in hash table"),
 				pe->exportproto->protoname);
 			return;
 		}
 		if (drcb_hashinsert(nhpp, (CHAR *)pp, cp, 0) != 0)
 		{
-			ttyputerr(x_("DRC error 16 inserting port %s into hash table"), pp->protoname);
+			ttyputerr(x_((char*)"DRC error 16 inserting port %s into hash table"), pp->protoname);
 			return;
 		}
 	}
@@ -3562,7 +3562,7 @@ void drcb_getnodenetworks(NODEINST *ni, HASHTABLE *hpp, HASHTABLE *hai,
 			if (cp == 0) continue;
 			if (drcb_hashinsert(nhpp, (CHAR *)pp, cp, 0) != 0)
 			{
-				ttyputerr(x_("DRC error 17 inserting port %s into hash table"),
+				ttyputerr(x_((char*)"DRC error 17 inserting port %s into hash table"),
 					pp->protoname);
 				return;
 			}
@@ -3573,7 +3573,7 @@ void drcb_getnodenetworks(NODEINST *ni, HASHTABLE *hpp, HASHTABLE *hai,
 			cp = (CHAR *)*netindex;
 			if (drcb_hashinsert(nhpp, (CHAR *)pp, cp, 0) != 0)
 			{
-				ttyputerr(x_("DRC error 18 inserting port %s into hash table"),
+				ttyputerr(x_((char*)"DRC error 18 inserting port %s into hash table"),
 					pp->protoname);
 				return;
 			}
@@ -3590,15 +3590,15 @@ void drcb_getnodenetworks(NODEINST *ni, HASHTABLE *hpp, HASHTABLE *hai,
  */
 void drcb_buildlayerinteractions(TECHNOLOGY *tech)
 {
-	REGISTER INTBIG i, tot, index, tablesize, dist, layer;
+	 INTBIG i, tot, index, tablesize, dist, layer;
 	INTBIG edge;
-	REGISTER NODEPROTO *np;
-	REGISTER NODEINST *ni;
-	REGISTER ARCPROTO *ap;
-	REGISTER ARCINST *ai;
+	 NODEPROTO *np;
+	 NODEINST *ni;
+	 ARCPROTO *ap;
+	 ARCINST *ai;
 	NODEINST node;
 	ARCINST arc;
-	REGISTER POLYGON *poly;
+	 POLYGON *poly;
 
 	/* code cannot be called by multiple procesors: uses globals */
 	NOT_REENTRANT;
@@ -3739,7 +3739,7 @@ void drcb_buildlayerinteractions(TECHNOLOGY *tech)
  */
 BOOLEAN drcb_checklayerwithnode(INTBIG layer, NODEPROTO *np)
 {
-	REGISTER INTBIG index, i;
+	 INTBIG index, i;
 
 	if (np->primindex == 0) return(FALSE);
 	if (np->tech != drcb_layerintertech)
@@ -3766,7 +3766,7 @@ BOOLEAN drcb_checklayerwithnode(INTBIG layer, NODEPROTO *np)
  */
 BOOLEAN drcb_checklayerwitharc(INTBIG layer, ARCPROTO *ap)
 {
-	REGISTER INTBIG index, i;
+	 INTBIG index, i;
 
 	if (ap->tech != drcb_layerintertech)
 	{
@@ -3809,9 +3809,9 @@ BOOLEAN drcb_boxesintersect(INTBIG lx1p, INTBIG hx1p, INTBIG ly1p, INTBIG hy1p,
  */
 void drcb_getnodeEpolys(NODEINST *ni, POLYLIST *plist, XARRAY trans)
 {
-	REGISTER INTBIG j;
+	 INTBIG j;
 	BOOLEAN convertpseudo, onlyreasonable;
-	REGISTER POLYGON *poly;
+	 POLYGON *poly;
 
 	convertpseudo = FALSE;
 	if (((ni->proto->userbits&NFUNCTION) >> NFUNCTIONSH) == NPPIN)
@@ -3835,7 +3835,7 @@ void drcb_getnodeEpolys(NODEINST *ni, POLYLIST *plist, XARRAY trans)
 
 void drcb_getnodepolys(NODEINST *ni, POLYLIST *plist, XARRAY trans)
 {
-	REGISTER INTBIG j;
+	 INTBIG j;
 	BOOLEAN onlyreasonable;
 
 	if ((drcb_options&DRCREASONABLE) != 0) onlyreasonable = TRUE; else
@@ -3851,8 +3851,8 @@ void drcb_getnodepolys(NODEINST *ni, POLYLIST *plist, XARRAY trans)
 
 void drcb_getarcpolys(ARCINST *ai, POLYLIST *plist)
 {
-	REGISTER INTBIG j;
-	REGISTER POLYGON *poly;
+	 INTBIG j;
+	 POLYGON *poly;
 
 	plist->polylistcount = allarcpolys(ai, plist, NOWINDOWPART);
 	for(j = 0; j < plist->polylistcount; j++)
@@ -3871,11 +3871,11 @@ void drcb_getarcpolys(ARCINST *ai, POLYLIST *plist)
  */
 HASHTABLE *drcb_hashcreate(INTBIG size, INTBIG type, NODEPROTO *np)
 {
-	REGISTER HASHTABLE *newh;
-	REGISTER INTBIG i, len;
-	REGISTER NODEINST *ni;
-	REGISTER ARCINST *ai;
-	REGISTER PORTPROTO *pp;
+	 HASHTABLE *newh;
+	 INTBIG i, len;
+	 NODEINST *ni;
+	 ARCINST *ai;
+	 PORTPROTO *pp;
 
 	len = 0;
 	switch (type)
@@ -3921,8 +3921,8 @@ void drcb_hashdestroy(HASHTABLE *hash)
  */
 HASHTABLE *drcb_hashcopy(HASHTABLE *hash)
 {
-	REGISTER HASHTABLE *newh;
-	REGISTER INTBIG i;
+	 HASHTABLE *newh;
+	 INTBIG i;
 
 	newh = drcb_allochashtable(hash->thelen);
 	if (newh == NULL) return(NOHASHTABLE);
@@ -3939,8 +3939,8 @@ HASHTABLE *drcb_hashcopy(HASHTABLE *hash)
  */
 CHAR *drcb_hashwalk(HASHTABLE *hash, CHAR *(*proc)(CHAR*, CHAR*, CHAR*), CHAR *arg)
 {
-	REGISTER INTBIG i;
-	REGISTER CHAR *ret;
+	 INTBIG i;
+	 CHAR *ret;
 
 	for(i=0; i<hash->thelen; i++)
 	{
@@ -3964,9 +3964,9 @@ CHAR *drcb_hashwalk(HASHTABLE *hash, CHAR *(*proc)(CHAR*, CHAR*, CHAR*), CHAR *a
  */
 INTBIG drcb_hashinsert(HASHTABLE *hash, CHAR *key, CHAR *datum, INTBIG replace)
 {
-	REGISTER PORTPROTO *pp;
-	REGISTER NODEINST *ni;
-	REGISTER ARCINST *ai;
+	 PORTPROTO *pp;
+	 NODEINST *ni;
+	 ARCINST *ai;
 
 	switch (hash->thetype)
 	{
@@ -3988,9 +3988,9 @@ INTBIG drcb_hashinsert(HASHTABLE *hash, CHAR *key, CHAR *datum, INTBIG replace)
 
 CHAR *drcb_hashsearch(HASHTABLE *hash, CHAR *key)
 {
-	REGISTER PORTPROTO *pp;
-	REGISTER NODEINST *ni;
-	REGISTER ARCINST *ai;
+	 PORTPROTO *pp;
+	 NODEINST *ni;
+	 ARCINST *ai;
 
 	switch (hash->thetype)
 	{
@@ -4026,8 +4026,8 @@ void drcb_freeintersectingelements(NODEPROTO *np, STATE *state)
  */
 void drcb_freertree(RTNODE *rtn, STATE *state)
 {
-	REGISTER INTBIG j;
-	REGISTER SHAPE *shape;
+	 INTBIG j;
+	 SHAPE *shape;
 
 	if (rtn->flag != 0)
 	{
@@ -4057,7 +4057,7 @@ void drcb_freertree(RTNODE *rtn, STATE *state)
 
 SHAPE *drcb_allocshape(STATE *state)
 {
-	REGISTER SHAPE *shape;
+	 SHAPE *shape;
 
 	if (state->freeshapes != NOSHAPE)
 	{
@@ -4082,8 +4082,8 @@ void drcb_freeshape(SHAPE *shape, STATE *state)
  */
 HASHTABLE *drcb_allochashtable(INTBIG len)
 {
-	REGISTER HASHTABLE *ht;
-	REGISTER CHAR **thelist;
+	 HASHTABLE *ht;
+	 CHAR **thelist;
 
 	/* BEGIN critical section */
 	if (drcb_paralleldrc) emutexlock(drcb_mutexhash);
@@ -4161,13 +4161,13 @@ void drcb_reporterror(STATE *state, INTBIG errtype, TECHNOLOGY *tech, CHAR *msg,
 	POLYGON *poly1, GEOM *geom1, INTBIG layer1, INTBIG net1,
 	POLYGON *poly2, GEOM *geom2, INTBIG layer2, INTBIG net2)
 {
-	REGISTER NODEPROTO *np, *topcell, *np1, *np2;
-	REGISTER VARIABLE *var;
-	REGISTER INTBIG i, len, sortlayer, lambda;
-	REGISTER BOOLEAN showgeom;
-	REGISTER GEOM *p1, *p2;
-	REGISTER void *err, *infstr;
-	REGISTER CHAR *errmsg;
+	 NODEPROTO *np, *topcell, *np1, *np2;
+	 VARIABLE *var;
+	 INTBIG i, len, sortlayer, lambda;
+	 BOOLEAN showgeom;
+	 GEOM *p1, *p2;
+	 void *err, *infstr;
+	 CHAR *errmsg;
 
 	/* if this error is being ignored, don't record it */
 	if (withincell)
@@ -4199,7 +4199,7 @@ if (drcb_paralleldrc) emutexlock(drcb_mutexio);
 		drcb_topcellalways == topcell)
 	{
 		if (numerrors() == 0)
-			(void)asktool(us_tool, x_("clear"));
+			(void)asktool(us_tool, x_((char*)"clear"));
 		drcb_highlighterror(poly1, poly2, topcell);
 	}
 
@@ -4209,40 +4209,40 @@ if (drcb_paralleldrc) emutexlock(drcb_mutexio);
 	if (errtype == SPACINGERROR || errtype == NOTCHERROR)
 	{
 		/* describe spacing width error */
-		if (errtype == SPACINGERROR) addstringtoinfstr(infstr, _("Spacing")); else
-			addstringtoinfstr(infstr, _("Notch"));
+		if (errtype == SPACINGERROR) addstringtoinfstr(infstr, _((char*)"Spacing")); else
+			addstringtoinfstr(infstr, _((char*)"Notch"));
 		if (layer1 == layer2)
-			formatinfstr(infstr, _(" (layer %s)"), layername(tech, layer1));
-		addstringtoinfstr(infstr, x_(": "));
+			formatinfstr(infstr, _((char*)" (layer %s)"), layername(tech, layer1));
+		addstringtoinfstr(infstr, x_((char*)": "));
 		np2 = geomparent(geom2);
 		if (np1 != np2)
 		{
-			formatinfstr(infstr, _("cell %s, "), describenodeproto(np1));
+			formatinfstr(infstr, _((char*)"cell %s, "), describenodeproto(np1));
 		} else if (np1 != topcell)
 		{
-			formatinfstr(infstr, _("[in cell %s] "), describenodeproto(np1));
+			formatinfstr(infstr, _((char*)"[in cell %s] "), describenodeproto(np1));
 		}
 		if (geom1->entryisnode)
-			formatinfstr(infstr, _("node %s"), describenodeinst(geom1->entryaddr.ni)); else
-				formatinfstr(infstr, _("arc %s"), describearcinst(geom1->entryaddr.ai));
+			formatinfstr(infstr, _((char*)"node %s"), describenodeinst(geom1->entryaddr.ni)); else
+				formatinfstr(infstr, _((char*)"arc %s"), describearcinst(geom1->entryaddr.ai));
 		if (layer1 != layer2)
-			formatinfstr(infstr, _(", layer %s"), layername(tech, layer1));
+			formatinfstr(infstr, _((char*)", layer %s"), layername(tech, layer1));
 
-		if (actual < 0) addstringtoinfstr(infstr, _(" OVERLAPS ")); else
-			if (actual == 0) addstringtoinfstr(infstr, _(" TOUCHES ")); else
-				formatinfstr(infstr, _(" LESS (BY %s) THAN %s TO "), latoa(limit-actual, lambda),
+		if (actual < 0) addstringtoinfstr(infstr, _((char*)" OVERLAPS ")); else
+			if (actual == 0) addstringtoinfstr(infstr, _((char*)" TOUCHES ")); else
+				formatinfstr(infstr, _((char*)" LESS (BY %s) THAN %s TO "), latoa(limit-actual, lambda),
 					latoa(limit, lambda));
 
 		if (np1 != np2)
-			formatinfstr(infstr, _("cell %s, "), describenodeproto(np2));
+			formatinfstr(infstr, _((char*)"cell %s, "), describenodeproto(np2));
 		if (geom2->entryisnode)
-			formatinfstr(infstr, _("node %s"), describenodeinst(geom2->entryaddr.ni)); else
-				formatinfstr(infstr, _("arc %s"), describearcinst(geom2->entryaddr.ai));
+			formatinfstr(infstr, _((char*)"node %s"), describenodeinst(geom2->entryaddr.ni)); else
+				formatinfstr(infstr, _((char*)"arc %s"), describearcinst(geom2->entryaddr.ai));
 		if (layer1 != layer2)
-			formatinfstr(infstr, _(", layer %s"), layername(tech, layer2));
+			formatinfstr(infstr, _((char*)", layer %s"), layername(tech, layer2));
 		if (msg != NULL)
 		{
-			addstringtoinfstr(infstr, x_("; "));
+			addstringtoinfstr(infstr, x_((char*)"; "));
 			addstringtoinfstr(infstr, msg);
 		}
 		sortlayer = mini(layer1, layer2);
@@ -4252,34 +4252,34 @@ if (drcb_paralleldrc) emutexlock(drcb_mutexio);
 		switch (errtype)
 		{
 			case MINWIDTHERROR:
-				addstringtoinfstr(infstr, _("Minimum width error:"));
+				addstringtoinfstr(infstr, _((char*)"Minimum width error:"));
 				break;
 			case MINSIZEERROR:
-				addstringtoinfstr(infstr, _("Minimum size error:"));
+				addstringtoinfstr(infstr, _((char*)"Minimum size error:"));
 				break;
 			case BADLAYERERROR:
-				formatinfstr(infstr, _("Invalid layer (%s):"), layername(tech, layer1));
+				formatinfstr(infstr, _((char*)"Invalid layer (%s):"), layername(tech, layer1));
 				break;
 		}
-		formatinfstr(infstr, _(" cell %s"), describenodeproto(np1));
+		formatinfstr(infstr, _((char*)" cell %s"), describenodeproto(np1));
 		if (geom1->entryisnode)
 		{
-			formatinfstr(infstr, _(", node %s"), describenodeinst(geom1->entryaddr.ni));
+			formatinfstr(infstr, _((char*)", node %s"), describenodeinst(geom1->entryaddr.ni));
 		} else
 		{
-			formatinfstr(infstr, _(", arc %s"), describearcinst(geom1->entryaddr.ai));
+			formatinfstr(infstr, _((char*)", arc %s"), describearcinst(geom1->entryaddr.ai));
 		}
 		if (errtype == MINWIDTHERROR)
 		{
-			formatinfstr(infstr, _(", layer %s"), layername(tech, layer1));
-			formatinfstr(infstr, _(" LESS THAN %s WIDE (IS %s)"), latoa(limit, lambda), latoa(actual, lambda));
+			formatinfstr(infstr, _((char*)", layer %s"), layername(tech, layer1));
+			formatinfstr(infstr, _((char*)" LESS THAN %s WIDE (IS %s)"), latoa(limit, lambda), latoa(actual, lambda));
 		} else if (errtype == MINSIZEERROR)
 		{
-			formatinfstr(infstr, _(" LESS THAN %s IN SIZE (IS %s)"), latoa(limit, lambda), latoa(actual, lambda));
+			formatinfstr(infstr, _((char*)" LESS THAN %s IN SIZE (IS %s)"), latoa(limit, lambda), latoa(actual, lambda));
 		}
 		sortlayer = layer1;
 	}
-	if (rule != 0) formatinfstr(infstr, _(" [rule %s]"), rule);
+	if (rule != 0) formatinfstr(infstr, _((char*)" [rule %s]"), rule);
 	errmsg = returninfstr(infstr);
 	if (dr_logerrors)
 	{
@@ -4291,7 +4291,7 @@ if (drcb_paralleldrc) emutexlock(drcb_mutexio);
 		if (geom2 != NOGEOM) addgeomtoerror(err, geom2, showgeom, 0, 0);
 	} else
 	{
-		ttyputerr(x_("%s"), errmsg);
+		ttyputerr(x_((char*)"%s"), errmsg);
 	}
 
 /* END critical section */
@@ -4301,17 +4301,17 @@ if (drcb_paralleldrc) emutexunlock(drcb_mutexio);
 void drcb_highlighterror(POLYGON *poly1, POLYGON *poly2, NODEPROTO *cell)
 {
 	INTBIG lx, hx, ly, hy;
-	REGISTER INTBIG i, prev;
+	 INTBIG i, prev;
 
 	if (isbox(poly1, &lx, &hx, &ly, &hy))
 	{
-		(void)asktool(us_tool, x_("show-area"), lx, hx, ly, hy, cell);
+		(void)asktool(us_tool, x_((char*)"show-area"), lx, hx, ly, hy, cell);
 	} else
 	{
 		for(i=0; i<poly1->count; i++)
 		{
 			if (i == 0) prev = poly1->count-1; else prev = i-1;
-			(void)asktool(us_tool, x_("show-line"), poly1->xv[prev], poly1->yv[prev],
+			(void)asktool(us_tool, x_((char*)"show-line"), poly1->xv[prev], poly1->yv[prev],
 				poly1->xv[i], poly1->yv[i], cell);
 		}
 	}
@@ -4319,13 +4319,13 @@ void drcb_highlighterror(POLYGON *poly1, POLYGON *poly2, NODEPROTO *cell)
 	{
 		if (isbox(poly2, &lx, &hx, &ly, &hy))
 		{
-			(void)asktool(us_tool, x_("show-area"), lx, hx, ly, hy, cell);
+			(void)asktool(us_tool, x_((char*)"show-area"), lx, hx, ly, hy, cell);
 		} else
 		{
 			for(i=0; i<poly2->count; i++)
 			{
 				if (i == 0) prev = poly2->count-1; else prev = i-1;
-				(void)asktool(us_tool, x_("show-line"), poly2->xv[prev], poly2->yv[prev],
+				(void)asktool(us_tool, x_((char*)"show-line"), poly2->xv[prev], poly2->yv[prev],
 					poly2->xv[i], poly2->yv[i], cell);
 			}
 		}

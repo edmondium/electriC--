@@ -533,10 +533,10 @@ DB_SRC = \
     src/db/dbvars.cpp
 
 DRC_SRC = \
-    src/drc/drc.c \
-    src/drc/drcbatch.c \
+    src/drc/drc.cpp \
+    src/drc/drcbatch.cpp \
     src/drc/drcflat.cpp \
-    src/drc/drcquick.c
+    src/drc/drcquick.cpp
 
 ELK_SRC = \
     src/elk/elkautoload.c \
@@ -1041,10 +1041,10 @@ src/db/dbtech.o: src/db/dbtech.cpp $(HDS)/global.h $(HDS)/database.h $(HDS)/egra
 src/db/dbtechi.o: src/db/dbtechi.cpp $(HDS)/global.h $(HDS)/database.h $(HDS)/egraphics.h $(HDS)/tech.h $(HDS)/tecgen.h $(HDS)/tecmocmos.h $(HDS)/efunction.h $(HDS)/usr.h
 src/db/dbtext.o: src/db/dbtext.cpp $(HDS)/global.h $(HDS)/database.h $(HDS)/egraphics.h $(HDS)/edialogs.h $(HDS)/usr.h $(HDS)/tecgen.h $(HDS)/network.h
 src/db/dbvars.o: src/db/dbvars.cpp $(HDS)/global.h $(HDS)/database.h $(HDS)/egraphics.h $(HDS)/edialogs.h $(HDS)/usr.h $(HDS)/drc.h $(HDS)/erc.h $(HDS)/rout.h $(HDS)/network.h $(HDS)/logeffort.h $(HDS)/sim.h $(HDS)/simirsim.h $(HDS)/eio.h $(HDS)/tecart.h $(HDS)/tecmocmos.h $(HDS)/tecmocmossub.h $(HDS)/tecschem.h
-src/drc/drc.o: src/drc/drc.c $(HDS)/config.h $(HDS)/global.h $(HDS)/egraphics.h $(HDS)/drc.h $(HDS)/efunction.h $(HDS)/tech.h $(HDS)/tecgen.h $(HDS)/tecschem.h $(HDS)/edialogs.h $(HDS)/usr.h $(HDS)/usrdiacom.h
-src/drc/drcbatch.o: src/drc/drcbatch.c $(HDS)/config.h $(HDS)/global.h $(HDS)/efunction.h $(HDS)/drc.h $(HDS)/database.h $(HDS)/tech.h $(HDS)/egraphics.h $(HDS)/usr.h
+src/drc/drc.o: src/drc/drc.cpp $(HDS)/config.h $(HDS)/global.h $(HDS)/egraphics.h $(HDS)/drc.h $(HDS)/efunction.h $(HDS)/tech.h $(HDS)/tecgen.h $(HDS)/tecschem.h $(HDS)/edialogs.h $(HDS)/usr.h $(HDS)/usrdiacom.h
+src/drc/drcbatch.o: src/drc/drcbatch.cpp $(HDS)/config.h $(HDS)/global.h $(HDS)/efunction.h $(HDS)/drc.h $(HDS)/database.h $(HDS)/tech.h $(HDS)/egraphics.h $(HDS)/usr.h
 src/drc/drcflat.o: src/drc/drcflat.cpp $(HDS)/config.h $(HDS)/global.h $(HDS)/drc.h $(HDS)/efunction.h $(HDS)/egraphics.h
-src/drc/drcquick.o: src/drc/drcquick.c $(HDS)/config.h $(HDS)/global.h $(HDS)/egraphics.h $(HDS)/tech.h $(HDS)/tecgen.h $(HDS)/drc.h $(HDS)/efunction.h $(HDS)/usr.h
+src/drc/drcquick.o: src/drc/drcquick.cpp $(HDS)/config.h $(HDS)/global.h $(HDS)/egraphics.h $(HDS)/tech.h $(HDS)/tecgen.h $(HDS)/drc.h $(HDS)/efunction.h $(HDS)/usr.h
 src/elk/elkautoload.o: src/elk/elkautoload.c src/elk/elkkernel.h
 src/elk/elkbignum.o: src/elk/elkbignum.c src/elk/elkkernel.h
 src/elk/elkbool.o: src/elk/elkbool.c src/elk/elkkernel.h

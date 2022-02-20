@@ -66,28 +66,28 @@ static void    dr_flatprop(ARCINST*, INTBIG);
 void dr_flatignore(CHAR *cell)
 {
 	INTBIG i;
-	REGISTER NODEPROTO *np;
+	 NODEPROTO *np;
 
 	np = getnodeproto(cell);
 	if (np == NONODEPROTO)
 	{
-		ttyputerr(_("No cell called %s"), cell);
+		ttyputerr(_((char*)"No cell called %s"), cell);
 		return;
 	}
 	if (np->primindex != 0)
 	{
-		ttyputerr(_("Can only ignore cells, not primitives"));
+		ttyputerr(_((char*)"Can only ignore cells, not primitives"));
 		return;
 	}
 	for(i=0; i<dr_nflat_ignored; i++) if (dr_flatignored[i] == np)
 		return;
 	if (dr_nflat_ignored == MAX_DRC_FLATIGNORE)
 	{
-		ttyputerr(_("Too many cells"));
+		ttyputerr(_((char*)"Too many cells"));
 		return;
 	}
 	dr_flatignored[dr_nflat_ignored++] = np;
-	ttyputmsg(_("Cell %s will be ignored from flat DRC"), describenodeproto(np));
+	ttyputmsg(_((char*)"Cell %s will be ignored from flat DRC"), describenodeproto(np));
 }
 
 /*
@@ -96,44 +96,44 @@ void dr_flatignore(CHAR *cell)
 void dr_flatunignore(CHAR *cell)
 {
 	INTBIG i;
-	REGISTER NODEPROTO *np;
+	 NODEPROTO *np;
 
 	np = getnodeproto(cell);
 	if (np == NONODEPROTO)
 	{
-		ttyputerr(_("No cell called %s"), cell);
+		ttyputerr(_((char*)"No cell called %s"), cell);
 		return;
 	}
 	if (np->primindex != 0)
 	{
-		ttyputerr(_("Can only unignore cells, not primitives"));
+		ttyputerr(_((char*)"Can only unignore cells, not primitives"));
 		return;
 	}
 	for(i=0; i<dr_nflat_ignored && dr_flatignored[i] != np; i++) ;
 	if (i == dr_nflat_ignored)
 	{
-		ttyputerr(_("Not being ignored"));
+		ttyputerr(_((char*)"Not being ignored"));
 		return;
 	}
 	for(; i<dr_nflat_ignored; i++)
 		dr_flatignored[i-1] = dr_flatignored[i];
 	dr_nflat_ignored--;
-	ttyputmsg(_("Cell %s will be included in flat DRC"), describenodeproto(np));
+	ttyputmsg(_((char*)"Cell %s will be included in flat DRC"), describenodeproto(np));
 }
 
 void dr_flatwrite(NODEPROTO *simnp)
 {
-	REGISTER BOOLEAN ret = TRUE;
-	REGISTER PORTPROTO *pp, *spp;
-	REGISTER TECHNOLOGY *tech;
-	REGISTER VARIABLE *var;
+	 BOOLEAN ret = TRUE;
+	 PORTPROTO *pp, *spp;
+	 TECHNOLOGY *tech;
+	 VARIABLE *var;
 	CHAR p1[20], p2[20];
 	CHAR *flatdrcloc, *sflatdrcloc;
 	EProcess dr_process;
 
 	if (simnp == NONODEPROTO)
 	{
-		ttyputerr(_("No cell to flatten for DRC"));
+		ttyputerr(_((char*)"No cell to flatten for DRC"));
 		return;
 	}
 	dr_maintech = simnp->tech;
@@ -145,17 +145,17 @@ void dr_flatwrite(NODEPROTO *simnp)
 	(void)esnprintf(dr_yminfile, 132, x_("%s"), simnp->protoname);
 	(void)estrcat(dr_yminfile, x_("_miny.drc"));
 
-	(void)esnprintf(dr_ymaxfile, 132, x_("%s"), simnp->protoname);
-	(void)estrcat(dr_ymaxfile, x_("_maxy.drc"));
+	(void)esnprintf(dr_ymaxfile, 132, x_((char*)"%s"), simnp->protoname);
+	(void)estrcat(dr_ymaxfile, x_((char*)"_maxy.drc"));
 
 	/* create the file */
 	dr_file = xcreate(dr_flatdrcfile, el_filetypetext, 0, 0);
 	if (dr_file == NULL)
 	{
-		ttyputerr(_("Cannot write %s"), dr_flatdrcfile);
+		ttyputerr(_((char*)"Cannot write %s"), dr_flatdrcfile);
 		return;
 	}
-	ttyputmsg(_("Writing flattened %s circuit into '%s'..."),
+	ttyputmsg(_((char*)"Writing flattened %s circuit into '%s'..."),
 		dr_maintech->techname, dr_flatdrcfile);
 
 	/* re-assign net-list values, starting at each port of the top cell */
@@ -178,7 +178,7 @@ void dr_flatwrite(NODEPROTO *simnp)
 	/* initialize cache of CIF layer information */
 	for(tech = el_technologies; tech != NOTECHNOLOGY; tech = tech->nexttechnology)
 	{
-		var = getval((INTBIG)tech, VTECHNOLOGY, VSTRING|VISARRAY, x_("IO_cif_layer_names"));
+		var = getval((INTBIG)tech, VTECHNOLOGY, VSTRING|VISARRAY, x_((char*)"IO_cif_layer_names"));
 		tech->temp1 = (var == NOVARIABLE ? 0 : var->addr);
 	}
 
@@ -196,15 +196,15 @@ void dr_flatwrite(NODEPROTO *simnp)
 	/* no point continuing if nothing to do */
 	if (dr_flat_boxcount == 0)
 	{
-		ttyputmsg(_("No boxes written, DRC short detection complete"));
+		ttyputmsg(_((char*)"No boxes written, DRC short detection complete"));
 		return;
 	}
 
 	/* setup communication with fast short finding program */
-	ttyputmsg(_("%ld boxes written, now attempting fast short detection..."), dr_flat_boxcount);
-	(void)esnprintf(p1, 20, x_("%ld"), el_curlib->lambda[el_curtech->techindex]);
-	(void)esnprintf(p2, 20, x_("%ld"), dr_flat_boxcount);
-	if ((flatdrcloc = egetenv(x_("FLATDRCLOC"))) == NULL)
+	ttyputmsg(_((char*)"%ld boxes written, now attempting fast short detection..."), dr_flat_boxcount);
+	(void)esnprintf(p1, 20, x_((char*)"%ld"), el_curlib->lambda[el_curtech->techindex]);
+	(void)esnprintf(p2, 20, x_((char*)"%ld"), dr_flat_boxcount);
+	if ((flatdrcloc = egetenv(x_((char*)"FLATDRCLOC"))) == NULL)
 		flatdrcloc = FLATDRCLOC;
 	dr_process.clearArguments();
 	dr_process.addArgument( flatdrcloc );
@@ -219,38 +219,38 @@ void dr_flatwrite(NODEPROTO *simnp)
 	/* if this program ran correctly, stop now */
 	if (!ret)
 	{
-		ttyputmsg(_("DRC short detection complete"));
+		ttyputmsg(_((char*)"DRC short detection complete"));
 		return;
 	}
 
 	/* setup for slow short detection */
-	ttyputmsg(_("Too many boxes: disk version must be run"));
-	ttyputmsg(_("  Interim step: sorting by minimum Y into '%s'..."), dr_yminfile);
+	ttyputmsg(_((char*)"Too many boxes: disk version must be run"));
+	ttyputmsg(_((char*)"  Interim step: sorting by minimum Y into '%s'..."), dr_yminfile);
 	dr_process.clearArguments();
 	dr_process.addArgument( SORTLOC );
-	dr_process.addArgument( x_("+0n") );
-	dr_process.addArgument( x_("-1") );
-	dr_process.addArgument( x_("-o") );
+	dr_process.addArgument( x_((char*)"+0n") );
+	dr_process.addArgument( x_((char*)"-1") );
+	dr_process.addArgument( x_((char*)"-o") );
 	dr_process.addArgument( dr_yminfile );
 	dr_process.addArgument( dr_flatdrcfile );
 	dr_process.setCommunication( FALSE, FALSE, FALSE );
 	dr_process.start();
 	dr_process.wait();
-	ttyputmsg(_("  Interim step: sorting by maximum Y into '%s'..."), dr_ymaxfile);
+	ttyputmsg(_((char*)"  Interim step: sorting by maximum Y into '%s'..."), dr_ymaxfile);
 	dr_process.clearArguments();
 	dr_process.addArgument( SORTLOC );
-	dr_process.addArgument( x_("+1n") );
-	dr_process.addArgument(	x_("-2") );
-	dr_process.addArgument(	x_("-o") );
+	dr_process.addArgument( x_((char*)"+1n") );
+	dr_process.addArgument(	x_((char*)"-2") );
+	dr_process.addArgument(	x_((char*)"-o") );
 	dr_process.addArgument(	dr_ymaxfile );
 	dr_process.addArgument(	dr_flatdrcfile );
 	dr_process.setCommunication( FALSE, FALSE, FALSE );
 	dr_process.start();
 	dr_process.wait();
 
-	ttyputmsg(_("Now invoking slow short detection..."));
+	ttyputmsg(_((char*)"Now invoking slow short detection..."));
 	(void)esnprintf(p1, 20, x_("%ld"), el_curlib->lambda[el_curtech->techindex]);
-	if ((sflatdrcloc = egetenv(x_("SFLATDRCLOC"))) == NULL)
+	if ((sflatdrcloc = egetenv(x_((char*)"SFLATDRCLOC"))) == NULL)
 		sflatdrcloc = SFLATDRCLOC;
 	dr_process.clearArguments();
 	dr_process.addArgument( sflatdrcloc );
@@ -262,13 +262,13 @@ void dr_flatwrite(NODEPROTO *simnp)
 	/* run the short detection program */
 	(void)dr_readshorterrors(dr_process);
 	dr_process.kill();
-	ttyputmsg(_("DRC short detection complete"));
+	ttyputmsg(_((char*)"DRC short detection complete"));
 }
 
 BOOLEAN dr_readshorterrors(EProcess &process)
 {
-	REGISTER CHAR *ptr, *layname;
-	REGISTER INTBIG errors, lx, hx, ly, hy;
+	 CHAR *ptr, *layname;
+	 INTBIG errors, lx, hx, ly, hy;
 	CHAR line[200], *err, layer[50];
 	INTBIG sx, sy, cx, cy;
 
@@ -293,7 +293,7 @@ BOOLEAN dr_readshorterrors(EProcess &process)
 				if (errors == 0)
 				{
 					/* start by removing any highlighting */
-					(void)asktool(us_tool, x_("clear"));
+					(void)asktool(us_tool, x_((char*)"clear"));
 					flushscreen(); /* empty graphics buffer */
 				}
 
@@ -302,17 +302,17 @@ BOOLEAN dr_readshorterrors(EProcess &process)
 				lx = cx-sx/2;   hx = cx+sx/2;
 				ly = cy-sy/2;   hy = cy+sy/2;
 				layname = layername(dr_maintech, eatoi(layer));
-				ttyputmsg(_("Error on %s layer from X(%s...%s) Y(%s...%s)"),
+				ttyputmsg(_((char*)"Error on %s layer from X(%s...%s) Y(%s...%s)"),
 					layname, latoa(lx, 0), latoa(hx, 0), latoa(ly, 0), latoa(hy, 0));
-				(void)asktool(us_tool, x_("show-area"), lx, hx, ly, hy, el_curwindowpart->curnodeproto);
+				(void)asktool(us_tool, x_((char*)"show-area"), lx, hx, ly, hy, el_curwindowpart->curnodeproto);
 				flushscreen(); /* empty graphics buffer */
 				errors++;
 			} else if (line[0] == '*')
 			{
 				/* found number of errors, pass to user */
 				err = &line[2];
-				ttyputerr(x_("%s"), err);
-			} else ttyputmsg(x_("%s"), line);
+				ttyputerr(x_((char*)"%s"), err);
+			} else ttyputmsg(x_((char*)"%s"), line);
 			ptr = line;
 			continue;
 		}
@@ -327,12 +327,12 @@ BOOLEAN dr_readshorterrors(EProcess &process)
  */
 void dr_flatprint(NODEPROTO *cell, XARRAY mytrans)
 {
-	REGISTER INTBIG i;
-	REGISTER ARCINST *ai;
-	REGISTER PORTPROTO *pp, *spp;
-	REGISTER PORTARCINST *pi;
-	REGISTER PORTEXPINST *pe;
-	REGISTER NODEINST *ni;
+	 INTBIG i;
+	 ARCINST *ai;
+	 PORTPROTO *pp, *spp;
+	 PORTARCINST *pi;
+	 PORTEXPINST *pe;
+	 NODEINST *ni;
 	static POLYGON *poly = NOPOLYGON;
 	XARRAY subtrans, temptrans1, temptrans2;
 	INTBIG n;
@@ -468,11 +468,11 @@ void dr_flatprint(NODEPROTO *cell, XARRAY mytrans)
  */
 void dr_transistor_hack(POLYGON *poly, NODEINST *ni)
 {
-	REGISTER PORTPROTO *pp, *spp;
-	REGISTER PORTARCINST *pi, *spi;
-	REGISTER INTBIG drain, portnum, type;
+	 PORTPROTO *pp, *spp;
+	 PORTARCINST *pi, *spi;
+	 INTBIG drain, portnum, type;
 	INTBIG edge;
-	REGISTER TECH_NODES *thistn;
+	 TECH_NODES *thistn;
 
 	type = (ni->proto->userbits&NFUNCTION) >> NFUNCTIONSH;
 	if (!(type == NPTRANMOS || type == NPTRADMOS || type == NPTRAPMOS ||
@@ -507,10 +507,10 @@ void dr_transistor_hack(POLYGON *poly, NODEINST *ni)
 	if (type == NPTRANMOS || type == NPTRADMOS || type == NPTRAPMOS || type == NPTRANS)
 	{
 		/* Spacing needs adjusting when active width is greater than gate distance. */
-		REGISTER INTBIG i, gate_min_distance, active_overlap;
-		REGISTER INTBIG lambda, correction;
-		REGISTER TECH_SERPENT *st;
-		REGISTER TECH_POLYGON *lay;
+		 INTBIG i, gate_min_distance, active_overlap;
+		 INTBIG lambda, correction;
+		 TECH_SERPENT *st;
+		 TECH_POLYGON *lay;
 
 		lambda = lambdaofnode(ni);
 		i = 0;
@@ -534,7 +534,7 @@ void dr_transistor_hack(POLYGON *poly, NODEINST *ni)
 			} else
 			{
 				INTBIG lx, hx, ly, hy, centerx, centery, xwid, ywid;
-				REGISTER INTBIG default_width = (active_overlap/WHOLE) * lambda;
+				 INTBIG default_width = (active_overlap/WHOLE) * lambda;
 
 				/* I don't really know which polygons of the serpentine transistor
 				 * to adjust, so this is a lame heuristic to figure it out using the
@@ -571,8 +571,8 @@ void dr_transistor_hack(POLYGON *poly, NODEINST *ni)
 void dr_flatdesc_poly(POLYGON *poly, INTBIG net, XARRAY trans, TECHNOLOGY *tech, NODEPROTO *cell)
 {
 	INTBIG lx, hx, ly, hy, lxb, hxb, lyb, hyb;
-	REGISTER INTBIG xv, yv;
-	REGISTER INTBIG i;
+	 INTBIG xv, yv;
+	 INTBIG i;
 
 	/* ignore layers that have no valid CIF */
 	if (poly->layer < 0 || tech->temp1 == 0) return;
@@ -601,7 +601,7 @@ void dr_flatdesc_poly(POLYGON *poly, INTBIG net, XARRAY trans, TECHNOLOGY *tech,
 	/* ignore zero or negative sizes */
 	if ((hy - ly) > 0 && (hx - lx) > 0)
 	{
-		xprintf(dr_file, x_("%ld %ld %ld %ld %ld %ld\n"), ly, hy, lx, hx, poly->layer, net);
+		xprintf(dr_file, x_((char*)"%ld %ld %ld %ld %ld %ld\n"), ly, hy, lx, hx, poly->layer, net);
 		dr_flat_boxcount++;
 	}
 }
@@ -612,10 +612,10 @@ void dr_flatdesc_poly(POLYGON *poly, INTBIG net, XARRAY trans, TECHNOLOGY *tech,
  */
 void dr_flatprop(ARCINST *ai, INTBIG nindex)
 {
-	REGISTER ARCINST *oai;
-	REGISTER NODEINST *ni;
-	REGISTER PORTARCINST *pi;
-	REGISTER INTBIG i;
+	 ARCINST *oai;
+	 NODEINST *ni;
+	 PORTARCINST *pi;
+	 INTBIG i;
 
 	/* set this arcinst to the current node number */
 	ai->temp2 = nindex;

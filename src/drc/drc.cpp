@@ -45,56 +45,56 @@
 
 /* the DRC tool table */
 static COMCOMP dr_drccp = {NOKEYWORD, topofcells, nextcells, NOPARAMS,
-	INPUTOPT, x_(" \t"), M_("cell to be rechecked"), M_("check current cell")};
+	INPUTOPT, x_((char*)" \t"), M_((char*)"cell to be rechecked"), M_((char*)"check current cell")};
 static KEYWORD drcnotopt[] =
 {
-	{x_("verbose"),        0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
-	{x_("reasonable"),     0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"verbose"),        0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"reasonable"),     0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
 	TERMKEY
 };
 static COMCOMP drcnotp = {drcnotopt, NOTOPLIST, NONEXTLIST, NOPARAMS,
-	INPUTOPT, x_(" \t"), M_("Design Rule Checker negative action"), 0};
+	INPUTOPT, x_((char*)" \t"), M_((char*)"Design Rule Checker negative action"), 0};
 static COMCOMP drcfip = {NOKEYWORD, topofcells, nextcells, NOPARAMS,
-	INPUTOPT, x_(" \t"), M_("cell to ignored for short check DRC"), 0};
+	INPUTOPT, x_((char*)" \t"), M_((char*)"cell to ignored for short check DRC"), 0};
 static COMCOMP drcfup = {NOKEYWORD, topofcells, nextcells, NOPARAMS,
-	INPUTOPT, x_(" \t"), M_("cell to un-ignored for short check DRC"), 0};
+	INPUTOPT, x_((char*)" \t"), M_((char*)"cell to un-ignored for short check DRC"), 0};
 static KEYWORD drcfopt[] =
 {
-	{x_("select-run"),   0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
-	{x_("run"),          0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
-	{x_("ignore"),       1,{&drcfip,NOKEY,NOKEY,NOKEY,NOKEY}},
-	{x_("unignore"),     1,{&drcfup,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"select-run"),   0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"run"),          0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"ignore"),       1,{&drcfip,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"unignore"),     1,{&drcfup,NOKEY,NOKEY,NOKEY,NOKEY}},
 	TERMKEY
 };
 static COMCOMP drcfp = {drcfopt, NOTOPLIST, NONEXTLIST, NOPARAMS,
-	INPUTOPT, x_(" \t"), M_("Short Detecting Design Rule Checker action"), 0};
+	INPUTOPT, x_((char*)" \t"), M_((char*)"Short Detecting Design Rule Checker action"), 0};
 static KEYWORD drcnopt[] =
 {
-	{x_("run"),               0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
-	{x_("select-run"),        0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
-	{x_("reset-check-dates"), 0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
-	{x_("just-1-error"),      0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
-	{x_("all-errors"),        0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"run"),               0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"select-run"),        0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"reset-check-dates"), 0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"just-1-error"),      0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"all-errors"),        0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
 	TERMKEY
 };
 static COMCOMP drcbatchp = {drcnopt, NOTOPLIST, NONEXTLIST, NOPARAMS,
-	INPUTOPT, x_(" \t"), M_("Batch Design Rule Checker action"), 0};
+	INPUTOPT, x_((char*)" \t"), M_((char*)"Batch Design Rule Checker action"), 0};
 static KEYWORD drcopt[] =
 {
-	{x_("check"),                 1,{&dr_drccp,NOKEY,NOKEY,NOKEY,NOKEY}},
-	{x_("forget-ignored-errors"), 0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
-	{x_("not"),                   1,{&drcnotp,NOKEY,NOKEY,NOKEY,NOKEY}},
-	{x_("verbose"),               0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
-	{x_("batch"),                 1,{&drcbatchp,NOKEY,NOKEY,NOKEY,NOKEY}},
-	{x_("shortcheck"),            1,{&drcfp,NOKEY,NOKEY,NOKEY,NOKEY}},
-	{x_("ecadcheck"),             0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
-	{x_("reasonable"),            0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
-	{x_("quick-check"),           0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
-	{x_("quick-select-check"),    0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"check"),                 1,{&dr_drccp,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"forget-ignored-errors"), 0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"not"),                   1,{&drcnotp,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"verbose"),               0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"batch"),                 1,{&drcbatchp,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"shortcheck"),            1,{&drcfp,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"ecadcheck"),             0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"reasonable"),            0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"quick-check"),           0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
+	{x_((char*)"quick-select-check"),    0,{NOKEY,NOKEY,NOKEY,NOKEY,NOKEY}},
 	TERMKEY
 };
 COMCOMP dr_drcp = {drcopt, NOTOPLIST, NONEXTLIST, NOPARAMS,
-	0, x_(" \t"), M_("Design Rule Checker action"), M_("show defaults")};
+	0, x_((char*)" \t"), M_((char*)"Design Rule Checker action"), M_((char*)"show defaults")};
 
 /* dcheck modules */
 #define NODCHECK ((DCHECK *)-1)
@@ -151,26 +151,26 @@ static INTBIG    dr_optionskey;						/* key for "DRC_options" */
 
 CHAR *dr_variablenames[] =
 {
-	x_("DRC_max_distances"),
-	x_("DRC_wide_limit"),
-	x_("DRC_min_width"),
-	x_("DRC_min_width_rule"),
-	x_("DRC_min_node_size"),
-	x_("DRC_min_node_size_rule"),
-	x_("DRC_min_connected_distances"),
-	x_("DRC_min_connected_distances_rule"),
-	x_("DRC_min_unconnected_distances"),
-	x_("DRC_min_unconnected_distances_rule"),
-	x_("DRC_min_connected_distances_wide"),
-	x_("DRC_min_connected_distances_wide_rule"),
-	x_("DRC_min_unconnected_distances_wide"),
-	x_("DRC_min_unconnected_distances_wide_rule"),
-	x_("DRC_min_connected_distances_multi"),
-	x_("DRC_min_connected_distances_multi_rule"),
-	x_("DRC_min_unconnected_distances_multi"),
-	x_("DRC_min_unconnected_distances_multi_rule"),
-	x_("DRC_min_edge_distances"),
-	x_("DRC_min_edge_distances_rule"),
+	x_((char*)"DRC_max_distances"),
+	x_((char*)"DRC_wide_limit"),
+	x_((char*)"DRC_min_width"),
+	x_((char*)"DRC_min_width_rule"),
+	x_((char*)"DRC_min_node_size"),
+	x_((char*)"DRC_min_node_size_rule"),
+	x_((char*)"DRC_min_connected_distances"),
+	x_((char*)"DRC_min_connected_distances_rule"),
+	x_((char*)"DRC_min_unconnected_distances"),
+	x_((char*)"DRC_min_unconnected_distances_rule"),
+	x_((char*)"DRC_min_connected_distances_wide"),
+	x_((char*)"DRC_min_connected_distances_wide_rule"),
+	x_((char*)"DRC_min_unconnected_distances_wide"),
+	x_((char*)"DRC_min_unconnected_distances_wide_rule"),
+	x_((char*)"DRC_min_connected_distances_multi"),
+	x_((char*)"DRC_min_connected_distances_multi_rule"),
+	x_((char*)"DRC_min_unconnected_distances_multi"),
+	x_((char*)"DRC_min_unconnected_distances_multi_rule"),
+	x_((char*)"DRC_min_edge_distances"),
+	x_((char*)"DRC_min_edge_distances_rule"),
 	0
 };
 
@@ -209,13 +209,13 @@ void dr_init(INTBIG *argc, CHAR1 *argv[], TOOL *thistool)
 	dr_firstdcheck = NODCHECK;
 	dr_logerrors = TRUE;
 
-	dr_verbosekey = makekey(x_("DRC_verbose"));
-	dr_ignore_listkey = makekey(x_("DRC_ignore_list"));
-	dr_lastgooddrckey = makekey(x_("DRC_last_good_drc"));
-	dr_incrementalonkey = makekey(x_("DRC_incrementalon"));
-	dr_optionskey = makekey(x_("DRC_options"));
-	DiaDeclareHook(x_("drcopt"), &dr_drcp, dr_optionsdlog);
-	DiaDeclareHook(x_("drcrules"), &dr_drccp, dr_rulesdloghook);
+	dr_verbosekey = makekey(x_((char*)"DRC_verbose"));
+	dr_ignore_listkey = makekey(x_((char*)"DRC_ignore_list"));
+	dr_lastgooddrckey = makekey(x_((char*)"DRC_last_good_drc"));
+	dr_incrementalonkey = makekey(x_((char*)"DRC_incrementalon"));
+	dr_optionskey = makekey(x_((char*)"DRC_options"));
+	DiaDeclareHook(x_((char*)"drcopt"), &dr_drcp, dr_optionsdlog);
+	DiaDeclareHook(x_((char*)"drcrules"), &dr_drccp, dr_rulesdloghook);
 }
 
 void dr_done(void)
@@ -242,45 +242,45 @@ void dr_done(void)
 
 void dr_set(INTBIG count, CHAR *par[])
 {
-	REGISTER BOOLEAN negate;
-	REGISTER INTBIG l, i, errs, options;
-	REGISTER CHAR *pp;
-	REGISTER FILE *f;
-	REGISTER NODEPROTO *np;
-	REGISTER VARIABLE *var;
-	REGISTER TECHNOLOGY *tech;
+	 BOOLEAN negate;
+	 INTBIG l, i, errs, options;
+	 CHAR *pp;
+	 FILE *f;
+	 NODEPROTO *np;
+	 VARIABLE *var;
+	 TECHNOLOGY *tech;
 	CHAR *newpar[3], *truename, *abortseq;
 	static INTBIG filetypedrac = -1;
-	REGISTER void *infstr;
+	 void *infstr;
 
 	if (count == 0)
 	{
 		var = getvalkey((INTBIG)dr_tool, VTOOL, VINTEGER, dr_verbosekey);
 		if (var == NOVARIABLE) i = 0; else i = var->addr;
-		if (i == 0) ttyputmsg(M_("Design rule checker is brief")); else
- 			ttyputmsg(M_("Design rule checker is verbose"));
+		if (i == 0) ttyputmsg(M_((char*)"Design rule checker is brief")); else
+ 			ttyputmsg(M_((char*)"Design rule checker is verbose"));
 		return;
 	}
 
 	options = dr_getoptionsvalue();
 	l = estrlen(pp = par[0]);
 	negate = FALSE;
-	if (namesamen(pp, x_("not"), l) == 0)
+	if (namesamen(pp, x_((char*)"not"), l) == 0)
 	{
 		negate = TRUE;
 		if (count <= 1)
 		{
-			count = ttygetparam(M_("DRC negate option:"), &drcnotp, MAXPARS-1, &par[1]) + 1;
+			count = ttygetparam(M_((char*)"DRC negate option:"), &drcnotp, MAXPARS-1, &par[1]) + 1;
 			if (count <= 1)
 			{
-				ttyputerr(M_("Aborted"));
+				ttyputerr(M_((char*)"Aborted"));
 				return;
 			}
 		}
 		l = estrlen(pp = par[1]);
 	}
 
-	if (namesamen(pp, x_("forget-ignored-errors"), l) == 0)
+	if (namesamen(pp, x_((char*)"forget-ignored-errors"), l) == 0)
 	{
 		np = dr_checkthiscell(count, par[1]);
 		if (np == NONODEPROTO) return;
@@ -290,17 +290,17 @@ void dr_set(INTBIG count, CHAR *par[])
 		if (var != NOVARIABLE)
 			(void)delvalkey((INTBIG)np, VNODEPROTO, dr_ignore_listkey);
 
-		ttyputmsg(M_("Ignored violations turned back on."));
+		ttyputmsg(M_((char*)"Ignored violations turned back on."));
 		return;
 	}
-	if (namesamen(pp, x_("check"), l) == 0)
+	if (namesamen(pp, x_((char*)"check"), l) == 0)
 	{
 		/* make sure network tool is on */
 		if ((net_tool->toolstate&TOOLON) == 0)
 		{
-			ttyputerr(M_("Network tool must be running...turning it on"));
+			ttyputerr(M_((char*)"Network tool must be running...turning it on"));
 			toolturnon(net_tool);
-			ttyputerr(M_("...now reissue the DRC command"));
+			ttyputerr(M_((char*)"...now reissue the DRC command"));
 			return;
 		}
 
@@ -310,29 +310,29 @@ void dr_set(INTBIG count, CHAR *par[])
 		return;
 	}
 
-	if (namesamen(pp, x_("ecadcheck"), l) == 0)
+	if (namesamen(pp, x_((char*)"ecadcheck"), l) == 0)
 	{
 		np = getcurcell();
 		if (np == NONODEPROTO)
 		{
-			ttyputerr(_("Must be editing a cell to check with ECAD's Dracula"));
+			ttyputerr(_((char*)"Must be editing a cell to check with ECAD's Dracula"));
 			return;
 		}
 		tech = np->tech;
-		var = getval((INTBIG)tech, VTECHNOLOGY, VSTRING|VISARRAY, x_("DRC_ecad_deck"));
+		var = getval((INTBIG)tech, VTECHNOLOGY, VSTRING|VISARRAY, x_((char*)"DRC_ecad_deck"));
 		if (var == NOVARIABLE)
 		{
-			ttyputerr(_("Cannot find an ECAD deck in the %s technology"), tech->techname);
+			ttyputerr(_((char*)"Cannot find an ECAD deck in the %s technology"), tech->techname);
 			return;
 		}
 
 		/* create the file */
 		if (filetypedrac < 0)
-			filetypedrac = setupfiletype(x_("rul"), x_("*.map"), MACFSTAG('TEXT'), FALSE, x_("drac"), _("Dracula"));
-		f = xcreate(x_("ecaddrc.RUL"), filetypedrac, _("ECAD DRC Control File"), &truename);
+			filetypedrac = setupfiletype(x_((char*)"rul"), x_((char*)"*.map"), MACFSTAG((char*)'TEXT'), FALSE, x_((char*)"drac"), _((char*)"Dracula"));
+		f = xcreate(x_((char*)"ecaddrc.RUL"), filetypedrac, _((char*)"ECAD DRC Control File"), &truename);
 		if (f == NULL)
 		{
-			if (truename != 0) ttyputerr(_("Cannot write %s"), truename);
+			if (truename != 0) ttyputerr(_((char*)"Cannot write %s"), truename);
 			return;
 		}
 
@@ -343,50 +343,50 @@ void dr_set(INTBIG count, CHAR *par[])
 			pp = ((CHAR **)var->addr)[i];
 			if (estrncmp(pp, x_(" PRIMARY ="), 10) == 0)
 			{
-				xprintf(f, x_(" PRIMARY = %s\n"), np->protoname);
+				xprintf(f, x_((char*)" PRIMARY = %s\n"), np->protoname);
 				continue;
 			}
 			if (estrncmp(pp, x_(" INDISK ="), 9) == 0)
 			{
-				xprintf(f, x_(" INDISK = %s.cif\n"), np->protoname);
+				xprintf(f, x_((char*)" INDISK = %s.cif\n"), np->protoname);
 				continue;
 			}
-			xprintf(f, x_("%s\n"), pp);
+			xprintf(f, x_((char*)"%s\n"), pp);
 		}
 
 		/* finished with control deck */
 		xclose(f);
-		ttyputverbose(M_("Wrote 'ecaddrc.RUL'.  Now generating CIF for cell %s"), describenodeproto(np));
+		ttyputverbose(M_((char*)"Wrote 'ecaddrc.RUL'.  Now generating CIF for cell %s"), describenodeproto(np));
 
 		/* tell I/O to write CIF */
-		newpar[0] = x_("cif");
-		newpar[1] = x_("output");
-		newpar[2] = x_("include-cloak-layer");
+		newpar[0] = x_((char*)"cif");
+		newpar[1] = x_((char*)"output");
+		newpar[2] = x_((char*)"include-cloak-layer");
 		telltool(io_tool, 3, newpar);
-		(void)asktool(io_tool, x_("write"), (INTBIG)np->lib, (INTBIG)x_("cif"));
-		newpar[0] = x_("cif");
-		newpar[1] = x_("output");
-		newpar[2] = x_("ignore-cloak-layer");
+		(void)asktool(io_tool, x_((char*)"write"), (INTBIG)np->lib, (INTBIG)x_((char*)"cif"));
+		newpar[0] = x_((char*)"cif");
+		newpar[1] = x_((char*)"output");
+		newpar[2] = x_((char*)"ignore-cloak-layer");
 		telltool(io_tool, 3, newpar);
 		return;
 	}
 
-	if (namesamen(pp, x_("batch"), l) == 0)
+	if (namesamen(pp, x_((char*)"batch"), l) == 0)
 	{
 		if (count == 1)
 		{
-			ttyputusage(x_("telltool drc batch OPTIONS"));
+			ttyputusage(x_((char*)"telltool drc batch OPTIONS"));
 			return;
 		}
 		l = estrlen(pp = par[1]);
-		if (namesamen(pp, x_("run"), l) == 0)
+		if (namesamen(pp, x_((char*)"run"), l) == 0)
 		{
 			/* make sure network tool is on */
 			if ((net_tool->toolstate&TOOLON) == 0)
 			{
-				ttyputerr(M_("Network tool must be running...turning it on"));
+				ttyputerr(M_((char*)"Network tool must be running...turning it on"));
 				toolturnon(net_tool);
-				ttyputerr(M_("...now reissue the DRC command"));
+				ttyputerr(M_((char*)"...now reissue the DRC command"));
 				return;
 			}
 
@@ -394,28 +394,28 @@ void dr_set(INTBIG count, CHAR *par[])
 			np = getcurcell();
 			if (np == NONODEPROTO)
 			{
-				ttyputerr(_("No current cell"));
+				ttyputerr(_((char*)"No current cell"));
 				return;
 			}
 
 			/* see if a dialog should be displayed */
 			infstr = initinfstr();
-			addstringtoinfstr(infstr, _("Checking hierarchically..."));
+			addstringtoinfstr(infstr, _((char*)"Checking hierarchically..."));
 			abortseq = getinterruptkey();
 			if (abortseq != 0)
-				formatinfstr(infstr, _(" (type %s to abort)"), abortseq);
+				formatinfstr(infstr, _((char*)" (type %s to abort)"), abortseq);
 			ttyputmsg(returninfstr(infstr));
 			(void)drcb_check(np, TRUE, FALSE);
 			return;
 		}
-		if (namesamen(pp, x_("select-run"), l) == 0)
+		if (namesamen(pp, x_((char*)"select-run"), l) == 0)
 		{
 			/* make sure network tool is on */
 			if ((net_tool->toolstate&TOOLON) == 0)
 			{
-				ttyputerr(M_("Network tool must be running...turning it on"));
+				ttyputerr(M_((char*)"Network tool must be running...turning it on"));
 				toolturnon(net_tool);
-				ttyputerr(M_("...now reissue the DRC command"));
+				ttyputerr(M_((char*)"...now reissue the DRC command"));
 				return;
 			}
 
@@ -423,146 +423,146 @@ void dr_set(INTBIG count, CHAR *par[])
 			np = getcurcell();
 			if (np == NONODEPROTO)
 			{
-				ttyputerr(_("No current cell"));
+				ttyputerr(_((char*)"No current cell"));
 				return;
 			}
 
 			/* see if a dialog should be displayed */
 			infstr = initinfstr();
-			addstringtoinfstr(infstr, _("Checking selected area hierarchically..."));
+			addstringtoinfstr(infstr, _((char*)"Checking selected area hierarchically..."));
 			abortseq = getinterruptkey();
 			if (abortseq != 0)
-				formatinfstr(infstr, _(" (type %s to abort)"), abortseq);
+				formatinfstr(infstr, _((char*)" (type %s to abort)"), abortseq);
 			ttyputmsg(returninfstr(infstr));
 			(void)drcb_check(np, TRUE, TRUE);
 			return;
 		}
-		if (namesamen(pp, x_("just-1-error"), l) == 0)
+		if (namesamen(pp, x_((char*)"just-1-error"), l) == 0)
 		{
 			(void)setvalkey((INTBIG)dr_tool, VTOOL, dr_optionskey,
 				options | DRCFIRSTERROR, VINTEGER);
-			ttyputmsg(M_("Hierarchical DRC will stop after first error in a cell"));
+			ttyputmsg(M_((char*)"Hierarchical DRC will stop after first error in a cell"));
 			return;
 		}
-		if (namesamen(pp, x_("all-errors"), l) == 0)
+		if (namesamen(pp, x_((char*)"all-errors"), l) == 0)
 		{
 			(void)setvalkey((INTBIG)dr_tool, VTOOL, dr_optionskey,
 				options & ~DRCFIRSTERROR, VINTEGER);
-			ttyputmsg(M_("Hierarchical DRC will find all errors in a cell"));
+			ttyputmsg(M_((char*)"Hierarchical DRC will find all errors in a cell"));
 			return;
 		}
-		if (namesamen(pp, x_("reset-check-dates"), l) == 0)
+		if (namesamen(pp, x_((char*)"reset-check-dates"), l) == 0)
 		{
 			dr_reset_dates();
-			ttyputmsg(M_("All date information about valid DRC is reset"));
+			ttyputmsg(M_((char*)"All date information about valid DRC is reset"));
 			return;
 		}
-		ttyputbadusage(x_("telltool drc batch"));
+		ttyputbadusage(x_((char*)"telltool drc batch"));
 		return;
 	}
 
-	if (namesamen(pp, x_("quick-check"), l) == 0 && l >= 7)
+	if (namesamen(pp, x_((char*)"quick-check"), l) == 0 && l >= 7)
 	{
 		/* get the current cell */
 		np = getcurcell();
 		if (np == NONODEPROTO)
 		{
-			ttyputerr(_("No current cell"));
+			ttyputerr(_((char*)"No current cell"));
 			return;
 		}
 		dr_checkentirecell(np, 0, 0, 0, FALSE);
 		return;
 	}
 
-	if (namesamen(pp, x_("quick-select-check"), l) == 0 && l >= 7)
+	if (namesamen(pp, x_((char*)"quick-select-check"), l) == 0 && l >= 7)
 	{
 		/* get the current cell */
 		np = getcurcell();
 		if (np == NONODEPROTO)
 		{
-			ttyputerr(_("No current cell"));
+			ttyputerr(_((char*)"No current cell"));
 			return;
 		}
 		dr_checkentirecell(np, 0, 0, 0, TRUE);
 		return;
 	}
 
-	if (namesamen(pp, x_("shortcheck"), l) == 0)
+	if (namesamen(pp, x_((char*)"shortcheck"), l) == 0)
 	{
 		if (count < 2)
 		{
-			ttyputusage(x_("telltool drc shortcheck (run|ignore|unignore)"));
+			ttyputusage(x_((char*)"telltool drc shortcheck (run|ignore|unignore)"));
 			return;
 		}
 		l = estrlen(pp = par[1]);
-		if (namesamen(pp, x_("run"), l) == 0)
+		if (namesamen(pp, x_((char*)"run"), l) == 0)
 		{
 			/* make sure network tool is on */
 			if ((net_tool->toolstate&TOOLON) == 0)
 			{
-				ttyputerr(M_("Network tool must be running...turning it on"));
+				ttyputerr(M_((char*)"Network tool must be running...turning it on"));
 				toolturnon(net_tool);
-				ttyputerr(M_("...now reissue the DRC command"));
+				ttyputerr(M_((char*)"...now reissue the DRC command"));
 				return;
 			}
 			dr_flatwrite(getcurcell());
 			return;
 		}
-		if (namesamen(pp, x_("ignore"), l) == 0)
+		if (namesamen(pp, x_((char*)"ignore"), l) == 0)
 		{
 			if (count < 3)
 			{
-				ttyputusage(x_("telltool drc shortcheck ignore CELL"));
+				ttyputusage(x_((char*)"telltool drc shortcheck ignore CELL"));
 				return;
 			}
 			dr_flatignore(par[2]);
 			return;
 		}
-		if (namesamen(pp, x_("unignore"), l) == 0)
+		if (namesamen(pp, x_((char*)"unignore"), l) == 0)
 		{
 			if (count < 3)
 			{
-				ttyputusage(x_("telltool drc shortcheck unignore CELL"));
+				ttyputusage(x_((char*)"telltool drc shortcheck unignore CELL"));
 				return;
 			}
 			dr_flatunignore(par[2]);
 			return;
 		}
-		ttyputbadusage(x_("telltool drc shortcheck"));
+		ttyputbadusage(x_((char*)"telltool drc shortcheck"));
 		return;
 	}
 
-	if (namesamen(pp, x_("verbose"), l) == 0)
+	if (namesamen(pp, x_((char*)"verbose"), l) == 0)
 	{
 		if (!negate)
 		{
 			(void)setvalkey((INTBIG)dr_tool, VTOOL, dr_verbosekey, 1, VINTEGER|VDONTSAVE);
-			ttyputverbose(M_("DRC verbose"));
+			ttyputverbose(M_((char*)"DRC verbose"));
 		} else
 		{
 			if (getvalkey((INTBIG)dr_tool, VTOOL, VINTEGER, dr_verbosekey) != NOVARIABLE)
 				(void)delvalkey((INTBIG)dr_tool, VTOOL, dr_verbosekey);
-			ttyputverbose(M_("DRC brief"));
+			ttyputverbose(M_((char*)"DRC brief"));
 		}
 		return;
 	}
 
-	if (namesamen(pp, x_("reasonable"), l) == 0)
+	if (namesamen(pp, x_((char*)"reasonable"), l) == 0)
 	{
 		if (!negate)
 		{
 			(void)setvalkey((INTBIG)dr_tool, VTOOL, dr_optionskey,
 				options | DRCREASONABLE, VINTEGER);
-			ttyputverbose(M_("DRC will consider only reasonable number of polygons"));
+			ttyputverbose(M_((char*)"DRC will consider only reasonable number of polygons"));
 		} else
 		{
 			(void)setvalkey((INTBIG)dr_tool, VTOOL, dr_optionskey,
 				options & ~DRCREASONABLE, VINTEGER);
-			ttyputverbose(M_("DRC will consider all polygons"));
+			ttyputverbose(M_((char*)"DRC will consider all polygons"));
 		}
 		return;
 	}
-	ttyputbadusage(x_("telltool drc"));
+	ttyputbadusage(x_((char*)"telltool drc"));
 }
 
 /*
@@ -571,12 +571,12 @@ void dr_set(INTBIG count, CHAR *par[])
  */
 INTBIG dr_request(CHAR *command, va_list ap)
 {
-	REGISTER NODEPROTO *cell;
-	REGISTER NODEINST **nodelist;
-	REGISTER BOOLEAN *validity;
-	REGISTER INTBIG arg1, arg2, arg3, arg4, count;
+	 NODEPROTO *cell;
+	 NODEINST **nodelist;
+	 BOOLEAN *validity;
+	 INTBIG arg1, arg2, arg3, arg4, count;
 
-	if (namesame(command, x_("check-instances")) == 0)
+	if (namesame(command, x_((char*)"check-instances")) == 0)
 	{
 		/* get the arguments */
 		arg1 = va_arg(ap, INTBIG);
@@ -596,15 +596,15 @@ INTBIG dr_request(CHAR *command, va_list ap)
 
 void dr_examinenodeproto(NODEPROTO *np)
 {
-	REGISTER INTBIG i, errs;
-	REGISTER CHAR *pt;
+	 INTBIG i, errs;
+	 CHAR *pt;
 	if (dr_examinecell(np, FALSE) != 0)
 	{
 		errs = numerrors();
 		for(i=0; i<errs; i++)
 		{
 			pt = reportnexterror(0, 0, 0);
-			ttyputmsg(x_("%s"), pt);
+			ttyputmsg(x_((char*)"%s"), pt);
 		}
 
 		/* reset error pointers to start of list */
@@ -617,9 +617,9 @@ void dr_examinenodeproto(NODEPROTO *np)
  */
 INTBIG dr_examinecell(NODEPROTO *np, BOOLEAN report)
 {
-	REGISTER NODEINST *ni;
-	REGISTER ARCINST *ai;
-	REGISTER INTBIG errorcount;
+	 NODEINST *ni;
+	 ARCINST *ai;
+	 INTBIG errorcount;
 
 	if (stopping(STOPREASONDRC)) return(0);
 
@@ -637,7 +637,7 @@ INTBIG dr_examinecell(NODEPROTO *np, BOOLEAN report)
 	}
 
 	/* clear errors */
-	initerrorlogging(_("DRC"));
+	initerrorlogging(_((char*)"DRC"));
 
 	drcb_initincrementalcheck(np);
 	for(ni = np->firstnodeinst; ni != NONODEINST; ni = ni->nextnodeinst)
@@ -646,7 +646,7 @@ INTBIG dr_examinecell(NODEPROTO *np, BOOLEAN report)
 		(void)drcb_checkincremental(ai->geom, TRUE);
 	errorcount = numerrors();
 	if (report)
-		ttyputmsg(_("Cell %s checked at this level only (%ld errors)"),
+		ttyputmsg(_((char*)"Cell %s checked at this level only (%ld errors)"),
 			describenodeproto(np), errorcount);
 	termerrorlogging(TRUE);
 	return(errorcount);
@@ -654,10 +654,10 @@ INTBIG dr_examinecell(NODEPROTO *np, BOOLEAN report)
 
 void dr_slice(void)
 {
-	REGISTER DCHECK *d, *nextd;
-	REGISTER NODEPROTO *np;
-	REGISTER BOOLEAN didcheck;
-	REGISTER VARIABLE *var;
+	 DCHECK *d, *nextd;
+	 NODEPROTO *np;
+	 BOOLEAN didcheck;
+	 VARIABLE *var;
 
 	/* see if the tool should be off */
 	var = getvalkey((INTBIG)dr_tool, VTOOL, VINTEGER, dr_incrementalonkey);
@@ -672,13 +672,13 @@ void dr_slice(void)
 	/* make sure network tool is on */
 	if ((net_tool->toolstate&TOOLON) == 0)
 	{
-		ttyputerr(M_("Network tool must be running...turning it on"));
+		ttyputerr(M_((char*)"Network tool must be running...turning it on"));
 		toolturnon(net_tool);
 		return;
 	}
 
 	/* mark this activity */
-	setactivity(_("DRC"));
+	setactivity(_((char*)"DRC"));
 
 	/* first clear the ignore information on any objects that changed */
 	for(d = dr_firstdcheck; d != NODCHECK; d = d->nextdcheck)
@@ -754,8 +754,8 @@ void dr_modifyarcinst(ARCINST *ai,INTBIG oldxA, INTBIG oldyA, INTBIG oldxB, INTB
 
 void dr_newobject(INTBIG addr, INTBIG type)
 {
-	REGISTER NODEINST *ni;
-	REGISTER ARCINST *ai;
+	 NODEINST *ni;
+	 ARCINST *ai;
 
 	if ((type&VTYPE) == VNODEINST)
 	{
@@ -770,9 +770,9 @@ void dr_newobject(INTBIG addr, INTBIG type)
 
 void dr_killobject(INTBIG addr, INTBIG type)
 {
-	REGISTER DCHECK *d, *lastd, *nextd;
-	REGISTER NODEINST *ni;
-	REGISTER ARCINST *ai;
+	 DCHECK *d, *lastd, *nextd;
+	 NODEINST *ni;
+	 ARCINST *ai;
 
 	/* remove any others in the list that point to this deleted object */
 	lastd = NODCHECK;
@@ -826,7 +826,7 @@ void dr_newvariable(INTBIG addr, INTBIG type, INTBIG key, INTBIG newtype)
  */
 DCHECK *dr_allocdcheck(void)
 {
-	REGISTER DCHECK *d;
+	 DCHECK *d;
 
 	if (dr_dcheckfree == NODCHECK)
 	{
@@ -852,7 +852,7 @@ void dr_freedcheck(DCHECK *d)
 
 void dr_queuecheck(void *addr, NODEPROTO *cell, INTBIG function)
 {
-	REGISTER DCHECK *d;
+	 DCHECK *d;
 
 	/* do not examine anything in a hidden library (such as the clipboard) */
 	if ((cell->lib->userbits&HIDDENLIBRARY) != 0) return;
@@ -876,7 +876,7 @@ void dr_queuecheck(void *addr, NODEPROTO *cell, INTBIG function)
  */
 void dr_unqueuecheck(LIBRARY *lib)
 {
-	REGISTER DCHECK *d, *nextd, *lastd;
+	 DCHECK *d, *nextd, *lastd;
 
 	lastd = NODCHECK;
 	for(d = dr_firstdcheck; d != NODCHECK; d = nextd)
@@ -898,9 +898,9 @@ void dr_unqueuecheck(LIBRARY *lib)
  */
 void dr_unignore(NODEPROTO *np, BOOLEAN objisnode, void *addr)
 {
-	REGISTER GEOM **ignorelist, *p1, *p2, *geom;
-	REGISTER VARIABLE *var;
-	REGISTER INTBIG i, len, pt;
+	 GEOM **ignorelist, *p1, *p2, *geom;
+	 VARIABLE *var;
+	 INTBIG i, len, pt;
 
 	var = getvalkey((INTBIG)np, VNODEPROTO, VGEOM|VISARRAY, dr_ignore_listkey);
 
@@ -949,23 +949,23 @@ void dr_unignore(NODEPROTO *np, BOOLEAN objisnode, void *addr)
  */
 NODEPROTO *dr_checkthiscell(INTBIG count, CHAR *name)
 {
-	REGISTER NODEPROTO *np;
+	 NODEPROTO *np;
 
 	if (count < 2)
 	{
 		np = getcurcell();
-		if (np == NONODEPROTO) ttyputerr(_("No current cell"));
+		if (np == NONODEPROTO) ttyputerr(_((char*)"No current cell"));
 		return(np);
 	}
 	np = getnodeproto(name);
 	if (np == NONODEPROTO)
 	{
-		ttyputerr(_("No cell named %s"), name);
+		ttyputerr(_((char*)"No cell named %s"), name);
 		return(NONODEPROTO);
 	}
 	if (np->primindex != 0)
 	{
-		ttyputerr(_("Can only check cells, not primitives"));
+		ttyputerr(_((char*)"Can only check cells, not primitives"));
 		return(NONODEPROTO);
 	}
 	return(np);
@@ -978,7 +978,7 @@ NODEPROTO *dr_checkthiscell(INTBIG count, CHAR *name)
  */
 INTBIG dr_getoptionsvalue(void)
 {
-	REGISTER VARIABLE *var;
+	 VARIABLE *var;
 
 	var = getvalkey((INTBIG)dr_tool, VTOOL, VINTEGER, dr_optionskey);
 	if (var == NOVARIABLE) return(0);
@@ -990,9 +990,9 @@ INTBIG dr_getoptionsvalue(void)
  */
 void dr_reset_dates(void)
 {
-	REGISTER LIBRARY *lib;
-	REGISTER NODEPROTO *np;
-	REGISTER VARIABLE *var;
+	 LIBRARY *lib;
+	 NODEPROTO *np;
+	 VARIABLE *var;
 
 	for(lib = el_curlib; lib != NOLIBRARY; lib = lib->nextlibrary)
 	{
@@ -1012,9 +1012,9 @@ void dr_reset_dates(void)
 void dr_checkentirecell(NODEPROTO *cell, INTBIG count, NODEINST **nodestocheck, BOOLEAN *validity,
 	BOOLEAN justarea)
 {
-	REGISTER LIBRARY *lib;
-	REGISTER NODEPROTO *np;
-	REGISTER INTBIG errorcount;
+	 LIBRARY *lib;
+	 NODEPROTO *np;
+	 INTBIG errorcount;
 
 	if (cell->cellview == el_schematicview || cell->tech == sch_tech)
 	{
@@ -1022,10 +1022,10 @@ void dr_checkentirecell(NODEPROTO *cell, INTBIG count, NODEINST **nodestocheck, 
 		for(lib = el_curlib; lib != NOLIBRARY; lib = lib->nextlibrary)
 			for(np = lib->firstnodeproto; np != NONODEPROTO; np = np->nextnodeproto)
 				np->temp1 = 0;
-		initerrorlogging(_("Schematic DRC"));
+		initerrorlogging(_((char*)"Schematic DRC"));
 		dr_checkschematiccellrecursively(cell);
 		errorcount = numerrors();
-		if (errorcount != 0) ttyputmsg(_("TOTAL OF %ld ERRORS FOUND"), errorcount);
+		if (errorcount != 0) ttyputmsg(_((char*)"TOTAL OF %ld ERRORS FOUND"), errorcount);
 		termerrorlogging(TRUE);
 		return;
 	}
@@ -1036,8 +1036,8 @@ void dr_checkentirecell(NODEPROTO *cell, INTBIG count, NODEINST **nodestocheck, 
 
 void dr_checkschematiccellrecursively(NODEPROTO *cell)
 {
-	REGISTER NODEINST *ni;
-	REGISTER NODEPROTO *cnp;
+	 NODEINST *ni;
+	 NODEPROTO *cnp;
 
 	cell->temp1 = 1;
 	for(ni = cell->firstnodeinst; ni != NONODEINST; ni = ni->nextnodeinst)
@@ -1054,18 +1054,18 @@ void dr_checkschematiccellrecursively(NODEPROTO *cell)
 	}
 
 	/* now check this cell */
-	ttyputmsg(_("Checking schematic cell %s"), describenodeproto(cell));
+	ttyputmsg(_((char*)"Checking schematic cell %s"), describenodeproto(cell));
 	dr_checkschematiccell(cell, FALSE);
 }
 
 void dr_checkschematiccell(NODEPROTO *cell, BOOLEAN justthis)
 {
-	REGISTER NODEINST *ni;
-	REGISTER ARCINST *ai;
-	REGISTER INTBIG errorcount, initialerrorcount, thiserrors;
-	REGISTER CHAR *indent;
+	 NODEINST *ni;
+	 ARCINST *ai;
+	 INTBIG errorcount, initialerrorcount, thiserrors;
+	 CHAR *indent;
 
-	if (justthis) initerrorlogging(_("Schematic DRC"));
+	if (justthis) initerrorlogging(_((char*)"Schematic DRC"));
 	initialerrorcount = numerrors();
 	for(ni = cell->firstnodeinst; ni != NONODEINST; ni = ni->nextnodeinst)
 		dr_schdocheck(ni->geom);
@@ -1073,10 +1073,10 @@ void dr_checkschematiccell(NODEPROTO *cell, BOOLEAN justthis)
 		dr_schdocheck(ai->geom);
 	errorcount = numerrors();
 	thiserrors = errorcount - initialerrorcount;
-	if (justthis) indent = x_(""); else
-		indent = x_("   ");
-	if (thiserrors == 0) ttyputmsg(_("%sNo errors found"), indent); else
-		ttyputmsg(_("%s%ld errors found"), indent, thiserrors);
+	if (justthis) indent = x_((char*)""); else
+		indent = x_((char*)"   ");
+	if (thiserrors == 0) ttyputmsg(_((char*)"%sNo errors found"), indent); else
+		ttyputmsg(_((char*)"%s%ld errors found"), indent, thiserrors);
 	if (justthis) termerrorlogging(TRUE);
 }
 
@@ -1085,15 +1085,15 @@ void dr_checkschematiccell(NODEPROTO *cell, BOOLEAN justthis)
  */
 void dr_schdocheck(GEOM *geom)
 {
-	REGISTER NODEPROTO *cell, *np;
-	REGISTER NODEINST *ni;
-	REGISTER ARCINST *ai;
+	 NODEPROTO *cell, *np;
+	 NODEINST *ni;
+	 ARCINST *ai;
 	ARCINST **thearcs;
-	REGISTER PORTARCINST *pi;
-	REGISTER PORTPROTO *pp;
-	REGISTER VARIABLE *var, *fvar;
-	REGISTER BOOLEAN checkdangle;
-	REGISTER INTBIG i, j, fun, signals, portwidth, nodesize;
+	 PORTARCINST *pi;
+	 PORTPROTO *pp;
+	 VARIABLE *var, *fvar;
+	 BOOLEAN checkdangle;
+	 INTBIG i, j, fun, signals, portwidth, nodesize;
 	INTBIG x, y;
 	void *err, *infstr;
 	UINTBIG descript[TEXTDESCRIPTSIZE];
@@ -1114,7 +1114,7 @@ void dr_schdocheck(GEOM *geom)
 					if (pi->conarcinst->proto == sch_busarc) break;
 				if (pi == NOPORTARCINST)
 				{
-					err = logerror(_("Bus pin does not connect to any bus arcs"), cell, 0);
+					err = logerror(_((char*)"Bus pin does not connect to any bus arcs"), cell, 0);
 					addgeomtoerror(err, geom, TRUE, 0, 0);
 					return;
 				}
@@ -1126,7 +1126,7 @@ void dr_schdocheck(GEOM *geom)
 				if (pi->conarcinst->proto == sch_wirearc) i++;
 			if (i > 1)
 			{
-				err = logerror(_("Wire arcs cannot connect through a bus pin"), cell, 0);
+				err = logerror(_((char*)"Wire arcs cannot connect through a bus pin"), cell, 0);
 				addgeomtoerror(err, geom, TRUE, 0, 0);
 				for(pi = ni->firstportarcinst; pi != NOPORTARCINST; pi = pi->nextportarcinst)
 					if (pi->conarcinst->proto == sch_wirearc)
@@ -1149,7 +1149,7 @@ void dr_schdocheck(GEOM *geom)
 				}
 				if (i >= ni->numvar)
 				{
-					err = logerror(_("Stranded pin (not connected or exported)"), cell, 0);
+					err = logerror(_((char*)"Stranded pin (not connected or exported)"), cell, 0);
 					addgeomtoerror(err, geom, TRUE, 0, 0);
 					return;
 				}
@@ -1157,14 +1157,14 @@ void dr_schdocheck(GEOM *geom)
 
 			if (isinlinepin(ni, &thearcs))
 			{
-				err = logerror(_("Unnecessary pin (between 2 arcs)"), cell, 0);
+				err = logerror(_((char*)"Unnecessary pin (between 2 arcs)"), cell, 0);
 				addgeomtoerror(err, geom, TRUE, 0, 0);
 				return;
 			}
 
 			if (invisiblepinwithoffsettext(ni, &x, &y, FALSE))
 			{
-				err = logerror(_("Invisible pin has text in different location"), cell, 0);
+				err = logerror(_((char*)"Invisible pin has text in different location"), cell, 0);
 				addgeomtoerror(err, geom, TRUE, 0, 0);
 				addlinetoerror(err, (ni->lowx+ni->highx)/2, (ni->lowy+ni->highy)/2, x, y);
 				return;
@@ -1193,7 +1193,7 @@ void dr_schdocheck(GEOM *geom)
 				{
 					/* this node's parameter is no longer on the cell: delete from instance */
 					infstr = initinfstr();
-					formatinfstr(infstr, _("Parameter '%s' on node %s is invalid and has been deleted"),
+					formatinfstr(infstr, _((char*)"Parameter '%s' on node %s is invalid and has been deleted"),
 						truevariablename(var), describenodeinst(ni));
 					err = logerror(returninfstr(infstr), cell, 0);
 					addgeomtoerror(err, geom, TRUE, 0, 0);
@@ -1207,7 +1207,7 @@ void dr_schdocheck(GEOM *geom)
 					if (TDGETUNITS(var->textdescript) != TDGETUNITS(fvar->textdescript))
 					{
 						infstr = initinfstr();
-						formatinfstr(infstr, _("Parameter '%s' on node %s had incorrect units (now fixed)"),
+						formatinfstr(infstr, _((char*)"Parameter '%s' on node %s had incorrect units (now fixed)"),
 							truevariablename(var), describenodeinst(ni));
 						err = logerror(returninfstr(infstr), cell, 0);
 						addgeomtoerror(err, geom, TRUE, 0, 0);
@@ -1224,7 +1224,7 @@ void dr_schdocheck(GEOM *geom)
 						if ((var->type&VDISPLAY) != 0)
 						{
 							infstr = initinfstr();
-							formatinfstr(infstr, _("Parameter '%s' on node %s should not be visible (now fixed)"),
+							formatinfstr(infstr, _((char*)"Parameter '%s' on node %s should not be visible (now fixed)"),
 								truevariablename(var), describenodeinst(ni));
 							err = logerror(returninfstr(infstr), cell, 0);
 							addgeomtoerror(err, geom, TRUE, 0, 0);
@@ -1237,7 +1237,7 @@ void dr_schdocheck(GEOM *geom)
 						if ((var->type&VDISPLAY) == 0)
 						{
 							infstr = initinfstr();
-							formatinfstr(infstr, _("Parameter '%s' on node %s should be visible (now fixed)"),
+							formatinfstr(infstr, _((char*)"Parameter '%s' on node %s should be visible (now fixed)"),
 								truevariablename(var), describenodeinst(ni));
 							err = logerror(returninfstr(infstr), cell, 0);
 							addgeomtoerror(err, geom, TRUE, 0, 0);
@@ -1284,7 +1284,7 @@ void dr_schdocheck(GEOM *geom)
 				if (ni->firstportarcinst->nextportarcinst != NOPORTARCINST) continue;
 
 				/* the arc dangles */
-				err = logerror(_("Arc dangles"), cell, 0);
+				err = logerror(_((char*)"Arc dangles"), cell, 0);
 				addgeomtoerror(err, geom, TRUE, 0, 0);
 				return;
 			}
@@ -1307,7 +1307,7 @@ void dr_schdocheck(GEOM *geom)
 			if (pp == NOPORTPROTO)
 			{
 				infstr = initinfstr();
-				formatinfstr(infstr, _("Arc %s connects to port %s of node %s, but there is no equivalent port in cell %s"),
+				formatinfstr(infstr, _((char*)"Arc %s connects to port %s of node %s, but there is no equivalent port in cell %s"),
 					describearcinst(ai), ai->end[i].portarcinst->proto->protoname, describenodeinst(ni), describenodeproto(np));
 				err = logerror(returninfstr(infstr), cell, 0);
 				addgeomtoerror(err, geom, TRUE, 0, 0);
@@ -1321,7 +1321,7 @@ void dr_schdocheck(GEOM *geom)
 			if (signals != portwidth && signals != portwidth*nodesize)
 			{
 				infstr = initinfstr();
-				formatinfstr(infstr, _("Arc %s (%ld wide) connects to port %s of node %s (%ld wide)"),
+				formatinfstr(infstr, _((char*)"Arc %s (%ld wide) connects to port %s of node %s (%ld wide)"),
 					describearcinst(ai), signals, pp->protoname, describenodeinst(ni), portwidth);
 				err = logerror(returninfstr(infstr), cell, 0);
 				addgeomtoerror(err, geom, TRUE, 0, 0);
@@ -1339,9 +1339,9 @@ void dr_schdocheck(GEOM *geom)
  */
 void dr_schcheckobjectvicinity(GEOM *topgeom, GEOM *geom, XARRAY trans)
 {
-	REGISTER INTBIG i, total;
-	REGISTER NODEINST *ni, *subni;
-	REGISTER ARCINST *ai, *subai;
+	 INTBIG i, total;
+	 NODEINST *ni, *subni;
+	 ARCINST *ai, *subai;
 	XARRAY xformr, xformt, subrot, localtrans;
 	static POLYGON *poly = NOPOLYGON;
 
@@ -1393,14 +1393,14 @@ void dr_schcheckobjectvicinity(GEOM *topgeom, GEOM *geom, XARRAY trans)
  */
 BOOLEAN dr_schcheckpolygonvicinity(GEOM *geom, POLYGON *poly)
 {
-	REGISTER NODEINST *ni, *oni;
-	REGISTER ARCINST *ai, *oai;
-	REGISTER NODEPROTO *cell;
-	REGISTER GEOM *ogeom;
-	REGISTER PORTARCINST *pi;
-	REGISTER NETWORK *net;
-	REGISTER BOOLEAN connected;
-	REGISTER INTBIG i, sea;
+	 NODEINST *ni, *oni;
+	 ARCINST *ai, *oai;
+	 NODEPROTO *cell;
+	 GEOM *ogeom;
+	 PORTARCINST *pi;
+	 NETWORK *net;
+	 BOOLEAN connected;
+	 INTBIG i, sea;
 
 	/* don't check text */
 	if (poly->style == TEXTCENT || poly->style == TEXTTOP ||
@@ -1515,9 +1515,9 @@ BOOLEAN dr_schcheckpolygonvicinity(GEOM *geom, POLYGON *poly)
 BOOLEAN dr_schcheckpoly(GEOM *geom, POLYGON *poly, GEOM *otopgeom, GEOM *ogeom, XARRAY otrans,
 	BOOLEAN cancross)
 {
-	REGISTER INTBIG i, total;
-	REGISTER NODEINST *ni, *subni;
-	REGISTER ARCINST *ai, *subai;
+	 INTBIG i, total;
+	 NODEINST *ni, *subni;
+	 ARCINST *ai, *subai;
 	XARRAY xformr, xformt, thistrans, subrot;
 	static POLYGON *opoly = NOPOLYGON;
 
@@ -1575,8 +1575,8 @@ BOOLEAN dr_schcheckpoly(GEOM *geom, POLYGON *poly, GEOM *otopgeom, GEOM *ogeom, 
  */
 BOOLEAN dr_checkpolyagainstpoly(GEOM *geom, POLYGON *poly, GEOM *ogeom, POLYGON *opoly, BOOLEAN cancross)
 {
-	REGISTER void *err;
-	REGISTER INTBIG i;
+	 void *err;
+	 INTBIG i;
 
 	if (cancross)
 	{
@@ -1599,7 +1599,7 @@ BOOLEAN dr_checkpolyagainstpoly(GEOM *geom, POLYGON *poly, GEOM *ogeom, POLYGON 
 	}
 
 	/* report the error */
-	err = logerror(_("Objects touch"), geomparent(geom), 0);
+	err = logerror(_((char*)"Objects touch"), geomparent(geom), 0);
 	addgeomtoerror(err, geom, TRUE, 0, 0);
 	addgeomtoerror(err, ogeom, TRUE, 0, 0);
 	return(TRUE);
@@ -1611,9 +1611,9 @@ BOOLEAN dr_checkpolyagainstpoly(GEOM *geom, POLYGON *poly, GEOM *ogeom, POLYGON 
  */
 BOOLEAN dr_schcheckcolinear(ARCINST *ai, ARCINST *oai)
 {
-	REGISTER INTBIG lowx, highx, lowy, highy, olow, ohigh, ang, oang, fx, fy, tx, ty,
+	 INTBIG lowx, highx, lowy, highy, olow, ohigh, ang, oang, fx, fy, tx, ty,
 		ofx, ofy, otx, oty, dist, gdist, frx, fry, tox, toy, ca, sa;
-	REGISTER void *err;
+	 void *err;
 
 	/* get information about the other line */
 	fx = ai->end[0].xpos;   fy = ai->end[0].ypos;
@@ -1658,7 +1658,7 @@ BOOLEAN dr_schcheckcolinear(ARCINST *ai, ARCINST *oai)
 		ohigh = maxi(ofx, otx);
 		if (lowx >= ohigh || highx <= olow) return(FALSE);
 	}
-	err = logerror(_("Arcs overlap"), ai->parent, 0);
+	err = logerror(_((char*)"Arcs overlap"), ai->parent, 0);
 	addgeomtoerror(err, ai->geom, TRUE, 0, 0);
 	addgeomtoerror(err, oai->geom, TRUE, 0, 0);
 
@@ -1698,26 +1698,26 @@ BOOLEAN dr_schcheckcolinear(ARCINST *ai, ARCINST *oai)
 /* DRC: Options */
 static DIALOGITEM dr_optionsdialogitems[] =
 {
- /*  1 */ {0, {304,184,328,248}, BUTTON, N_("OK")},
- /*  2 */ {0, {304,44,328,108}, BUTTON, N_("Cancel")},
- /*  3 */ {0, {144,8,160,224}, MESSAGE, N_("Incremental and hierarchical:")},
- /*  4 */ {0, {272,32,288,160}, BUTTON, N_("Edit Rules Deck")},
- /*  5 */ {0, {32,32,48,117}, CHECK, N_("On")},
- /*  6 */ {0, {192,216,208,272}, EDITTEXT, x_("")},
- /*  7 */ {0, {8,8,24,169}, MESSAGE, N_("Incremental DRC:")},
- /*  8 */ {0, {64,8,80,169}, MESSAGE, N_("Hierarchical DRC:")},
- /*  9 */ {0, {248,8,264,169}, MESSAGE, N_("Dracula DRC Interface:")},
- /* 10 */ {0, {112,32,128,192}, BUTTON, N_("Clear valid DRC dates")},
- /* 11 */ {0, {88,32,104,228}, CHECK, N_("Just 1 error per cell")},
- /* 12 */ {0, {216,32,232,296}, CHECK, N_("Ignore center cuts in large contacts")},
- /* 13 */ {0, {192,48,208,212}, MESSAGE, N_("Number of processors:")},
- /* 14 */ {0, {168,32,184,217}, CHECK, N_("Use multiple processors")},
- /* 15 */ {0, {56,8,57,296}, DIVIDELINE, x_("")},
- /* 16 */ {0, {136,8,137,296}, DIVIDELINE, x_("")},
- /* 17 */ {0, {240,8,241,296}, DIVIDELINE, x_("")},
- /* 18 */ {0, {296,8,297,296}, DIVIDELINE, x_("")}
+ /*  1 */ {0, {304,184,328,248}, BUTTON, N_((char*)"OK")},
+ /*  2 */ {0, {304,44,328,108}, BUTTON, N_((char*)"Cancel")},
+ /*  3 */ {0, {144,8,160,224}, MESSAGE, N_((char*)"Incremental and hierarchical:")},
+ /*  4 */ {0, {272,32,288,160}, BUTTON, N_((char*)"Edit Rules Deck")},
+ /*  5 */ {0, {32,32,48,117}, CHECK, N_((char*)"On")},
+ /*  6 */ {0, {192,216,208,272}, EDITTEXT, x_((char*)"")},
+ /*  7 */ {0, {8,8,24,169}, MESSAGE, N_((char*)"Incremental DRC:")},
+ /*  8 */ {0, {64,8,80,169}, MESSAGE, N_((char*)"Hierarchical DRC:")},
+ /*  9 */ {0, {248,8,264,169}, MESSAGE, N_((char*)"Dracula DRC Interface:")},
+ /* 10 */ {0, {112,32,128,192}, BUTTON, N_((char*)"Clear valid DRC dates")},
+ /* 11 */ {0, {88,32,104,228}, CHECK, N_((char*)"Just 1 error per cell")},
+ /* 12 */ {0, {216,32,232,296}, CHECK, N_((char*)"Ignore center cuts in large contacts")},
+ /* 13 */ {0, {192,48,208,212}, MESSAGE, N_((char*)"Number of processors:")},
+ /* 14 */ {0, {168,32,184,217}, CHECK, N_((char*)"Use multiple processors")},
+ /* 15 */ {0, {56,8,57,296}, DIVIDELINE, x_((char*)"")},
+ /* 16 */ {0, {136,8,137,296}, DIVIDELINE, x_((char*)"")},
+ /* 17 */ {0, {240,8,241,296}, DIVIDELINE, x_((char*)"")},
+ /* 18 */ {0, {296,8,297,296}, DIVIDELINE, x_((char*)"")}
 };
-static DIALOG dr_optionsdialog = {{50,75,387,381}, N_("DRC Options"), 0, 18, dr_optionsdialogitems, 0, 0};
+static DIALOG dr_optionsdialog = {{50,75,387,381}, N_((char*)"DRC Options"), 0, 18, dr_optionsdialogitems, 0, 0};
 
 /* special items for the "DRC Options" dialog: */
 #define DDRO_DRACULADECK   4		/* Edit dracula rules (button) */
@@ -1730,14 +1730,14 @@ static DIALOG dr_optionsdialog = {{50,75,387,381}, N_("DRC Options"), 0, 18, dr_
 
 void dr_optionsdlog(void)
 {
-	REGISTER INTBIG itemHit, options, oldoptions, i, l, numproc, orignumproc;
-	REGISTER CHAR *qual;
+	 INTBIG itemHit, options, oldoptions, i, l, numproc, orignumproc;
+	 CHAR *qual;
 	INTBIG dummy, clearvaliddrcdates;
 	CHAR header[200], *dummyfile[1];
-	REGISTER VARIABLE *var;
-	REGISTER WINDOWPART *w;
-	REGISTER EDITOR *ed;
-	REGISTER void *infstr, *dia;
+	 VARIABLE *var;
+	 WINDOWPART *w;
+	 EDITOR *ed;
+	 void *infstr, *dia;
 
 	dia = DiaInitDialog(&dr_optionsdialog);
 	if (dia == 0) return;
@@ -1834,18 +1834,18 @@ void dr_optionsdlog(void)
 	if (itemHit == DDRO_DRACULADECK)
 	{
 		/* now edit the dracula */
-		qual = x_("DRC_ecad_deck");
+		qual = x_((char*)"DRC_ecad_deck");
 		esnprintf(header, 200, _("ECAD deck for technology %s"), el_curtech->techname);
 
 		var = getval((INTBIG)el_curtech, VTECHNOLOGY, -1, qual);
 		if (var == NOVARIABLE)
 		{
-			dummyfile[0] = x_("");
+			dummyfile[0] = x_((char*)"");
 			var = setval((INTBIG)el_curtech, VTECHNOLOGY, qual, (INTBIG)dummyfile,
 				VSTRING|VISARRAY|(1<<VLENGTHSH));
 			if (var == NOVARIABLE)
 			{
-				ttyputerr(_("Cannot create DRC_ecad_deck on the technology"));
+				ttyputerr(_((char*)"Cannot create DRC_ecad_deck on the technology"));
 				return;
 			}
 		} else
@@ -1879,13 +1879,13 @@ void dr_optionsdlog(void)
  */
 void dr_rulesdloghook(void)
 {
-	REGISTER INTBIG i, changed, truelen, truelenR, truelencon, truelenuncon, truelenconW, truelenunconW,
+	 INTBIG i, changed, truelen, truelenR, truelencon, truelenuncon, truelenconW, truelenunconW,
 		truelenconM, truelenunconM, truelenedge, truelenconR, truelenunconR, truelenconWR, truelenunconWR,
 		truelenconMR, truelenunconMR, truelenedgeR;
-	REGISTER VARIABLE *varcon, *varuncon, *varconW, *varunconW, *varconM, *varunconM,
+	 VARIABLE *varcon, *varuncon, *varconW, *varunconW, *varconM, *varunconM,
 		*varedge, *varconR, *varunconR, *varconWR, *varunconWR, *varconMR, *varunconMR,
 		*varedgeR, *varmindist, *varmindistR, *var, *varminsize, *varminsizeR;
-	REGISTER DRCRULES *rules;
+	 DRCRULES *rules;
 
 	/* create a RULES structure */
 	rules = dr_allocaterules(el_curtech->layercount, el_curtech->nodeprotocount, el_curtech->techname);
@@ -2107,7 +2107,7 @@ void dr_rulesdloghook(void)
 DRCRULES *dr_allocaterules(INTBIG layercount, INTBIG nodecount, CHAR *techname)
 {
 	DRCRULES *rules;
-	REGISTER INTBIG i;
+	 INTBIG i;
 
 	rules = (DRCRULES *)emalloc(sizeof (DRCRULES), el_tempcluster);
 	if (rules == 0) return(NODRCRULES);
@@ -2156,7 +2156,7 @@ DRCRULES *dr_allocaterules(INTBIG layercount, INTBIG nodecount, CHAR *techname)
 	for(i=0; i<rules->numlayers; i++)
 	{
 		rules->minwidth[i] = XX;
-		(void)allocstring(&rules->minwidthR[i], x_(""), el_tempcluster);
+		(void)allocstring(&rules->minwidthR[i], x_((char*)""), el_tempcluster);
 		rules->layernames[i] = 0;
 	}
 	for(i=0; i<rules->utsize; i++)
@@ -2168,13 +2168,13 @@ DRCRULES *dr_allocaterules(INTBIG layercount, INTBIG nodecount, CHAR *techname)
 		rules->conlistM[i] = XX;
 		rules->unconlistM[i] = XX;
 		rules->edgelist[i] = XX;
-		(void)allocstring(&rules->conlistR[i], x_(""), el_tempcluster);
-		(void)allocstring(&rules->unconlistR[i], x_(""), el_tempcluster);
-		(void)allocstring(&rules->conlistWR[i], x_(""), el_tempcluster);
-		(void)allocstring(&rules->unconlistWR[i], x_(""), el_tempcluster);
-		(void)allocstring(&rules->conlistMR[i], x_(""), el_tempcluster);
-		(void)allocstring(&rules->unconlistMR[i], x_(""), el_tempcluster);
-		(void)allocstring(&rules->edgelistR[i], x_(""), el_tempcluster);
+		(void)allocstring(&rules->conlistR[i], x_((char*)""), el_tempcluster);
+		(void)allocstring(&rules->unconlistR[i], x_((char*)""), el_tempcluster);
+		(void)allocstring(&rules->conlistWR[i], x_((char*)""), el_tempcluster);
+		(void)allocstring(&rules->unconlistWR[i], x_((char*)""), el_tempcluster);
+		(void)allocstring(&rules->conlistMR[i], x_((char*)""), el_tempcluster);
+		(void)allocstring(&rules->unconlistMR[i], x_((char*)""), el_tempcluster);
+		(void)allocstring(&rules->edgelistR[i], x_((char*)""), el_tempcluster);
 	}
 	rules->widelimit = K10;
 
@@ -2192,7 +2192,7 @@ DRCRULES *dr_allocaterules(INTBIG layercount, INTBIG nodecount, CHAR *techname)
 		{
 			rules->minnodesize[i*2] = XX;
 			rules->minnodesize[i*2+1] = XX;
-			(void)allocstring(&rules->minnodesizeR[i], x_(""), el_tempcluster);
+			(void)allocstring(&rules->minnodesizeR[i], x_((char*)""), el_tempcluster);
 		}
 	}
 	return(rules);
@@ -2203,7 +2203,7 @@ DRCRULES *dr_allocaterules(INTBIG layercount, INTBIG nodecount, CHAR *techname)
  */
 void dr_freerules(DRCRULES *rules)
 {
-	REGISTER INTBIG i;
+	 INTBIG i;
 
 	efree((CHAR *)rules->techname);
 	efree((CHAR *)rules->conlist);
@@ -2254,53 +2254,53 @@ void dr_freerules(DRCRULES *rules)
 /* DRC: Rules */
 static DIALOGITEM dr_rulesdialogitems[] =
 {
- /*  1 */ {0, {8,516,32,580}, BUTTON, N_("OK")},
- /*  2 */ {0, {40,516,64,580}, BUTTON, N_("Cancel")},
- /*  3 */ {0, {32,100,188,278}, SCROLL, x_("")},
- /*  4 */ {0, {32,8,48,95}, RADIO, N_("Layers:")},
- /*  5 */ {0, {212,8,435,300}, SCROLL, x_("")},
- /*  6 */ {0, {8,100,24,294}, MESSAGE|INACTIVE, x_("")},
- /*  7 */ {0, {8,8,24,95}, MESSAGE, N_("Technology:")},
- /*  8 */ {0, {192,8,208,88}, MESSAGE, N_("To Layer:")},
- /*  9 */ {0, {88,452,104,523}, MESSAGE, N_("Size")},
- /* 10 */ {0, {88,528,104,583}, MESSAGE, N_("Rule")},
- /* 11 */ {0, {112,308,128,424}, MESSAGE, N_("Minimum Width:")},
- /* 12 */ {0, {112,454,128,502}, EDITTEXT, x_("")},
- /* 13 */ {0, {112,514,128,596}, EDITTEXT, x_("")},
- /* 14 */ {0, {180,308,196,387}, MESSAGE, N_("Normal:")},
- /* 15 */ {0, {204,324,220,450}, MESSAGE, N_("When connected:")},
- /* 16 */ {0, {204,454,220,502}, EDITTEXT, x_("")},
- /* 17 */ {0, {204,514,220,595}, EDITTEXT, x_("")},
- /* 18 */ {0, {232,324,248,450}, MESSAGE, N_("Not connected:")},
- /* 19 */ {0, {232,454,248,502}, EDITTEXT, x_("")},
- /* 20 */ {0, {232,514,248,595}, EDITTEXT, x_("")},
- /* 21 */ {0, {288,308,304,520}, MESSAGE, N_("Wide (when bigger than this):")},
- /* 22 */ {0, {312,324,328,450}, MESSAGE, N_("When connected:")},
- /* 23 */ {0, {312,454,328,502}, EDITTEXT, x_("")},
- /* 24 */ {0, {312,514,328,595}, EDITTEXT, x_("")},
- /* 25 */ {0, {340,324,356,450}, MESSAGE, N_("Not connected:")},
- /* 26 */ {0, {340,454,356,502}, EDITTEXT, x_("")},
- /* 27 */ {0, {340,514,356,595}, EDITTEXT, x_("")},
- /* 28 */ {0, {368,308,384,448}, MESSAGE, N_("Multiple cuts:")},
- /* 29 */ {0, {392,324,408,450}, MESSAGE, N_("When connected:")},
- /* 30 */ {0, {392,454,408,502}, EDITTEXT, x_("")},
- /* 31 */ {0, {392,514,408,595}, EDITTEXT, x_("")},
- /* 32 */ {0, {420,324,436,450}, MESSAGE, N_("Not connected:")},
- /* 33 */ {0, {420,454,436,502}, EDITTEXT, x_("")},
- /* 34 */ {0, {420,514,436,595}, EDITTEXT, x_("")},
- /* 35 */ {0, {180,452,196,523}, MESSAGE, N_("Distance")},
- /* 36 */ {0, {180,528,196,583}, MESSAGE, N_("Rule")},
- /* 37 */ {0, {24,328,48,488}, BUTTON, N_("Factory Reset of Rules")},
- /* 38 */ {0, {288,526,304,574}, EDITTEXT, x_("")},
- /* 39 */ {0, {260,324,276,450}, MESSAGE, N_("Edge:")},
- /* 40 */ {0, {260,454,276,502}, EDITTEXT, x_("")},
- /* 41 */ {0, {260,514,276,595}, EDITTEXT, x_("")},
- /* 42 */ {0, {192,104,208,300}, CHECK, N_("Show only lines with rules")},
- /* 43 */ {0, {56,8,72,95}, RADIO, N_("Nodes:")},
- /* 44 */ {0, {136,308,152,424}, MESSAGE, N_("Minimum Height:")},
- /* 45 */ {0, {136,454,152,502}, EDITTEXT, x_("")}
+ /*  1 */ {0, {8,516,32,580}, BUTTON, N_((char*)"OK")},
+ /*  2 */ {0, {40,516,64,580}, BUTTON, N_((char*)"Cancel")},
+ /*  3 */ {0, {32,100,188,278}, SCROLL, x_((char*)"")},
+ /*  4 */ {0, {32,8,48,95}, RADIO, N_((char*)"Layers:")},
+ /*  5 */ {0, {212,8,435,300}, SCROLL, x_((char*)"")},
+ /*  6 */ {0, {8,100,24,294}, MESSAGE|INACTIVE, x_((char*)"")},
+ /*  7 */ {0, {8,8,24,95}, MESSAGE, N_((char*)"Technology:")},
+ /*  8 */ {0, {192,8,208,88}, MESSAGE, N_((char*)"To Layer:")},
+ /*  9 */ {0, {88,452,104,523}, MESSAGE, N_((char*)"Size")},
+ /* 10 */ {0, {88,528,104,583}, MESSAGE, N_((char*)"Rule")},
+ /* 11 */ {0, {112,308,128,424}, MESSAGE, N_((char*)"Minimum Width:")},
+ /* 12 */ {0, {112,454,128,502}, EDITTEXT, x_((char*)"")},
+ /* 13 */ {0, {112,514,128,596}, EDITTEXT, x_((char*)"")},
+ /* 14 */ {0, {180,308,196,387}, MESSAGE, N_((char*)"Normal:")},
+ /* 15 */ {0, {204,324,220,450}, MESSAGE, N_((char*)"When connected:")},
+ /* 16 */ {0, {204,454,220,502}, EDITTEXT, x_((char*)"")},
+ /* 17 */ {0, {204,514,220,595}, EDITTEXT, x_((char*)"")},
+ /* 18 */ {0, {232,324,248,450}, MESSAGE, N_((char*)"Not connected:")},
+ /* 19 */ {0, {232,454,248,502}, EDITTEXT, x_((char*)"")},
+ /* 20 */ {0, {232,514,248,595}, EDITTEXT, x_((char*)"")},
+ /* 21 */ {0, {288,308,304,520}, MESSAGE, N_((char*)"Wide (when bigger than this):")},
+ /* 22 */ {0, {312,324,328,450}, MESSAGE, N_((char*)"When connected:")},
+ /* 23 */ {0, {312,454,328,502}, EDITTEXT, x_((char*)"")},
+ /* 24 */ {0, {312,514,328,595}, EDITTEXT, x_((char*)"")},
+ /* 25 */ {0, {340,324,356,450}, MESSAGE, N_((char*)"Not connected:")},
+ /* 26 */ {0, {340,454,356,502}, EDITTEXT, x_((char*)"")},
+ /* 27 */ {0, {340,514,356,595}, EDITTEXT, x_((char*)"")},
+ /* 28 */ {0, {368,308,384,448}, MESSAGE, N_((char*)"Multiple cuts:")},
+ /* 29 */ {0, {392,324,408,450}, MESSAGE, N_((char*)"When connected:")},
+ /* 30 */ {0, {392,454,408,502}, EDITTEXT, x_((char*)"")},
+ /* 31 */ {0, {392,514,408,595}, EDITTEXT, x_((char*)"")},
+ /* 32 */ {0, {420,324,436,450}, MESSAGE, N_((char*)"Not connected:")},
+ /* 33 */ {0, {420,454,436,502}, EDITTEXT, x_((char*)"")},
+ /* 34 */ {0, {420,514,436,595}, EDITTEXT, x_((char*)"")},
+ /* 35 */ {0, {180,452,196,523}, MESSAGE, N_((char*)"Distance")},
+ /* 36 */ {0, {180,528,196,583}, MESSAGE, N_((char*)"Rule")},
+ /* 37 */ {0, {24,328,48,488}, BUTTON, N_((char*)"Factory Reset of Rules")},
+ /* 38 */ {0, {288,526,304,574}, EDITTEXT, x_((char*)"")},
+ /* 39 */ {0, {260,324,276,450}, MESSAGE, N_((char*)"Edge:")},
+ /* 40 */ {0, {260,454,276,502}, EDITTEXT, x_((char*)"")},
+ /* 41 */ {0, {260,514,276,595}, EDITTEXT, x_((char*)"")},
+ /* 42 */ {0, {192,104,208,300}, CHECK, N_((char*)"Show only lines with rules")},
+ /* 43 */ {0, {56,8,72,95}, RADIO, N_((char*)"Nodes:")},
+ /* 44 */ {0, {136,308,152,424}, MESSAGE, N_((char*)"Minimum Height:")},
+ /* 45 */ {0, {136,454,152,502}, EDITTEXT, x_((char*)"")}
 };
-static DIALOG dr_rulesdialog = {{50,75,495,681}, N_("Design Rules"), 0, 45, dr_rulesdialogitems, 0, 0};
+static DIALOG dr_rulesdialog = {{50,75,495,681}, N_((char*)"Design Rules"), 0, 45, dr_rulesdialogitems, 0, 0};
 
 static void       dr_loaddrcdialog(DRCRULES *rules, INTBIG *validlayers, void *dia);
 static void       dr_loaddrcruleobjects(DRCRULES *rules, INTBIG *validlayers, void *dia);
@@ -2365,16 +2365,16 @@ static INTBIG     dr_rulesdialoggetlayer(DRCRULES *rules, INTBIG item, void *dia
  */
 INTBIG dr_rulesdlog(TECHNOLOGY *tech, DRCRULES *rules)
 {
-	REGISTER INTBIG itemHit, i, j, dist, layer1, layer2, temp, dindex, *validlayers, changed;
-	REGISTER NODEINST *ni;
-	REGISTER ARCINST *ai;
-	REGISTER NODEPROTO *np;
+	 INTBIG itemHit, i, j, dist, layer1, layer2, temp, dindex, *validlayers, changed;
+	 NODEINST *ni;
+	 ARCINST *ai;
+	 NODEPROTO *np;
 	NODEINST node;
 	ARCINST arc;
-	REGISTER ARCPROTO *ap;
-	REGISTER CHAR *pt, *varname;
-	REGISTER POLYGON *poly;
-	REGISTER void *dia;
+	 ARCPROTO *ap;
+	 CHAR *pt, *varname;
+	 POLYGON *poly;
+	 void *dia;
 
 	/* determine which layers are valid */
 	validlayers = (INTBIG *)emalloc(rules->numlayers * SIZEOFINTBIG, dr_tool->cluster);
@@ -2664,7 +2664,7 @@ INTBIG dr_rulesdlog(TECHNOLOGY *tech, DRCRULES *rules)
 		}
 
 		/* call the technology-specific routine to do any extra work */
-		(void)asktech(tech, x_("factory-reset"));
+		(void)asktech(tech, x_((char*)"factory-reset"));
 
 		/* also clear valid DRC dates */
 		dr_reset_dates();
@@ -2675,7 +2675,7 @@ INTBIG dr_rulesdlog(TECHNOLOGY *tech, DRCRULES *rules)
 
 void dr_loaddrcruleobjects(DRCRULES *rules, INTBIG *validlayers, void *dia)
 {
-	REGISTER INTBIG i;
+	 INTBIG i;
 
 	DiaLoadTextDialog(dia, DDRR_FROMLAYER, DiaNullDlogList, DiaNullDlogItem, DiaNullDlogDone, 0);
 	if (DiaGetControl(dia, DDRR_SHOWLAYERS) == 0)
@@ -2766,8 +2766,8 @@ void dr_loaddrcruleobjects(DRCRULES *rules, INTBIG *validlayers, void *dia)
  */
 void dr_loaddrcdialog(DRCRULES *rules, INTBIG *validlayers, void *dia)
 {
-	REGISTER INTBIG i, j, layer1, layer2, temp, dindex, onlyvalid, count;
-	REGISTER CHAR *line;
+	 INTBIG i, j, layer1, layer2, temp, dindex, onlyvalid, count;
+	 CHAR *line;
 
 	if (DiaGetControl(dia, DDRR_SHOWLAYERS) == 0)
 	{
@@ -2782,7 +2782,7 @@ void dr_loaddrcdialog(DRCRULES *rules, INTBIG *validlayers, void *dia)
 		/* show layer information */
 		onlyvalid = DiaGetControl(dia, DDRR_VALIDRULES);
 		j = dr_rulesdialoggetlayer(rules, DDRR_FROMLAYER, dia);
-		if (rules->minwidth[j] < 0) DiaSetText(dia, DDRR_MINWIDTH, x_("")); else
+		if (rules->minwidth[j] < 0) DiaSetText(dia, DDRR_MINWIDTH, x_((char*)"")); else
 			DiaSetText(dia, DDRR_MINWIDTH, frtoa(rules->minwidth[j]));
 		DiaSetText(dia, DDRR_MINWIDTHR, rules->minwidthR[j]);
 		DiaLoadTextDialog(dia, DDRR_TOLAYER, DiaNullDlogList, DiaNullDlogItem, DiaNullDlogDone, 0);
@@ -2807,40 +2807,40 @@ void dr_loaddrcdialog(DRCRULES *rules, INTBIG *validlayers, void *dia)
 
 CHAR *dr_loadoptlistline(DRCRULES *rules, INTBIG dindex, INTBIG lindex, INTBIG onlyvalid)
 {
-	REGISTER CHAR *condist, *uncondist, *wcondist, *wuncondist,
+	 CHAR *condist, *uncondist, *wcondist, *wuncondist,
 		*mcondist, *muncondist, *edgedist;
-	REGISTER void *infstr;
+	 void *infstr;
 
-	if (rules->conlist[dindex] < 0) condist = x_(""); else
+	if (rules->conlist[dindex] < 0) condist = x_((char*)""); else
 		condist = frtoa(rules->conlist[dindex]);
-	if (rules->unconlist[dindex] < 0) uncondist = x_(""); else
+	if (rules->unconlist[dindex] < 0) uncondist = x_((char*)""); else
 		uncondist = frtoa(rules->unconlist[dindex]);
-	if (rules->conlistW[dindex] < 0) wcondist = x_(""); else
+	if (rules->conlistW[dindex] < 0) wcondist = x_((char*)""); else
 		wcondist = frtoa(rules->conlistW[dindex]);
-	if (rules->unconlistW[dindex] < 0) wuncondist = x_(""); else
+	if (rules->unconlistW[dindex] < 0) wuncondist = x_((char*)""); else
 		wuncondist = frtoa(rules->unconlistW[dindex]);
-	if (rules->conlistM[dindex] < 0) mcondist = x_(""); else
+	if (rules->conlistM[dindex] < 0) mcondist = x_((char*)""); else
 		mcondist = frtoa(rules->conlistM[dindex]);
-	if (rules->unconlistM[dindex] < 0) muncondist = x_(""); else
+	if (rules->unconlistM[dindex] < 0) muncondist = x_((char*)""); else
 		muncondist = frtoa(rules->unconlistM[dindex]);
-	if (rules->edgelist[dindex] < 0) edgedist = x_(""); else
+	if (rules->edgelist[dindex] < 0) edgedist = x_((char*)""); else
 		edgedist = frtoa(rules->edgelist[dindex]);
 	if (onlyvalid != 0)
 	{
 		if (*condist == 0 && *uncondist == 0 && *wcondist == 0 &&
 			*wuncondist == 0 && *mcondist == 0 && *muncondist == 0 &&
-			*edgedist == 0) return(x_(""));
+			*edgedist == 0) return(x_((char*)""));
 	}
 	infstr = initinfstr();
-	formatinfstr(infstr, x_("%s (%s/%s/%s/%s/%s/%s/%s)"), rules->layernames[lindex],
+	formatinfstr(infstr, x_((char*)"%s (%s/%s/%s/%s/%s/%s/%s)"), rules->layernames[lindex],
 		condist, uncondist, wcondist, wuncondist, mcondist, muncondist, edgedist);
 	return(returninfstr(infstr));
 }
 
 INTBIG dr_rulesdialoggetlayer(DRCRULES *rules, INTBIG item, void *dia)
 {
-	REGISTER INTBIG i, layer;
-	REGISTER CHAR *lname, save, *endpos;
+	 INTBIG i, layer;
+	 CHAR *lname, save, *endpos;
 
 	i = DiaGetCurLine(dia, item);
 	if (i < 0) return(-1);
@@ -2858,7 +2858,7 @@ INTBIG dr_rulesdialoggetlayer(DRCRULES *rules, INTBIG item, void *dia)
 
 void dr_loaddrcdistance(DRCRULES *rules, void *dia)
 {
-	REGISTER INTBIG layer1, layer2, temp, dindex;
+	 INTBIG layer1, layer2, temp, dindex;
 
 	if (DiaGetControl(dia, DDRR_SHOWLAYERS) == 0)
 	{
@@ -2866,13 +2866,13 @@ void dr_loaddrcdistance(DRCRULES *rules, void *dia)
 	} else
 	{
 		/* show layer information */
-		DiaSetText(dia, DDRR_CONDIST, x_(""));    DiaSetText(dia, DDRR_CONDISTR, x_(""));
-		DiaSetText(dia, DDRR_UCONDIST, x_(""));   DiaSetText(dia, DDRR_UCONDISTR, x_(""));
-		DiaSetText(dia, DDRR_CONDISTW, x_(""));   DiaSetText(dia, DDRR_CONDISTWR, x_(""));
-		DiaSetText(dia, DDRR_UCONDISTW, x_(""));  DiaSetText(dia, DDRR_UCONDISTWR, x_(""));
-		DiaSetText(dia, DDRR_CONDISTM, x_(""));   DiaSetText(dia, DDRR_CONDISTMR, x_(""));
-		DiaSetText(dia, DDRR_UCONDISTM, x_(""));  DiaSetText(dia, DDRR_UCONDISTMR, x_(""));
-		DiaSetText(dia, DDRR_EDGEDIST, x_(""));   DiaSetText(dia, DDRR_EDGEDISTR, x_(""));
+		DiaSetText(dia, DDRR_CONDIST, x_((char*)""));    DiaSetText(dia, DDRR_CONDISTR, x_((char*)""));
+		DiaSetText(dia, DDRR_UCONDIST, x_((char*)""));   DiaSetText(dia, DDRR_UCONDISTR, x_((char*)""));
+		DiaSetText(dia, DDRR_CONDISTW, x_((char*)""));   DiaSetText(dia, DDRR_CONDISTWR, x_((char*)""));
+		DiaSetText(dia, DDRR_UCONDISTW, x_((char*)""));  DiaSetText(dia, DDRR_UCONDISTWR, x_((char*)""));
+		DiaSetText(dia, DDRR_CONDISTM, x_((char*)""));   DiaSetText(dia, DDRR_CONDISTMR, x_((char*)""));
+		DiaSetText(dia, DDRR_UCONDISTM, x_((char*)""));  DiaSetText(dia, DDRR_UCONDISTMR, x_((char*)""));
+		DiaSetText(dia, DDRR_EDGEDIST, x_((char*)""));   DiaSetText(dia, DDRR_EDGEDISTR, x_((char*)""));
 
 		layer1 = dr_rulesdialoggetlayer(rules, DDRR_FROMLAYER, dia);
 		if (layer1 < 0) return;

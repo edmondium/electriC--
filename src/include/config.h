@@ -165,9 +165,9 @@
 #    define RNLLOC           x_("/usr/bin/rnl")
 #    define SPICELOC         x_("/usr/bin/spice")
 #    define FASTHENRYLOC     x_("/usr/bin/fasthenry")
-#    define SORTLOC          x_("/usr/bin/sort")
-#    define FLATDRCLOC       x_("/usr/bin/ffindshort")
-#    define SFLATDRCLOC      x_("/usr/bin/findshort")
+#    define SORTLOC          x_((char*)"/usr/bin/sort")
+#    define FLATDRCLOC       x_((char*)"/usr/bin/ffindshort")
+#    define SFLATDRCLOC      x_((char*)"/usr/bin/findshort")
 #  endif
 #endif
 
