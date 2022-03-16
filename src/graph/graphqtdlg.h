@@ -4,7 +4,7 @@
  *
  * File: graphqtdlg.h
  * Dialogs header file
- * Written by: Dmitry Nadezhin, Instutute for Design Problems in Microelectronics, Russian Academy of Sciences
+ * Written by: Dmitry Nadezhin, Institute for Design Problems in Microelectronics, Russian Academy of Sciences
  *
  * Copyright (c) 2001 Static Free Software.
  *

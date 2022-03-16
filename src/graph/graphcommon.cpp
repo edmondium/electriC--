@@ -126,15 +126,15 @@ static INTBIG gra_badcoord(WINDOWFRAME *wf, INTBIG x, INTBIG y, CHAR *where )
 void gra_drawline(WINDOWPART *win, INTBIG x1, INTBIG y1, INTBIG x2, INTBIG y2, GRAPHICS *desc,
 	INTBIG texture)
 {
-	REGISTER INTBIG col, mask, lx, hx, ly, hy;
-	REGISTER WINDOWFRAME *wf;
+	 INTBIG col, mask, lx, hx, ly, hy;
+	 WINDOWFRAME *wf;
 
 	/* get line type parameters */
 	wf = win->frame;
 	col = desc->col;      mask = ~desc->bits;
 	y1 = wf->revy - y1;   y2 = wf->revy - y2;
-	CHECKCOORD(wf, x1, y1, x_("line"));
-	CHECKCOORD(wf, x2, y2, x_("line"));
+	CHECKCOORD(wf, x1, y1, x_((char*)"line"));
+	CHECKCOORD(wf, x2, y2, x_((char*)"line"));
 
 	switch (texture)
 	{
@@ -158,14 +158,14 @@ void gra_drawline(WINDOWPART *win, INTBIG x1, INTBIG y1, INTBIG x2, INTBIG y2, G
  */
 void gra_invertline(WINDOWPART *win, INTBIG x1, INTBIG y1, INTBIG x2, INTBIG y2)
 {
-	REGISTER WINDOWFRAME *wf;
-	REGISTER INTBIG lx, hx, ly, hy, dx, dy, d, incr1, incr2, x, y, xend, yend, yincr, xincr;
+	 WINDOWFRAME *wf;
+	 INTBIG lx, hx, ly, hy, dx, dy, d, incr1, incr2, x, y, xend, yend, yincr, xincr;
 
 	/* get line type parameters */
 	wf = win->frame;
 	y1 = wf->revy - y1;   y2 = wf->revy - y2;
-	CHECKCOORD(wf, x1, y1, x_("invline"));
-	CHECKCOORD(wf, x2, y2, x_("invline"));
+	CHECKCOORD(wf, x1, y1, x_((char*)"invline"));
+	CHECKCOORD(wf, x2, y2, x_((char*)"invline"));
 
 	/* initialize the Bresenham algorithm */
 	dx = abs(x2-x1);
@@ -436,11 +436,11 @@ static void gra_drawthickpoint(WINDOWFRAME *wf, INTBIG x, INTBIG y, INTBIG mask,
  */
 void gra_drawpolygon(WINDOWPART *win, INTBIG *x, INTBIG *y, INTBIG count, GRAPHICS *desc)
 {
-	REGISTER INTBIG i, j, k, l, ycur=0, yrev, wrap, lx=0, hx=0, ly=0, hy=0;
-	REGISTER UCHAR1 *row;
-	REGISTER INTBIG col, mask, style, pat;
-	REGISTER POLYSEG *a, *active, *edge, *lastedge, *left, *edgelist;
-	REGISTER WINDOWFRAME *wf;
+	 INTBIG i, j, k, l, ycur=0, yrev, wrap, lx=0, hx=0, ly=0, hy=0;
+	 UCHAR1 *row;
+	 INTBIG col, mask, style, pat;
+	 POLYSEG *a, *active, *edge, *lastedge, *left, *edgelist;
+	 WINDOWFRAME *wf;
 
 	/* get parameters */
 	wf = win->frame;
@@ -450,7 +450,7 @@ void gra_drawpolygon(WINDOWPART *win, INTBIG *x, INTBIG *y, INTBIG count, GRAPHI
 	/* set redraw area */
 	for(i=0; i<count; i++)
 	{
-		CHECKCOORD(wf, x[i], y[i], x_("polygon"));
+		CHECKCOORD(wf, x[i], y[i], x_((char*)"polygon"));
 		if (i == 0)
 		{
 			lx = hx = x[i];
@@ -645,9 +645,9 @@ void gra_drawpolygon(WINDOWPART *win, INTBIG *x, INTBIG *y, INTBIG count, GRAPHI
 void gra_drawbox(WINDOWPART *win, INTBIG lowx, INTBIG highx, INTBIG lowy, INTBIG highy,
 	GRAPHICS *desc)
 {
-	REGISTER WINDOWFRAME *wf;
-	REGISTER INTBIG style, x, y, left, right, bottom, top, pat;
-	REGISTER UCHAR1 *thisrow, mask, col;
+	 WINDOWFRAME *wf;
+	 INTBIG style, x, y, left, right, bottom, top, pat;
+	 UCHAR1 *thisrow, mask, col;
 
 	/* get graphics parameters */
 	wf = win->frame;
@@ -655,8 +655,8 @@ void gra_drawbox(WINDOWPART *win, INTBIG lowx, INTBIG highx, INTBIG lowy, INTBIG
 	style = desc->colstyle & NATURE;
 	left = lowx;                  right = highx + 1;
 	bottom = wf->revy-lowy + 1;   top = wf->revy-highy;
-	CHECKCOORD(wf, left, top, x_("box"));
-	CHECKCOORD(wf, right-1, bottom-1, x_("box"));
+	CHECKCOORD(wf, left, top, x_((char*)"box"));
+	CHECKCOORD(wf, right-1, bottom-1, x_((char*)"box"));
 
 	/* handle color drawing */
 	if (style == PATTERNED)
@@ -694,9 +694,9 @@ void gra_drawbox(WINDOWPART *win, INTBIG lowx, INTBIG highx, INTBIG lowy, INTBIG
  */
 void gra_invertbox(WINDOWPART *win, INTBIG lowx, INTBIG highx, INTBIG lowy, INTBIG highy)
 {
-	REGISTER WINDOWFRAME *wf;
-	REGISTER INTBIG top, bottom, left, right, x, y;
-	REGISTER UCHAR1 *thisrow;
+	 WINDOWFRAME *wf;
+	 INTBIG top, bottom, left, right, x, y;
+	 UCHAR1 *thisrow;
 
 	wf = win->frame;
 	left = lowx;
@@ -704,8 +704,8 @@ void gra_invertbox(WINDOWPART *win, INTBIG lowx, INTBIG highx, INTBIG lowy, INTB
 	bottom = wf->revy - lowy + 1;
 	top = wf->revy - highy;
 	if (top < 0) top = 0;
-	CHECKCOORD(wf, left, top, x_("invbox"));
-	CHECKCOORD(wf, right-1, bottom-1, x_("invbox"));
+	CHECKCOORD(wf, left, top, x_((char*)"invbox"));
+	CHECKCOORD(wf, right-1, bottom-1, x_((char*)"invbox"));
 
 	for(y=top; y<bottom; y++)
 	{
@@ -724,7 +724,7 @@ void gra_invertbox(WINDOWPART *win, INTBIG lowx, INTBIG highx, INTBIG lowy, INTB
 void gra_movebox(WINDOWPART *win, INTBIG sx, INTBIG sy, INTBIG wid, INTBIG hei,
 	INTBIG dx, INTBIG dy)
 {
-	REGISTER WINDOWFRAME *wf;
+	 WINDOWFRAME *wf;
 	INTBIG fleft, fright, ftop, fbottom, tleft, tright, ttop, tbottom;
 #ifdef USE_MEMMOVE
 	INTBIG i;
@@ -739,16 +739,16 @@ void gra_movebox(WINDOWPART *win, INTBIG sx, INTBIG sy, INTBIG wid, INTBIG hei,
 	fright = fleft + wid;
 	ftop = wf->revy + 1 - sy - hei;
 	fbottom = ftop + hei;
-	CHECKCOORD(wf, fleft, ftop, x_("movebox"));
-	CHECKCOORD(wf, fright-1, fbottom-1, x_("movebox"));
+	CHECKCOORD(wf, fleft, ftop, x_((char*)"movebox"));
+	CHECKCOORD(wf, fright-1, fbottom-1, x_((char*)"movebox"));
 
 	/* setup destination rectangle */
 	tleft = dx;
 	tright = tleft + wid;
 	ttop = wf->revy + 1 - dy - hei;
 	tbottom = ttop + hei;
-	CHECKCOORD(wf, tleft, ttop, x_("movebox"));
-	CHECKCOORD(wf, tright-1, tbottom-1, x_("movebox"));
+	CHECKCOORD(wf, tleft, ttop, x_((char*)"movebox"));
+	CHECKCOORD(wf, tright-1, tbottom-1, x_((char*)"movebox"));
 
 #ifdef USE_MEMMOVE
 	/* move the rows */
@@ -816,14 +816,14 @@ void gra_movebox(WINDOWPART *win, INTBIG sx, INTBIG sy, INTBIG wid, INTBIG hei,
  */
 INTBIG gra_savebox(WINDOWPART *win, INTBIG lx, INTBIG hx, INTBIG ly, INTBIG hy)
 {
-	REGISTER WINDOWFRAME *wf;
+	 WINDOWFRAME *wf;
 	SAVEDBOX *box;
 #ifdef USE_MEMMOVE
-	REGISTER INTBIG i, y;
+	 INTBIG i, y;
 #else
 	REGISTER INTBIG i, x, y;
 #endif
-	REGISTER INTBIG xsize, ysize, toindex;
+	 INTBIG xsize, ysize, toindex;
 
 	wf = win->frame;
 	i = ly;   ly = wf->revy-hy;   hy = wf->revy-i;
@@ -860,7 +860,7 @@ INTBIG gra_savebox(WINDOWPART *win, INTBIG lx, INTBIG hx, INTBIG ly, INTBIG hy)
  */
 void gra_movesavedbox(INTBIG code, INTBIG dx, INTBIG dy)
 {
-	REGISTER SAVEDBOX *box;
+	 SAVEDBOX *box;
 
 	if (code == -1) return;
 	box = (SAVEDBOX *)code;
@@ -877,11 +877,11 @@ void gra_movesavedbox(INTBIG code, INTBIG dx, INTBIG dy)
  */
 BOOLEAN gra_restorebox(INTBIG code, INTBIG destroy)
 {
-	REGISTER WINDOWFRAME *wf;
-	REGISTER SAVEDBOX *box;
-	REGISTER INTBIG fromindex;
+	 WINDOWFRAME *wf;
+	 SAVEDBOX *box;
+	 INTBIG fromindex;
 #ifdef USE_MEMMOVE
-	REGISTER INTBIG xsize, y;
+	 INTBIG xsize, y;
 #else
 	REGISTER INTBIG x, y;
 #endif
@@ -925,12 +925,12 @@ BOOLEAN gra_restorebox(INTBIG code, INTBIG destroy)
  */
 void gra_drawtext(WINDOWPART *win, INTBIG atx, INTBIG aty, INTBIG rotation, CHAR *s, GRAPHICS *desc)
 {
-	REGISTER INTBIG len, col, top, bottom, left, right, mask, pos,
+	 INTBIG len, col, top, bottom, left, right, mask, pos,
 		lx, hx, ly, hy, sx, ex, i, j, dpos, desti;
-	REGISTER UCHAR1 *dest, *ptr;
+	 UCHAR1 *dest, *ptr;
 	UCHAR1 **rowstart;
 	INTBIG wid, hei;
-	REGISTER WINDOWFRAME *wf;
+	 WINDOWFRAME *wf;
 
 	/* get parameters */
 	/* quit if string is null */
@@ -1056,10 +1056,10 @@ void gra_drawtext(WINDOWPART *win, INTBIG atx, INTBIG aty, INTBIG rotation, CHAR
  */
 void gra_drawcircle(WINDOWPART *win, INTBIG atx, INTBIG aty, INTBIG radius, GRAPHICS *desc)
 {
-	REGISTER WINDOWFRAME *wf;
-	REGISTER INTBIG col, mask, top, bottom, left, right;
-	REGISTER INTBIG x, y, d, maxx, maxy, thisx, thisy;
-	REGISTER UCHAR1 *thisrow;
+	 WINDOWFRAME *wf;
+	 INTBIG col, mask, top, bottom, left, right;
+	 INTBIG x, y, d, maxx, maxy, thisx, thisy;
+	 UCHAR1 *thisrow;
 
 	/* get parameters */
 	wf = win->frame;
@@ -1071,8 +1071,8 @@ void gra_drawcircle(WINDOWPART *win, INTBIG atx, INTBIG aty, INTBIG radius, GRAP
 	right = atx + radius + 1;
 	top = aty - radius;
 	bottom = aty + radius + 1;
-	CHECKCOORD(wf, left, top, x_("circle"));
-	CHECKCOORD(wf, right, bottom, x_("circle"));
+	CHECKCOORD(wf, left, top, x_((char*)"circle"));
+	CHECKCOORD(wf, right, bottom, x_((char*)"circle"));
 	gra_setrect(wf, left, right, top, bottom);
 
 	maxx = wf->swid;
@@ -1176,10 +1176,10 @@ void gra_drawcircle(WINDOWPART *win, INTBIG atx, INTBIG aty, INTBIG radius, GRAP
 void gra_drawthickcircle(WINDOWPART *win, INTBIG atx, INTBIG aty, INTBIG radius,
 	GRAPHICS *desc)
 {
-	REGISTER INTBIG col, mask, top, bottom, left, right;
-	REGISTER INTBIG x, y, d, maxx, maxy, thisx, thisy;
-	REGISTER WINDOWFRAME *wf;
-	REGISTER UCHAR1 *thisrow1, *thisrow2, *thisrow3, *thisrow4,
+	 INTBIG col, mask, top, bottom, left, right;
+	 INTBIG x, y, d, maxx, maxy, thisx, thisy;
+	 WINDOWFRAME *wf;
+	 UCHAR1 *thisrow1, *thisrow2, *thisrow3, *thisrow4,
 		*thisrow1m, *thisrow2m, *thisrow3m, *thisrow4m,
 		*thisrow1p, *thisrow2p, *thisrow3p, *thisrow4p;
 
@@ -1340,9 +1340,9 @@ void gra_drawthickcircle(WINDOWPART *win, INTBIG atx, INTBIG aty, INTBIG radius,
  */
 static void gra_drawdiscrow(WINDOWFRAME *wf, INTBIG thisy, INTBIG startx, INTBIG endx, GRAPHICS *desc)
 {
-	REGISTER UCHAR1 *thisrow;
-	REGISTER INTBIG x;
-	REGISTER INTBIG pat;
+	 UCHAR1 *thisrow;
+	 INTBIG x;
+	 INTBIG pat;
 
 	if (thisy < gra_curveminy || thisy >= gra_curvemaxy) return;
 	thisrow = wf->rowstart[thisy];
@@ -1369,10 +1369,10 @@ static void gra_drawdiscrow(WINDOWFRAME *wf, INTBIG thisy, INTBIG startx, INTBIG
  */
 void gra_drawdisc(WINDOWPART *win, INTBIG atx, INTBIG aty, INTBIG radius, GRAPHICS *desc)
 {
-	REGISTER WINDOWFRAME *wf;
-	REGISTER INTBIG x, y, d;
-	REGISTER INTBIG top, bottom, left, right;
-	REGISTER UCHAR1 *thisrow;
+	 WINDOWFRAME *wf;
+	 INTBIG x, y, d;
+	 INTBIG top, bottom, left, right;
+	 UCHAR1 *thisrow;
 
 	/* get parameters */
 	wf = win->frame;
@@ -1476,7 +1476,7 @@ static void gra_arcdopixel(WINDOWFRAME *wf, INTBIG x, INTBIG y)
 		if (y < gra_arcly) gra_arcly = y;
 		if (y > gra_archy) gra_archy = y;
 	}
-	CHECKCOORD(wf, x, y, x_("arc"));
+	CHECKCOORD(wf, x, y, x_((char*)"arc"));
 	if (gra_arcthick)
 	{
 		gra_drawthickpoint(wf, x, y, gra_curvemask, gra_curvecol);
@@ -1500,7 +1500,7 @@ static void gra_arcoutxform(WINDOWFRAME *wf, INTBIG x, INTBIG y)
 
 static void gra_arcbrescw(WINDOWFRAME *wf, INTBIG x, INTBIG y, INTBIG x1, INTBIG y1)
 {
-	REGISTER INTBIG d;
+	 INTBIG d;
 
 	d = 3 - 2 * y + 4 * x;
 	while (x < x1 && y > y1)
@@ -1522,7 +1522,7 @@ static void gra_arcbrescw(WINDOWFRAME *wf, INTBIG x, INTBIG y, INTBIG x1, INTBIG
 
 static void gra_arcbresmidcw(WINDOWFRAME *wf, INTBIG x, INTBIG y)
 {
-	REGISTER INTBIG d;
+	 INTBIG d;
 
 	d = 3 - 2 * y + 4 * x;
 	while (x < y)
@@ -1540,7 +1540,7 @@ static void gra_arcbresmidcw(WINDOWFRAME *wf, INTBIG x, INTBIG y)
 
 static void gra_arcbresmidccw(WINDOWFRAME *wf, INTBIG x, INTBIG y)
 {
-	REGISTER INTBIG d;
+	 INTBIG d;
 
 	d = 3 + 2 * y - 4 * x;
 	while (x > 0)
@@ -1558,7 +1558,7 @@ static void gra_arcbresmidccw(WINDOWFRAME *wf, INTBIG x, INTBIG y)
 
 static void gra_arcbresccw(WINDOWFRAME *wf, INTBIG x, INTBIG y, INTBIG x1, INTBIG y1)
 {
-	REGISTER INTBIG d;
+	 INTBIG d;
 
 	d = 3 + 2 * y + 4 * x;
 	while(x > x1 && y < y1)
@@ -1586,10 +1586,10 @@ static void gra_arcbresccw(WINDOWFRAME *wf, INTBIG x, INTBIG y, INTBIG x1, INTBI
 void gra_drawcirclearc(WINDOWPART *win, INTBIG centerx, INTBIG centery, INTBIG x1, INTBIG y1,
 	INTBIG x2, INTBIG y2, BOOLEAN thick, GRAPHICS *desc)
 {
-	REGISTER WINDOWFRAME *wf;
-	REGISTER INTBIG alternate, pa_x, pa_y, pb_x, pb_y, i, diff;
+	 WINDOWFRAME *wf;
+	 INTBIG alternate, pa_x, pa_y, pb_x, pb_y, i, diff;
 	INTBIG x, y;
-	REGISTER INTBIG start_oct, end_oct;
+	 INTBIG start_oct, end_oct;
 
 	/* ignore tiny arcs */
 	if (x1 == x2 && y1 == y2) return;
@@ -1680,11 +1680,11 @@ void gra_drawcirclearc(WINDOWPART *win, INTBIG centerx, INTBIG centery, INTBIG x
  */
 void gra_drawgrid(WINDOWPART *win, POLYGON *obj)
 {
-	REGISTER WINDOWFRAME *wf;
-	REGISTER INTBIG i, j, xnum, xden, ynum, yden, x0,y0, x1,y1, x2,y2, x3,y3,
+	 WINDOWFRAME *wf;
+	 INTBIG i, j, xnum, xden, ynum, yden, x0,y0, x1,y1, x2,y2, x3,y3,
 		x4,y4, x5,y5, x10, y10, y10mod, xspacing, yspacing, y1base, x1base;
-	REGISTER INTBIG x, y, fatdots;
-	REGISTER VARIABLE *var;
+	 INTBIG x, y, fatdots;
+	 VARIABLE *var;
 
 	wf = win->frame;
 	x0 = obj->xv[0];   y0 = obj->yv[0];		/* screen space grid spacing */
@@ -1693,8 +1693,8 @@ void gra_drawgrid(WINDOWPART *win, POLYGON *obj)
 	x3 = obj->xv[3];   y3 = obj->yv[3];		/* display space high */
 	x4 = obj->xv[4];   y4 = obj->yv[4];		/* screen space low */
 	x5 = obj->xv[5];   y5 = obj->yv[5];		/* screen space high */
-	CHECKCOORD(wf, x2, y2, x_("grid"));
-	CHECKCOORD(wf, x3, y3, x_("grid"));
+	CHECKCOORD(wf, x2, y2, x_((char*)"grid"));
+	CHECKCOORD(wf, x3, y3, x_((char*)"grid"));
 
 	var = getvalkey((INTBIG)us_tool, VTOOL, -1, us_gridboldspacingkey);
 	if (var == NOVARIABLE) xspacing = yspacing = 10; else
@@ -1884,13 +1884,13 @@ void EDialog::reset()
 
 INTBIG EDialog::nextHit(void)
 {
-    ttyputerr(_("nextHit() called in class dialog"));
+    ttyputerr(_((char*)"nextHit() called in class dialog"));
     return 0;
 }
 
 void EDialog::itemHitAction(INTBIG itemHit)
 {
-    ttyputerr(_("EDialog::itemHisAction should be redefined"));
+    ttyputerr(_((char*)"EDialog::itemHisAction should be redefined"));
 }
 
 void EDialog::showExtension( BOOLEAN showIt )
@@ -1991,7 +1991,7 @@ EDialogModal::EDialogModal( DIALOG *dialog )
 {
     d->modal = TRUE;
     d->vdia = DiaInitDialog( dialog );
-    if ( !d->vdia ) ttyputerr(_("Creation of dialog %s failed"), dialog->movable );
+    if ( !d->vdia ) ttyputerr(_((char*)"Creation of dialog %s failed"), dialog->movable );
 }
 
 EDialogModal::DialogCode EDialogModal::exec()
@@ -2025,7 +2025,7 @@ void EDialogModeless::show()
         d->vdia = DiaInitDialogModeless( itemDesc(), EDialogPrivate::itemHitActionCaller );
         itemDesc()->windowRect.bottom = (INTSML)saveBottom;
     } else d->vdia = DiaInitDialogModeless( itemDesc(), EDialogPrivate::itemHitActionCaller );
-    if ( !d->vdia ) ttyputerr(_("Creation of dialog %s failed"), itemDesc()->movable );
+    if ( !d->vdia ) ttyputerr(_((char*)"Creation of dialog %s failed"), itemDesc()->movable );
 }
 
 void EDialogModeless::hide()
@@ -2092,8 +2092,8 @@ void EProcess::addArgument( CHAR *arg )
 
 	n = 0;
 	while (d->arguments[n] != 0) n++;
-	newArguments = new (CHAR*[n + 2]);
-
+	//newArguments = new (CHAR*[n + 2]);
+	newArguments = new CHAR*[n + 2];
 	for (i = 0; i < n; i++)
 		newArguments[i] = d->arguments[i];
 	newArguments[n] = new CHAR[estrlen(arg) + 1];
@@ -2119,12 +2119,12 @@ BOOLEAN EProcess::start( CHAR *infile )
 	d->process = efork();
 	if (d->process == 1)
 	{
-		ttyputmsg(_("Run process directly please"));
+		ttyputmsg(_((char*)"Run process directly please"));
 		return FALSE;
 	}
 	if (d->process == 0)
 	{
-		REGISTER INTBIG save0, save1, save2;
+		 INTBIG save0, save1, save2;
 
 		if (d->_cStdin ) save0 = channelreplacewithchannel(0, d->ipipe[0]);
 		else if (infile != 0) save0 = channelreplacewithfile(0, infile);
@@ -2135,7 +2135,7 @@ BOOLEAN EProcess::start( CHAR *infile )
 		if ( d->_cStdin || infile != 0) channelrestore(0, save0);
 		if ( d->_cStdout ) channelrestore(1, save1);
 		if ( d->_cStderr ) channelrestore(2, save2);
-		ttyputerr(_("Cannot run %s"), d->arguments[0]);
+		ttyputerr(_((char*)"Cannot run %s"), d->arguments[0]);
 		exit(1);
 	}
 
@@ -2158,8 +2158,8 @@ void EProcess::kill()
 	{
 		ewait(d->process);
 		if (errno > 0)
-			ttyputmsg(_("%s execution reports error %d"), d->arguments[0], errno);
-		else ttyputmsg(_("%s execution terminated"), d->arguments[0]);
+			ttyputmsg(_((char*)"%s execution reports error %d"), d->arguments[0], errno);
+		else ttyputmsg(_((char*)"%s execution terminated"), d->arguments[0]);
 	}
 }
 

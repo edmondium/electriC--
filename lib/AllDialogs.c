@@ -17,14 +17,14 @@ static DIALOGITEM us_3ddepthdialogitems[] =
 };
 static DIALOG us_3ddepthdialog = {{75,75,660,473}, N_("3D Options"), 0, 13, us_3ddepthdialogitems, 0, 0};
 
-/* About Electric */
+/* About ElectriC++ */
 static DIALOGITEM us_aboutgnudialogitems[] =
 {
  /*  1 */ {0, {24,320,48,400}, BUTTON, N_("OK")},
  /*  2 */ {0, {308,12,324,356}, MESSAGE, N_("Electric comes with ABSOLUTELY NO WARRANTY")},
  /*  3 */ {0, {284,12,300,489}, MESSAGE, N_("Copyright (c) 2000 Static Free Software (www.staticfreesoft.com)")},
  /*  4 */ {0, {56,8,72,221}, MESSAGE, N_("Written by Steven M. Rubin")},
- /*  5 */ {0, {8,8,24,295}, MESSAGE, N_("The Electric(tm) Design System")},
+ /*  5 */ {0, {8,8,24,295}, MESSAGE, N_("The ElectriC++(TM) Design System")},
  /*  6 */ {0, {32,8,48,246}, MESSAGE, N_("Version XXXX")},
  /*  7 */ {0, {4,420,36,452}, ICON|INACTIVE, (CHAR *)us_icon130},
  /*  8 */ {0, {36,420,68,452}, ICON|INACTIVE, (CHAR *)us_icon129},

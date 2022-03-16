@@ -1121,8 +1121,10 @@ static FontRec gra_font[] =
 	 x_("-*-helvetica-bold-r-normal-*-*-120-*-*-*"),				/* MENU */
 	 x_("-*-helvetica-bold-r-normal-*-*-120-*-*-*") FONTINIT},
 	{(XFontStruct *)0,
-	 x_("-*-fixed-*-*-normal-*-*-120-*-*-*"),						/* EDIT */
-	 x_("-*-fixed-*-*-normal-*-*-120-*-*-*") FONTINIT},
+	 //x_("-*-fixed-*-*-normal-*-*-120-*-*-*"),						/* EDIT */
+	 //x_("-*-fixed-*-*-normal-*-*-120-*-*-*") FONTINIT},
+	 x_((char*)"-*-fixed-*-*-*--*-120-*-*-*-*-*-*"),						/* EDIT */
+	 x_((char*)"-*-fixed-*-*-*--*-120-*-*-*-*-*-*") FONTINIT},
 	{(XFontStruct *)0,
 	 x_("fixed"),													/* STATUS */
 	 x_("fixed") FONTINIT},
@@ -4801,7 +4803,7 @@ CHAR *screengetdefaultfacename(void)
 
 void screensettextinfo(WINDOWPART *win, TECHNOLOGY *tech, UINTBIG *descript)
 {
-	REGISTER INTBIG face, size;
+	 INTBIG face, size;
 
 	size = TDGETSIZE(descript);
 	size = truefontsize(size, win, tech);
@@ -5178,9 +5180,9 @@ void screendrawtext(WINDOWPART *win, INTBIG atx, INTBIG aty, CHAR *s, GRAPHICS *
 BOOLEAN gettextbits(WINDOWPART *win, CHAR *msg, INTBIG *wid, INTBIG *hei, UCHAR1 ***rowstart)
 {
 #ifdef ANYDEPTH
-	REGISTER INTBIG i, len, thechar, x, y, atx, height, width, datasize;
-	REGISTER UCHAR1 *ptr;
-	REGISTER UCHAR1 *dest;
+	 INTBIG i, len, thechar, x, y, atx, height, width, datasize;
+	 UCHAR1 *ptr;
+	 UCHAR1 *dest;
 # ifdef TRUETYPE
 	INTBIG bytesperline, topoffset, trueheight, xpos, xwid;
 	REGISTER CHAR *startpos, *endpos;
@@ -5566,7 +5568,7 @@ CHAR *buttonname(INTBIG b, INTBIG *important)
  */
 INTBIG gra_makebutton(INTBIG state)
 {
-	REGISTER INTBIG base;
+	 INTBIG base;
 
 	switch (state&ISBUTTON)
 	{
@@ -5689,8 +5691,8 @@ void trackcursor(BOOLEAN waitforpush, BOOLEAN (*whileup)(INTBIG, INTBIG),
 	void (*whendown)(void), BOOLEAN (*eachdown)(INTBIG, INTBIG),
 	BOOLEAN (*eachchar)(INTBIG, INTBIG, INTSML), void (*done)(void), INTBIG purpose)
 {
-	REGISTER BOOLEAN keepon;
-	REGISTER INTBIG oldcursor, action;
+	 BOOLEAN keepon;
+	 INTBIG oldcursor, action;
 
 	/* change the cursor to an appropriate icon */
 	oldcursor = us_normalcursor;
@@ -5788,7 +5790,7 @@ void stoptablet(void)
  */
 INTSML getnxtchar(INTBIG *special)
 {
-	REGISTER INTSML i;
+	 INTSML i;
 
 	if ((gra_inputstate != NOEVENT) && ((gra_inputstate & ISKEYSTROKE) != 0))
 	{
@@ -5841,7 +5843,7 @@ void checkforinterrupt(void)
  */
 INTBIG getbuckybits(void)
 {
-	REGISTER INTBIG bits, width, i;
+	 INTBIG bits, width, i;
 	CHAR1 keys[32];
 	static XModifierKeymap *mmap;
 	static INTBIG first = 1;
@@ -5935,16 +5937,16 @@ void gra_fileselectok(Widget w, XtPointer client_data,
  */
 CHAR *multifileselectin(CHAR *msg, INTBIG filetype)
 {
-	return(fileselect(msg, filetype, x_("")));
+	return(fileselect(msg, filetype, x_((char*)"")));
 }
 
 DIALOGITEM gra_fileindialogitems[] =   /* File Input */
 {
- /*  1 */ {0, {128,256,152,336}, BUTTON, N_("Open")},
- /*  2 */ {0, {176,256,200,336}, BUTTON, N_("Cancel")},
- /*  3 */ {0, {40,8,216,240}, SCROLL, x_("")},
- /*  4 */ {0, {8,8,40,336}, MESSAGE, x_("")},
- /*  5 */ {0, {80,256,104,336}, BUTTON, N_("Up")}
+ /*  1 */ {0, {128,256,152,336}, BUTTON, N_((char*)"Open")},
+ /*  2 */ {0, {176,256,200,336}, BUTTON, N_((char*)"Cancel")},
+ /*  3 */ {0, {40,8,216,240}, SCROLL, x_((char*)"")},
+ /*  4 */ {0, {8,8,40,336}, MESSAGE, x_((char*)"")},
+ /*  5 */ {0, {80,256,104,336}, BUTTON, N_((char*)"Up")}
 };
 DIALOG gra_fileindialog = {{50,75,278,421}, 0, 0, 5, gra_fileindialogitems, 0, 0};
 
@@ -5955,13 +5957,13 @@ DIALOG gra_fileindialog = {{50,75,278,421}, 0, 0, 5, gra_fileindialogitems, 0, 0
 
 DIALOGITEM gra_fileoutdialogitems[] =   /* File Output */
 {
- /*  1 */ {0, {146,256,170,336}, BUTTON, N_("OK")},
- /*  2 */ {0, {194,256,218,336}, BUTTON, N_("Cancel")},
- /*  3 */ {0, {50,8,218,240}, SCROLL, x_("")},
- /*  4 */ {0, {8,8,40,336}, MESSAGE, x_("")},
- /*  5 */ {0, {50,256,74,336}, BUTTON, N_("Up")},
- /*  6 */ {0, {98,256,122,336}, BUTTON, N_("Down")},
- /*  7 */ {0, {226,8,242,336}, EDITTEXT, x_("")}
+ /*  1 */ {0, {146,256,170,336}, BUTTON, N_((char*)"OK")},
+ /*  2 */ {0, {194,256,218,336}, BUTTON, N_((char*)"Cancel")},
+ /*  3 */ {0, {50,8,218,240}, SCROLL, x_((char*)"")},
+ /*  4 */ {0, {8,8,40,336}, MESSAGE, x_((char*)"")},
+ /*  5 */ {0, {50,256,74,336}, BUTTON, N_((char*)"Up")},
+ /*  6 */ {0, {98,256,122,336}, BUTTON, N_((char*)"Down")},
+ /*  7 */ {0, {226,8,242,336}, EDITTEXT, x_((char*)"")}
 };
 DIALOG gra_fileoutdialog = {{50,75,301,421}, 0, 0, 7, gra_fileoutdialogitems, 0, 0};
 
@@ -5989,7 +5991,7 @@ CHAR *fileselect(CHAR *msg, INTBIG filetype, CHAR *defofile)
 	Arg arg[10];
 	XEvent event;
 	CHAR filename[256], temp[256], *childmsg;
-	REGISTER WINDOWFRAME *wf;
+	 WINDOWFRAME *wf;
 
 	if (us_logplay != NULL)
 	{
@@ -6093,7 +6095,7 @@ CHAR *fileselect(CHAR *msg, INTBIG filetype, CHAR *defofile)
 			XtSetArg(arg[ac], XmNdirectory, mdirectory);   ac++;
 			XtSetArg(arg[ac], XmNpattern, mpattern);   ac++;
 			XtSetArg(arg[ac], XmNdialogTitle, mtitle);   ac++;
-			w = XmCreateFileSelectionDialog(wf->graphicswidget, b_(""), arg, ac);
+			w = XmCreateFileSelectionDialog(wf->graphicswidget, b_((char*)""), arg, ac);
 			XtAddCallback(w, XmNcancelCallback, (XtCallbackProc)gra_fileselectcancel, NULL);
 			XtAddCallback(w, XmNokCallback, (XtCallbackProc)gra_fileselectok, NULL);
 			XtManageChild(w);
@@ -6146,15 +6148,15 @@ CHAR *fileselect(CHAR *msg, INTBIG filetype, CHAR *defofile)
 				case 1:		/* an existing file */
 					esnprintf(fullmsg, 300, _("File '%s' exists.  Overwrite? "), gra_curpath);
 					count = ttygetparam(fullmsg, &us_yesnop, 2, pars);
-					if (count > 0 && namesamen(pars[0], x_("no"), estrlen(pars[0])) == 0)
+					if (count > 0 && namesamen(pars[0], x_((char*)"no"), estrlen(pars[0])) == 0)
 						gra_curpath[0] = 0;
 					break;
 				case 2:		/* a directory */
-					DiaMessageInDialog(_("'%s' is a directory: cannot write it"), gra_curpath);
+					DiaMessageInDialog(_((char*)"'%s' is a directory: cannot write it"), gra_curpath);
 					gra_curpath[0] = 0;
 					break;
 				case 3:		/* a read-only file */
-					DiaMessageInDialog(_("'%s' is read-only: cannot overwrite it"), gra_curpath);
+					DiaMessageInDialog(_((char*)"'%s' is read-only: cannot overwrite it"), gra_curpath);
 					gra_curpath[0] = 0;
 					break;
 			}
@@ -6199,7 +6201,7 @@ BOOLEAN gra_addfiletolist(CHAR *file)
 
 int gra_fileselectall(const struct dirent *a)
 {
-	REGISTER CHAR *pt;
+	 CHAR *pt;
 
 	pt = (CHAR *)a->d_name;
 	if (estrcmp(pt, x_("..")) == 0) return(0);
@@ -6291,7 +6293,7 @@ INTBIG filesindirectory(CHAR *directory, CHAR ***filelist)
 CHAR *truepath(CHAR *line)
 {
 	static CHAR outline[100], home[50];
-	REGISTER CHAR save, *ch;
+	 CHAR save, *ch;
 	static BOOLEAN gothome = FALSE;
 	struct passwd *tmp;
 
@@ -6400,7 +6402,7 @@ BOOLEAN createdirectory(CHAR *dirname)
 CHAR *currentdirectory(void)
 {
 	static CHAR line[MAXPATHLEN];
-	REGISTER INTBIG len;
+	 INTBIG len;
 
 #ifdef HAVE_GETCWD
 	(void)egetcwd(line, MAXPATHLEN);
@@ -6430,7 +6432,7 @@ void gra_setcurrentdirectory(CHAR *path)
  */
 CHAR *hashomedir(void)
 {
-	return(x_("~/"));
+	return(x_((char*)"~/"));
 }
 
 /*
@@ -6438,7 +6440,7 @@ CHAR *hashomedir(void)
  */
 CHAR *optionsfilepath(void)
 {
-	return(x_("~/.electricoptions.elib"));
+	return(x_((char*)"~/.electricoptions.elib"));
 }
 
 /*
@@ -6484,7 +6486,7 @@ BOOLEAN lockfile(CHAR *lockfilename)
 void unlockfile(CHAR *lockfilename)
 {
 	if (unlink(string1byte(lockfilename)) == -1)
-		ttyputerr(_("Error unlocking %s"), lockfilename);
+		ttyputerr(_((char*)"Error unlocking %s"), lockfilename);
 }
 
 /*
@@ -6635,13 +6637,17 @@ UINTBIG eventtime(void)
 UINTBIG ticktime(void)
 {
 #ifdef HAVE_FTIME
-	struct timeb tp;
+	//struct timeb tp;
+	struct timespec tp;
 	static INTBIG basesecs = 0;
 	INTBIG ticks;
-
-	ftime(&tp);
-	if (basesecs == 0) basesecs = tp.time;
-	ticks = (tp.time-basesecs) * 60 + (tp.millitm * 6 / 100);
+	clockid_t clockid;
+	//ftime(&tp);
+	clock_gettime(clockid, &tp);
+	//if (basesecs == 0) basesecs = tp.time;
+	if (basesecs == 0) basesecs = tp.tv_sec;	
+	//ticks = (tp.time-basesecs) * 60 + (tp.millitm * 6 / 100);
+	ticks = (tp.tv_sec-basesecs) * 60;
 	return(ticks + gra_timeoffset);
 #else
 #  ifdef HAVE_GETTIMEOFDAY
@@ -6682,11 +6688,14 @@ void gotosleep(INTBIG ticks)
 void starttimer(void)
 {
 #ifdef HAVE_FTIME
-	struct timeb tp;
-
-	ftime(&tp);
-	gra_timebasesec = tp.time;
-	gra_timebasems = tp.millitm;
+	//struct timeb tp;
+	struct timespec tp;
+	clockid_t clockid;
+	//ftime(&tp);
+	clock_gettime(clockid, &tp);
+	//gra_timebasesec = tp.time;
+	gra_timebasesec=tp.tv_sec;
+	//gra_timebasems = tp.millitm;
 #else
 	gra_timebasesec = time(0);
 #endif
@@ -6701,11 +6710,14 @@ float endtimer(void)
 	float seconds;
 #ifdef HAVE_FTIME
 	INTBIG milliseconds;
-	struct timeb timeptr;
-
-	ftime(&timeptr);
-	milliseconds = (timeptr.time - gra_timebasesec) * 1000 +
-		(timeptr.millitm-gra_timebasems);
+	//struct timeb timeptr;
+	struct timespec timeptr;	
+	clockid_t clockid;
+	clock_gettime(clockid, &timeptr);
+	//ftime(&timeptr);
+	/*milliseconds = (timeptr.time - gra_timebasesec) * 1000 +
+		(timeptr.millitm-gra_timebasems);*/
+	milliseconds = (timeptr.tv_sec - gra_timebasesec) * 1000;
 	seconds = ((float)milliseconds) / 1000.0;
 #else
 	seconds = time(0) - gra_timebasesec;
@@ -6732,7 +6744,7 @@ void gra_windowdelete(Widget w, XtPointer client_data, XtPointer *call_data)
 	/* simply disable deletion of the messages window */
 	if (w == gra_msgtoplevelwidget)
 	{
-		ttyputerr(_("Cannot delete the messages window"));
+		ttyputerr(_((char*)"Cannot delete the messages window"));
 		return;
 	}
 
@@ -6743,10 +6755,10 @@ void gra_windowdelete(Widget w, XtPointer client_data, XtPointer *call_data)
 void gra_handlequeuedframedeletion(void)
 {
 	CHAR *par[MAXPARS];
-	REGISTER INTBIG windows;
-	REGISTER WINDOWFRAME *wf, *delwf;
-	REGISTER WINDOWPART *win, *nextw, *neww;
-	REGISTER NODEPROTO *np;
+	 INTBIG windows;
+	 WINDOWFRAME *wf, *delwf;
+	 WINDOWPART *win, *nextw, *neww;
+	 NODEPROTO *np;
 
 	if (gra_deletethisframe == 0) return;
 	delwf = gra_deletethisframe;
@@ -6755,7 +6767,7 @@ void gra_handlequeuedframedeletion(void)
 	/* turn off component menu if it was deleted */
 	if (delwf->floating)
 	{
-		par[0] = x_("off");
+		par[0] = x_((char*)"off");
 		us_menu(1, par);
 		return;
 	}
@@ -6801,7 +6813,7 @@ void gra_handlequeuedframedeletion(void)
 		if (neww == NOWINDOWPART) el_curwindowpart = NOWINDOWPART;
 		(void)setvalkey((INTBIG)us_tool, VTOOL, us_current_window_key, (INTBIG)neww, VWINDOWPART|VDONTSAVE);
 		if (neww != NOWINDOWPART) np = neww->curnodeproto; else np = NONODEPROTO;
-		(void)setval((INTBIG)el_curlib, VLIBRARY, x_("curnodeproto"), (INTBIG)np, VNODEPROTO);
+		(void)setval((INTBIG)el_curlib, VLIBRARY, x_((char*)"curnodeproto"), (INTBIG)np, VNODEPROTO);
 
 		/* restore highlighting */
 		us_pophighlight(FALSE);
@@ -6919,15 +6931,15 @@ void gra_pickupnextevent(void)
 		switch ((special&SPECIALKEY)>>SPECIALKEYSH)
 		{
 			case SPECIALCUT:
-				par[0] = x_("cut");
+				par[0] = x_((char*)"cut");
 				us_text(1, par);
 				return;
 			case SPECIALCOPY:
-				par[0] = x_("copy");
+				par[0] = x_((char*)"copy");
 				us_text(1, par);
 				return;
 			case SPECIALPASTE:
-				par[0] = x_("paste");
+				par[0] = x_((char*)"paste");
 				us_text(1, par);
 				return;
 			case SPECIALUNDO:
@@ -6953,12 +6965,12 @@ void gra_pickupnextevent(void)
 void gra_nextevent(void)
 {
 	XEvent event;
-	REGISTER INTBIG windowindex;
-	REGISTER INTBIG x, y;
+	 INTBIG windowindex;
+	 INTBIG x, y;
 	BOOLEAN verbose;
 	POPUPMENU *pm;
-	REGISTER WINDOWFRAME *wf;
-	REGISTER INTBIG i, j;
+	 WINDOWFRAME *wf;
+	 INTBIG i, j;
 
 	/* handle any queued window deletions */
 	gra_handlequeuedframedeletion();
@@ -7040,7 +7052,7 @@ void gra_nextevent(void)
 void gra_messages_event_handler(Widget w, XtPointer data, XEvent *event, Boolean *cont)
 {
 	CHAR1 buffer[2];
-	REGISTER INTBIG state;
+	 INTBIG state;
 	INTBIG special;
 	KeySym key;
 
@@ -7092,16 +7104,16 @@ void gra_graphics_event_handler(Widget w, XtPointer data, XEvent *event, Boolean
 	BOOLEAN setcursor, inmenu;
 	INTBIG wid, hei, special;
 	CHAR *str;
-	REGISTER INTBIG x, y, state, xfx, xfy;
-	REGISTER UINTBIG thetime;
+	 INTBIG x, y, state, xfx, xfy;
+	 UINTBIG thetime;
 	INTBIG lx, hx, ly, hy;
-	REGISTER WINDOWPART *win;
-	REGISTER EDITOR *e;
-	REGISTER VARIABLE *var;
-	REGISTER TDIALOG *dia;
+	 WINDOWPART *win;
+	 EDITOR *e;
+	 VARIABLE *var;
+	 TDIALOG *dia;
 	XWindowAttributes xwa;
 	COMMANDBINDING commandbinding;
-	REGISTER WINDOWFRAME *wf;
+	 WINDOWFRAME *wf;
 	static BOOLEAN overrodestatus = FALSE;
 	extern INTBIG sim_window_wavexbar;
 	Window thewin;
@@ -7191,7 +7203,7 @@ void gra_graphics_event_handler(Widget w, XtPointer data, XEvent *event, Boolean
 		case ButtonPress:  /* these are ignored in the messages window */
 			if (us_logplay != NULL)
 			{
-				ttyputerr(_("Session playback aborted by mouse click"));
+				ttyputerr(_((char*)"Session playback aborted by mouse click"));
 				xclose(us_logplay);
 				us_logplay = NULL;
 				break;
@@ -7305,7 +7317,7 @@ void gra_graphics_event_handler(Widget w, XtPointer data, XEvent *event, Boolean
 								{
 									ttysetstatusfield(NOWINDOWFRAME, us_statusarc,
 										describearcproto(commandbinding.arcglyph), TRUE);
-									if (us_curnodeproto == NONODEPROTO) str = x_(""); else
+									if (us_curnodeproto == NONODEPROTO) str = x_((char*)""); else
 										str = describenodeproto(us_curnodeproto);
 									ttysetstatusfield(NOWINDOWFRAME, us_statusnode, str, TRUE);
 									inmenu = TRUE;
@@ -7320,7 +7332,7 @@ void gra_graphics_event_handler(Widget w, XtPointer data, XEvent *event, Boolean
 				{
 					ttysetstatusfield(NOWINDOWFRAME, us_statusarc,
 						describearcproto(us_curarcproto), TRUE);
-					if (us_curnodeproto == NONODEPROTO) str = x_(""); else
+					if (us_curnodeproto == NONODEPROTO) str = x_((char*)""); else
 						str = describenodeproto(us_curnodeproto);
 					ttysetstatusfield(NOWINDOWFRAME, us_statusnode, str, TRUE);
 					overrodestatus = FALSE;
@@ -7453,7 +7465,7 @@ WINDOWFRAME *gra_getcurrentwindowframe(Widget widget, BOOLEAN set)
 				{
 					(void)setvalkey((INTBIG)us_tool, VTOOL, us_current_window_key, (INTBIG)w,
 						VWINDOWPART|VDONTSAVE);
-					(void)setval((INTBIG)el_curlib, VLIBRARY, x_("curnodeproto"),
+					(void)setval((INTBIG)el_curlib, VLIBRARY, x_((char*)"curnodeproto"),
 						(INTBIG)w->curnodeproto, VNODEPROTO);
 #if 0
 					return(NOWINDOWFRAME);
@@ -7659,7 +7671,7 @@ void gra_repaint(WINDOWFRAME *wf, BOOLEAN redo)
 		us_redostatus(wf);
 
 		/* describe this change */
-		setactivity(_("Window Resize"));
+		setactivity(_((char*)"Window Resize"));
 	}
 	inrepaint = FALSE;
 }
@@ -7677,7 +7689,7 @@ void gra_recalcsize(WINDOWFRAME *wf, INTBIG newwid, INTBIG newhei)
 	if (wf->floating && newhei < gra_status_height + 2)
 	{
 		newhei = gra_status_height + 2;
-		ttyputmsg(_("Window too short: made minimum height"));
+		ttyputmsg(_((char*)"Window too short: made minimum height"));
 	}
 
 	if (newwid != wf->swid || newhei != wf->trueheight)
@@ -7750,44 +7762,44 @@ int gra_xerrors(Display *dpy, XErrorEvent *err)
 
 	XGetErrorText(dpy, err->error_code, buffer, 100);
 	/* buffer is now in the "encoding of the current locale" */
-	ttyputerr(_("ERROR: X Window System routine %d has %s"), err->request_code,
+	ttyputerr(_((char*)"ERROR: X Window System routine %d has %s"), err->request_code,
 		string2byte(buffer));
 	return(0);
 }
 
 void gra_xterrors(CHAR1 *msg)
 {
-	ttyputerr(_("ERROR: X Toolkit: %s"), string2byte(msg));
+	ttyputerr(_((char*)"ERROR: X Toolkit: %s"), string2byte(msg));
 }
 
 /* error events */
 RETSIGTYPE gra_sigill_trap(void)
 {
 	(void)signal(SIGILL, (SIGNALCAST)gra_sigill_trap);
-	error(_("FATAL ERROR: An illegal instruction has been trapped"));
+	error(_((char*)"FATAL ERROR: An illegal instruction has been trapped"));
 }
 
 RETSIGTYPE gra_sigfpe_trap(void)
 {
 	(void)signal(SIGFPE, (SIGNALCAST)gra_sigfpe_trap);
-	error(_("FATAL ERROR: A numerical error has occurred"));
+	error(_((char*)"FATAL ERROR: A numerical error has occurred"));
 }
 
 RETSIGTYPE gra_sigbus_trap(void)
 {
 	(void)signal(SIGBUS, (SIGNALCAST)gra_sigbus_trap);
-	error(_("FATAL ERROR: A bus error has occurred"));
+	error(_((char*)"FATAL ERROR: A bus error has occurred"));
 }
 
 RETSIGTYPE gra_sigsegv_trap(void)
 {
 	(void)signal(SIGSEGV, (SIGNALCAST)gra_sigsegv_trap);
-	error(_("FATAL ERROR: A segmentation violation has occurred"));
+	error(_((char*)"FATAL ERROR: A segmentation violation has occurred"));
 }
 
 void gra_intsignalfunc(void)
 {
-	ttyputerr(_("Interrupted..."));
+	ttyputerr(_((char*)"Interrupted..."));
 }
 
 /*************************** SESSION LOGGING ROUTINES ***************************/
@@ -7795,14 +7807,14 @@ void gra_intsignalfunc(void)
 /* Session Playback */
 DIALOGITEM gra_sesplaydialogitems[] =
 {
- /*  1 */ {0, {100,132,124,212}, BUTTON, N_("Yes")},
- /*  2 */ {0, {100,8,124,88}, BUTTON, N_("No")},
- /*  3 */ {0, {4,8,20,232}, MESSAGE, N_("Electric has found a session log file")},
- /*  4 */ {0, {24,8,40,232}, MESSAGE, N_("which may be from a recent crash.")},
- /*  5 */ {0, {52,8,68,232}, MESSAGE, N_("Do you wish to replay this session")},
- /*  6 */ {0, {72,8,88,232}, MESSAGE, N_("and reconstruct the lost work?")}
+ /*  1 */ {0, {100,132,124,212}, BUTTON, N_((char*)"Yes")},
+ /*  2 */ {0, {100,8,124,88}, BUTTON, N_((char*)"No")},
+ /*  3 */ {0, {4,8,20,232}, MESSAGE, N_((char*)"ElectriC++ has found a session log file")},
+ /*  4 */ {0, {24,8,40,232}, MESSAGE, N_((char*)"which may be from a recent crash.")},
+ /*  5 */ {0, {52,8,68,232}, MESSAGE, N_((char*)"Do you wish to replay this session")},
+ /*  6 */ {0, {72,8,88,232}, MESSAGE, N_((char*)"and reconstruct the lost work?")}
 };
-DIALOG gra_sesplaydialog = {{75,75,208,316}, N_("Replay Log?"), 0, 6, gra_sesplaydialogitems, 0, 0};
+DIALOG gra_sesplaydialog = {{75,75,208,316}, N_((char*)"Replay Log?"), 0, 6, gra_sesplaydialogitems, 0, 0};
 
 /* special items for the session playback dialog: */
 #define DSPL_YES    1		/* Yes (button) */
@@ -7813,13 +7825,13 @@ DIALOG gra_sesplaydialog = {{75,75,208,316}, N_("Replay Log?"), 0, 6, gra_sespla
  */
 void logstartrecord(void)
 {
-	REGISTER INTBIG itemhit, count, filestatus;
-	REGISTER LIBRARY *lib;
-	REGISTER WINDOWFRAME *wf;
-	REGISTER WINDOWPART *w;
-	REGISTER VARIABLE *var;
+	 INTBIG itemhit, count, filestatus;
+	 LIBRARY *lib;
+	 WINDOWFRAME *wf;
+	 WINDOWPART *w;
+	 VARIABLE *var;
 	XWindowAttributes xwa;
-	REGISTER void *dia;
+	 void *dia;
 	CHAR1 srcfile1[300], srcfile2[300];
 
 	/* if there is already a log file, it may be from a previous crash */
@@ -7850,42 +7862,42 @@ void logstartrecord(void)
 	gra_logbasetime = ticktime();
 
 	/* document the header */
-	xprintf(us_logrecord, x_("; ============= The header:\n"));
-	xprintf(us_logrecord, x_("; LC n           Library count\n"));
-	xprintf(us_logrecord, x_("; LD name file   Library read from disk\n"));
-	xprintf(us_logrecord, x_("; LM name file   Library not read from disk\n"));
-	xprintf(us_logrecord, x_("; WO n           Window offset currently 'n'\n"));
-	xprintf(us_logrecord, x_("; WT n           Window count\n"));
-	xprintf(us_logrecord, x_("; WC n x y w h   Component window, index 'n' at (x,y), size (wXh)\n"));
-	xprintf(us_logrecord, x_("; WE n x y w h   Edit window, index 'n' at (x,y), size (wXh)\n"));
-	xprintf(us_logrecord, x_("; WP n           Window has 'n' partitions\n"));
-	xprintf(us_logrecord, x_("; WB lx hx ly hy slx shx sly shy state cell loc    Window partition (background)\n"));
-	xprintf(us_logrecord, x_("; WF lx hx ly hy slx shx sly shy state cell loc    Window partition (foreground)\n"));
-	xprintf(us_logrecord, x_("; CI n           Current window index\n"));
-	xprintf(us_logrecord, x_("; CT tech        Current technology\n"));
+	xprintf(us_logrecord, x_((char*)"; ============= The header:\n"));
+	xprintf(us_logrecord, x_((char*)"; LC n           Library count\n"));
+	xprintf(us_logrecord, x_((char*)"; LD name file   Library read from disk\n"));
+	xprintf(us_logrecord, x_((char*)"; LM name file   Library not read from disk\n"));
+	xprintf(us_logrecord, x_((char*)"; WO n           Window offset currently 'n'\n"));
+	xprintf(us_logrecord, x_((char*)"; WT n           Window count\n"));
+	xprintf(us_logrecord, x_((char*)"; WC n x y w h   Component window, index 'n' at (x,y), size (wXh)\n"));
+	xprintf(us_logrecord, x_((char*)"; WE n x y w h   Edit window, index 'n' at (x,y), size (wXh)\n"));
+	xprintf(us_logrecord, x_((char*)"; WP n           Window has 'n' partitions\n"));
+	xprintf(us_logrecord, x_((char*)"; WB lx hx ly hy slx shx sly shy state cell loc    Window partition (background)\n"));
+	xprintf(us_logrecord, x_((char*)"; WF lx hx ly hy slx shx sly shy state cell loc    Window partition (foreground)\n"));
+	xprintf(us_logrecord, x_((char*)"; CI n           Current window index\n"));
+	xprintf(us_logrecord, x_((char*)"; CT tech        Current technology\n"));
 
 	/* log current libraries */
 	count = 0;
 	for(lib = el_curlib; lib != NOLIBRARY; lib = lib->nextlibrary)
 		if ((lib->userbits&HIDDENLIBRARY) == 0) count++;
-	xprintf(us_logrecord, x_("LC %ld\n"), count);
+	xprintf(us_logrecord, x_((char*)"LC %ld\n"), count);
 	for(lib = el_curlib; lib != NOLIBRARY; lib = lib->nextlibrary)
 	{
 		if ((lib->userbits&HIDDENLIBRARY) != 0) continue;
 		if ((lib->userbits&READFROMDISK) != 0)
 		{
-			xprintf(us_logrecord, x_("LD %s %s\n"), lib->libname, lib->libfile);
+			xprintf(us_logrecord, x_((char*)"LD %s %s\n"), lib->libname, lib->libfile);
 		} else
 		{
-			xprintf(us_logrecord, x_("LM %s %s\n"), lib->libname, lib->libfile);
+			xprintf(us_logrecord, x_((char*)"LM %s %s\n"), lib->libname, lib->libfile);
 		}
 	}
 
 	/* log current windows */
-	xprintf(us_logrecord, x_("WO %ld\n"), gra_windownumber);
+	xprintf(us_logrecord, x_((char*)"WO %ld\n"), gra_windownumber);
 	count = 0;
 	for(wf = el_firstwindowframe; wf != NOWINDOWFRAME; wf = wf->nextwindowframe) count++;
-	xprintf(us_logrecord, x_("WT %ld\n"), count);
+	xprintf(us_logrecord, x_((char*)"WT %ld\n"), count);
 	for(wf = el_firstwindowframe; wf != NOWINDOWFRAME; wf = wf->nextwindowframe)
 	{
 		gra_getwindowattributes(wf, &xwa);
@@ -7894,70 +7906,70 @@ void logstartrecord(void)
 		xwa.width += 2;
 		if (wf->floating != 0)
 		{
-			xprintf(us_logrecord, x_("WC %ld %ld %ld %ld %ld\n"), wf->windindex, xwa.x, xwa.y,
+			xprintf(us_logrecord, x_((char*)"WC %ld %ld %ld %ld %ld\n"), wf->windindex, xwa.x, xwa.y,
 				xwa.width, xwa.height);
 		} else
 		{
-			xprintf(us_logrecord, x_("WE %ld %ld %ld %ld %ld\n"), wf->windindex, xwa.x, xwa.y,
+			xprintf(us_logrecord, x_((char*)"WE %ld %ld %ld %ld %ld\n"), wf->windindex, xwa.x, xwa.y,
 				xwa.width, xwa.height);
 		}
 
 		count = 0;
 		for(w = el_topwindowpart; w != NOWINDOWPART; w = w->nextwindowpart)
 			if (w->frame == wf) count++;
-		xprintf(us_logrecord, x_("WP %ld\n"), count);
+		xprintf(us_logrecord, x_((char*)"WP %ld\n"), count);
 		for(w = el_topwindowpart; w != NOWINDOWPART; w = w->nextwindowpart)
 		{
 			if (w->frame != wf) continue;
 			if (w == el_curwindowpart)
 			{
-				xprintf(us_logrecord, x_("WF %ld %ld %ld %ld %ld %ld %ld %ld %ld %s %s\n"),
+				xprintf(us_logrecord, x_((char*)"WF %ld %ld %ld %ld %ld %ld %ld %ld %ld %s %s\n"),
 					w->uselx, w->usehx, w->usely, w->usehy, w->screenlx, w->screenhx,
 					w->screenly, w->screenhy, w->state, describenodeproto(w->curnodeproto),
 					w->location);
 			} else
 			{
-				xprintf(us_logrecord, x_("WB %ld %ld %ld %ld %ld %ld %ld %ld %ld %s %s\n"),
+				xprintf(us_logrecord, x_((char*)"WB %ld %ld %ld %ld %ld %ld %ld %ld %ld %s %s\n"),
 					w->uselx, w->usehx, w->usely, w->usehy, w->screenlx, w->screenhx,
 					w->screenly, w->screenhy, w->state, describenodeproto(w->curnodeproto),
 					w->location);
 			}
 		}
 	}
-	xprintf(us_logrecord, x_("CI %ld\n"), gra_windownumberindex);
+	xprintf(us_logrecord, x_((char*)"CI %ld\n"), gra_windownumberindex);
 
 	/* log current technology (macros store this in %H) */
-	var = getval((INTBIG)us_tool, VTOOL, VSTRING, x_("USER_local_caph"));
+	var = getval((INTBIG)us_tool, VTOOL, VSTRING, x_((char*)"USER_local_caph"));
 	if (var != NOVARIABLE)
 	{
 		/* technology name found in local variable */
-		xprintf(us_logrecord, x_("CT %s\n"), (CHAR *)var->addr);
+		xprintf(us_logrecord, x_((char*)"CT %s\n"), (CHAR *)var->addr);
 	} else
 	{
 		/* just write the current technology name */
-		xprintf(us_logrecord, x_("CT %s\n"), el_curtech->techname);
+		xprintf(us_logrecord, x_((char*)"CT %s\n"), el_curtech->techname);
 	}
 
 	/* document the body */
-	xprintf(us_logrecord, x_("; ============= The body:\n"));
-	xprintf(us_logrecord, x_("; KT k x y s w t Key 'k' typed at (x,y), special 's', window 'w', time 't'\n"));
-	xprintf(us_logrecord, x_("; BP n x y s w t Button 'n' pressed at (x,y), special 's', window 'w', time 't'\n"));
-	xprintf(us_logrecord, x_("; BD n x y s w t Button 'n' double-clicked at (x,y), special 's', window 'w', time 't'\n"));
-	xprintf(us_logrecord, x_("; BR n x y s w t Button 'n' released at (x,y), special 's', window 'w', time 't'\n"));
-	xprintf(us_logrecord, x_("; MP x y s w     Motion with button pressed at (x,y), special 's', window 'w'\n"));
-	xprintf(us_logrecord, x_("; MR x y s w     Motion with button released at (x,y), special 's', window 'w'\n"));
-	xprintf(us_logrecord, x_("; ME m i t       Invoked menu 'm', item 'i', time 't'\n"));
-	xprintf(us_logrecord, x_("; WS n w h t     Window 'n' grows to (wXh), time 't'\n"));
-	xprintf(us_logrecord, x_("; WM n x y t     Window 'n' moves to (x,y), time 't'\n"));
-	xprintf(us_logrecord, x_("; FS path        File selected is 'path'\n"));
-	xprintf(us_logrecord, x_("; PM v t         Popup menu selected 'v', time 't'\n"));
-	xprintf(us_logrecord, x_("; DI w i         Item 'i' of dialog selected\n"));
-	xprintf(us_logrecord, x_("; DS w i c vals  Dialog 'w' scroll item 'i' selects 'c' lines in 'values'\n"));
-	xprintf(us_logrecord, x_("; DE w i hc s    Dialog 'w' edit item 'i' hit character 'hc', text now 's'\n"));
-	xprintf(us_logrecord, x_("; DP w i e       Dialog 'w' popup item 'i' set to entry 'e'\n"));
-	xprintf(us_logrecord, x_("; DC w i v       Dialog 'w' item 'i' set to value 'v'\n"));
-	xprintf(us_logrecord, x_("; DM w x y       Dialog 'w' coordinates at (x,y)\n"));
-	xprintf(us_logrecord, x_("; DD w           Dialog 'w' done\n"));
+	xprintf(us_logrecord, x_((char*)"; ============= The body:\n"));
+	xprintf(us_logrecord, x_((char*)"; KT k x y s w t Key 'k' typed at (x,y), special 's', window 'w', time 't'\n"));
+	xprintf(us_logrecord, x_((char*)"; BP n x y s w t Button 'n' pressed at (x,y), special 's', window 'w', time 't'\n"));
+	xprintf(us_logrecord, x_((char*)"; BD n x y s w t Button 'n' double-clicked at (x,y), special 's', window 'w', time 't'\n"));
+	xprintf(us_logrecord, x_((char*)"; BR n x y s w t Button 'n' released at (x,y), special 's', window 'w', time 't'\n"));
+	xprintf(us_logrecord, x_((char*)"; MP x y s w     Motion with button pressed at (x,y), special 's', window 'w'\n"));
+	xprintf(us_logrecord, x_((char*)"; MR x y s w     Motion with button released at (x,y), special 's', window 'w'\n"));
+	xprintf(us_logrecord, x_((char*)"; ME m i t       Invoked menu 'm', item 'i', time 't'\n"));
+	xprintf(us_logrecord, x_((char*)"; WS n w h t     Window 'n' grows to (wXh), time 't'\n"));
+	xprintf(us_logrecord, x_((char*)"; WM n x y t     Window 'n' moves to (x,y), time 't'\n"));
+	xprintf(us_logrecord, x_((char*)"; FS path        File selected is 'path'\n"));
+	xprintf(us_logrecord, x_((char*)"; PM v t         Popup menu selected 'v', time 't'\n"));
+	xprintf(us_logrecord, x_((char*)"; DI w i         Item 'i' of dialog selected\n"));
+	xprintf(us_logrecord, x_((char*)"; DS w i c vals  Dialog 'w' scroll item 'i' selects 'c' lines in 'values'\n"));
+	xprintf(us_logrecord, x_((char*)"; DE w i hc s    Dialog 'w' edit item 'i' hit character 'hc', text now 's'\n"));
+	xprintf(us_logrecord, x_((char*)"; DP w i e       Dialog 'w' popup item 'i' set to entry 'e'\n"));
+	xprintf(us_logrecord, x_((char*)"; DC w i v       Dialog 'w' item 'i' set to value 'v'\n"));
+	xprintf(us_logrecord, x_((char*)"; DM w x y       Dialog 'w' coordinates at (x,y)\n"));
+	xprintf(us_logrecord, x_((char*)"; DD w           Dialog 'w' done\n"));
 }
 
 /*
@@ -7970,26 +7982,26 @@ BOOLEAN logplayback(CHAR *file)
 	CHAR *filename, tempstring[300], *pt, *start;
 	BOOLEAN cur, fromdisk;
 	BOOLEAN floating;
-	REGISTER WINDOWFRAME *wf;
+	 WINDOWFRAME *wf;
 	RECTAREA r;
-	REGISTER FILE *saveio;
-	REGISTER WINDOWPART *w, *nextw;
-	REGISTER INTBIG i, j, wcount, count, wid, hei, uselx, usehx, usely, usehy, sindex;
-	REGISTER INTBIG screenlx, screenhx, screenly, screenhy, state;
-	REGISTER LIBRARY *lib, *firstlib;
+	 FILE *saveio;
+	 WINDOWPART *w, *nextw;
+	 INTBIG i, j, wcount, count, wid, hei, uselx, usehx, usely, usehy, sindex;
+	 INTBIG screenlx, screenhx, screenly, screenhy, state;
+	 LIBRARY *lib, *firstlib;
 
-	us_logplay = xopen(file, us_filetypelog, x_(""), &filename);
+	us_logplay = xopen(file, us_filetypelog, x_((char*)""), &filename);
 	if (us_logplay == NULL) return(TRUE);
-	ttyputmsg(_("Playing log file..."));
-	ttyputmsg(_("   Move mouse continuously to advance playback"));
-	ttyputmsg(_("   Click mouse to abort playback"));
+	ttyputmsg(_((char*)"Playing log file..."));
+	ttyputmsg(_((char*)"   Move mouse continuously to advance playback"));
+	ttyputmsg(_((char*)"   Click mouse to abort playback"));
 	gra_lastplaybacktime = 0;
 
 	/* get current libraries */
 	(void)gra_logreadline(tempstring, 300);
 	if (estrncmp(tempstring, x_("LC"), 2) != 0)
 	{
-		ttyputerr(_("Log file is corrupt (error %d)"), 1);
+		ttyputerr(_((char*)"Log file is corrupt (error %d)"), 1);
 		return(TRUE);
 	}
 	count = eatoi(&tempstring[3]);
@@ -8005,14 +8017,14 @@ BOOLEAN logplayback(CHAR *file)
 			fromdisk = FALSE;
 		} else
 		{
-			ttyputerr(_("Log file is corrupt (error %d)"), 2);
+			ttyputerr(_((char*)"Log file is corrupt (error %d)"), 2);
 			return(TRUE);
 		}
 		start = &tempstring[3];
 		for(pt = start; *pt != 0; pt++) if (*pt == ' ') break;
 		if (*pt == 0)
 		{
-			ttyputerr(_("Log file is corrupt (error %d)"), 3);
+			ttyputerr(_((char*)"Log file is corrupt (error %d)"), 3);
 			return(TRUE);
 		}
 		*pt++ = 0;
@@ -8026,7 +8038,7 @@ BOOLEAN logplayback(CHAR *file)
 			{
 				saveio = us_logplay;
 				us_logplay = 0;
-				(void)asktool(io_tool, x_("read"), (INTBIG)lib, (INTBIG)x_("binary"), 0);
+				(void)asktool(io_tool, x_((char*)"read"), (INTBIG)lib, (INTBIG)x_((char*)"binary"), 0);
 				us_logplay = saveio;
 			}
 		}
@@ -8046,7 +8058,7 @@ BOOLEAN logplayback(CHAR *file)
 	(void)gra_logreadline(tempstring, 300);
 	if (estrncmp(tempstring, x_("WO"), 2) != 0)
 	{
-		ttyputerr(_("Log file is corrupt (error %d)"), 4);
+		ttyputerr(_((char*)"Log file is corrupt (error %d)"), 4);
 		return(TRUE);
 	}
 	gra_windownumber = eatoi(&tempstring[3]);
@@ -8055,7 +8067,7 @@ BOOLEAN logplayback(CHAR *file)
 	(void)gra_logreadline(tempstring, 300);
 	if (estrncmp(tempstring, x_("WT"), 2) != 0)
 	{
-		ttyputerr(_("Log file is corrupt (error %d)"), 5);
+		ttyputerr(_((char*)"Log file is corrupt (error %d)"), 5);
 		return(TRUE);
 	}
 	count = eatoi(&tempstring[3]);
@@ -8071,15 +8083,15 @@ BOOLEAN logplayback(CHAR *file)
 			floating = 0;
 		} else
 		{
-			ttyputerr(_("Log file is corrupt (error %d)"), 6);
+			ttyputerr(_((char*)"Log file is corrupt (error %d)"), 6);
 			return(TRUE);
 		}
 		pt = &tempstring[3];
-		sindex = eatoi(getkeyword(&pt, x_(" ")));
-		r.left = eatoi(getkeyword(&pt, x_(" ")));
-		r.top = eatoi(getkeyword(&pt, x_(" ")));
-		wid = eatoi(getkeyword(&pt, x_(" ")));
-		hei = eatoi(getkeyword(&pt, x_(" ")));
+		sindex = eatoi(getkeyword(&pt, x_((char*)" ")));
+		r.left = eatoi(getkeyword(&pt, x_((char*)" ")));
+		r.top = eatoi(getkeyword(&pt, x_((char*)" ")));
+		wid = eatoi(getkeyword(&pt, x_((char*)" ")));
+		hei = eatoi(getkeyword(&pt, x_((char*)" ")));
 		r.right = r.left + (INTSML)wid;
 		r.bottom = r.top + (INTSML)hei;
 		if (floating)
@@ -8098,7 +8110,7 @@ BOOLEAN logplayback(CHAR *file)
 		(void)gra_logreadline(tempstring, 300);
 		if (estrncmp(tempstring, x_("WP"), 2) != 0)
 		{
-			ttyputerr(_("Log file is corrupt (error %d)"), 7);
+			ttyputerr(_((char*)"Log file is corrupt (error %d)"), 7);
 			return(TRUE);
 		}
 		wcount = eatoi(&tempstring[3]);
@@ -8113,20 +8125,20 @@ BOOLEAN logplayback(CHAR *file)
 				cur = TRUE;
 			} else
 			{
-				ttyputerr(_("Log file is corrupt (error %d)"), 8);
+				ttyputerr(_((char*)"Log file is corrupt (error %d)"), 8);
 				return(TRUE);
 			}
 			pt = &tempstring[3];
-			uselx = eatoi(getkeyword(&pt, x_(" ")));
-			usehx = eatoi(getkeyword(&pt, x_(" ")));
-			usely = eatoi(getkeyword(&pt, x_(" ")));
-			usehy = eatoi(getkeyword(&pt, x_(" ")));
-			screenlx = eatoi(getkeyword(&pt, x_(" ")));
-			screenhx = eatoi(getkeyword(&pt, x_(" ")));
-			screenly = eatoi(getkeyword(&pt, x_(" ")));
-			screenhy = eatoi(getkeyword(&pt, x_(" ")));
-			state = eatoi(getkeyword(&pt, x_(" ")));
-			start = getkeyword(&pt, x_(" "));
+			uselx = eatoi(getkeyword(&pt, x_((char*)" ")));
+			usehx = eatoi(getkeyword(&pt, x_((char*)" ")));
+			usely = eatoi(getkeyword(&pt, x_((char*)" ")));
+			usehy = eatoi(getkeyword(&pt, x_((char*)" ")));
+			screenlx = eatoi(getkeyword(&pt, x_((char*)" ")));
+			screenhx = eatoi(getkeyword(&pt, x_((char*)" ")));
+			screenly = eatoi(getkeyword(&pt, x_((char*)" ")));
+			screenhy = eatoi(getkeyword(&pt, x_((char*)" ")));
+			state = eatoi(getkeyword(&pt, x_((char*)" ")));
+			start = getkeyword(&pt, x_((char*)" "));
 			while (*pt != 0 && *pt != ' ') pt++;
 			if (*pt == ' ') pt++;
 
@@ -8151,7 +8163,7 @@ BOOLEAN logplayback(CHAR *file)
 	(void)gra_logreadline(tempstring, 300);
 	if (estrncmp(tempstring, x_("CI"), 2) != 0)
 	{
-		ttyputerr(_("Log file is corrupt (error %d)"), 9);
+		ttyputerr(_((char*)"Log file is corrupt (error %d)"), 9);
 		return(TRUE);
 	}
 	gra_windownumberindex = eatoi(&tempstring[3]);
@@ -8160,7 +8172,7 @@ BOOLEAN logplayback(CHAR *file)
 	(void)gra_logreadline(tempstring, 300);
 	if (estrncmp(tempstring, x_("CT"), 2) != 0)
 	{
-		ttyputerr(_("Log file is corrupt (error %d)"), 10);
+		ttyputerr(_((char*)"Log file is corrupt (error %d)"), 10);
 		return(TRUE);
 	}
 	us_ensurepropertechnology(NONODEPROTO, &tempstring[3], TRUE);
@@ -8206,11 +8218,11 @@ void logfinishrecord(void)
 void gra_logwriteaction(INTBIG inputstate, INTBIG special, INTBIG cursorx, INTBIG cursory,
 	void *extradata)
 {
-	REGISTER CHAR *filename;
-	REGISTER INTBIG i, trueItem;
-	REGISTER POPUPMENU *pm;
-	REGISTER POPUPMENUITEM *mi;
-	REGISTER WINDOWFRAME *wf;
+	 CHAR *filename;
+	 INTBIG i, trueItem;
+	 POPUPMENU *pm;
+	 POPUPMENUITEM *mi;
+	 WINDOWFRAME *wf;
 
 	if (us_logrecord == NULL) return;
 
@@ -8231,42 +8243,42 @@ void gra_logwriteaction(INTBIG inputstate, INTBIG special, INTBIG cursorx, INTBI
 	{
 		if ((inputstate&BUTTONUP) != 0)
 		{
-			xprintf(us_logrecord, x_("MR %ld %ld %ld %ld\n"),
+			xprintf(us_logrecord, x_((char*)"MR %ld %ld %ld %ld\n"),
 				cursorx, cursory, special, extradata);
 		} else
 		{
-			xprintf(us_logrecord, x_("MP %ld %ld %ld %ld\n"),
+			xprintf(us_logrecord, x_((char*)"MP %ld %ld %ld %ld\n"),
 				cursorx, cursory, special, extradata);
 		}
 	} else if ((inputstate&ISKEYSTROKE) != 0)
 	{
-		xprintf(us_logrecord, x_("KT '%s' %ld %ld %ld %ld\n"),
+		xprintf(us_logrecord, x_((char*)"KT '%s' %ld %ld %ld %ld\n"),
 			us_describeboundkey(inputstate&CHARREAD, special, 1),
 				cursorx, cursory, extradata, ticktime()-gra_logbasetime);
 	} else if ((inputstate&ISBUTTON) != 0)
 	{
 		if ((inputstate&BUTTONUP) != 0)
 		{
-			xprintf(us_logrecord, x_("BR %ld %ld %ld %ld %ld %ld\n"),
+			xprintf(us_logrecord, x_((char*)"BR %ld %ld %ld %ld %ld %ld\n"),
 				inputstate&(ISBUTTON|SHIFTISDOWN|METAISDOWN|CONTROLISDOWN),
 					cursorx, cursory, special, extradata, ticktime()-gra_logbasetime);
 		} else
 		{
 			if ((inputstate&DOUBLECL) != 0)
 			{
-				xprintf(us_logrecord, x_("BD %ld %ld %ld %ld %ld %ld\n"),
+				xprintf(us_logrecord, x_((char*)"BD %ld %ld %ld %ld %ld %ld\n"),
 					inputstate&(ISBUTTON|SHIFTISDOWN|METAISDOWN|CONTROLISDOWN),
 						cursorx, cursory, special, extradata, ticktime()-gra_logbasetime);
 			} else
 			{
-				xprintf(us_logrecord, x_("BP %ld %ld %ld %ld %ld %ld\n"),
+				xprintf(us_logrecord, x_((char*)"BP %ld %ld %ld %ld %ld %ld\n"),
 					inputstate&(ISBUTTON|SHIFTISDOWN|METAISDOWN|CONTROLISDOWN),
 						cursorx, cursory, special, extradata, ticktime()-gra_logbasetime);
 			}
 		}
 	} else if (inputstate == MENUEVENT)
 	{
-		xprintf(us_logrecord, x_("ME %ld %ld %ld"), cursorx, cursory,
+		xprintf(us_logrecord, x_((char*)"ME %ld %ld %ld"), cursorx, cursory,
 			ticktime()-gra_logbasetime);
 		for(wf = el_firstwindowframe; wf != NOWINDOWFRAME; wf = wf->nextwindowframe)
 			if (!wf->floating) break;
@@ -8276,53 +8288,53 @@ void gra_logwriteaction(INTBIG inputstate, INTBIG special, INTBIG cursorx, INTBI
 			if (cursory >= 0 && cursory < pm->total)
 			{
 				mi = &pm->list[cursory];
-				xprintf(us_logrecord, x_("   ; command=%s"),
+				xprintf(us_logrecord, x_((char*)"   ; command=%s"),
 					us_stripampersand(mi->attribute));
 			}
 		}
-		xprintf(us_logrecord, x_("\n"));
+		xprintf(us_logrecord, x_((char*)"\n"));
 	} else if (inputstate == FILEREPLY)
 	{
 		filename = (CHAR *)extradata;
-		xprintf(us_logrecord, x_("FS %s\n"), filename);
+		xprintf(us_logrecord, x_((char*)"FS %s\n"), filename);
 	} else if (inputstate == POPUPSELECT)
 	{
-		xprintf(us_logrecord, x_("PM %ld %ld\n"), cursorx, ticktime()-gra_logbasetime);
+		xprintf(us_logrecord, x_((char*)"PM %ld %ld\n"), cursorx, ticktime()-gra_logbasetime);
 	} else if (inputstate == DIAEDITTEXT)
 	{
 		filename = (CHAR *)extradata;
-		xprintf(us_logrecord, x_("DE %ld %ld %s\n"), special, cursorx, filename);
+		xprintf(us_logrecord, x_((char*)"DE %ld %ld %s\n"), special, cursorx, filename);
 	} else if (inputstate == DIASCROLLSEL)
 	{
-		xprintf(us_logrecord, x_("DS %ld %ld %ld"), special, cursorx, cursory);
-		for(i=0; i<cursory; i++) xprintf(us_logrecord, x_(" %ld"), ((INTBIG *)extradata)[i]);
-		xprintf(us_logrecord, x_("\n"));
+		xprintf(us_logrecord, x_((char*)"DS %ld %ld %ld"), special, cursorx, cursory);
+		for(i=0; i<cursory; i++) xprintf(us_logrecord, x_((char*)" %ld"), ((INTBIG *)extradata)[i]);
+		xprintf(us_logrecord, x_((char*)"\n"));
 	} else if (inputstate == DIAPOPUPSEL)
 	{
-		xprintf(us_logrecord, x_("DP %ld %ld %ld\n"), special, cursorx, cursory);
+		xprintf(us_logrecord, x_((char*)"DP %ld %ld %ld\n"), special, cursorx, cursory);
 	} else if (inputstate == DIASETCONTROL)
 	{
-		xprintf(us_logrecord, x_("DC %ld %ld %ld\n"), special, cursorx, cursory);
+		xprintf(us_logrecord, x_((char*)"DC %ld %ld %ld\n"), special, cursorx, cursory);
 	} else if (inputstate == DIAITEMCLICK)
 	{
-		xprintf(us_logrecord, x_("DI %ld %ld\n"), special, cursorx);
+		xprintf(us_logrecord, x_((char*)"DI %ld %ld\n"), special, cursorx);
 	} else if (inputstate == DIAUSERMOUSE)
 	{
-		xprintf(us_logrecord, x_("DM %ld %ld %ld\n"), special, cursorx, cursory);
+		xprintf(us_logrecord, x_((char*)"DM %ld %ld %ld\n"), special, cursorx, cursory);
 	} else if (inputstate == DIAENDDIALOG)
 	{
-		xprintf(us_logrecord, x_("DD %ld\n"), special);
+		xprintf(us_logrecord, x_((char*)"DD %ld\n"), special);
 	} else if (inputstate == WINDOWMOVE)
 	{
-		xprintf(us_logrecord, x_("WM %ld %ld %ld %ld\n"), extradata,
+		xprintf(us_logrecord, x_((char*)"WM %ld %ld %ld %ld\n"), extradata,
 			cursorx, cursory, ticktime()-gra_logbasetime);
 	} else if (inputstate == WINDOWSIZE)
 	{
-		xprintf(us_logrecord, x_("WS %ld %ld %ld %ld\n"), extradata,
+		xprintf(us_logrecord, x_((char*)"WS %ld %ld %ld %ld\n"), extradata,
 			cursorx, cursory, ticktime()-gra_logbasetime);
 	} else
 	{
-		ttyputmsg(x_("Unknown event being logged: %ld"), inputstate);
+		ttyputmsg(x_((char*)"Unknown event being logged: %ld"), inputstate);
 	}
 
 	/* flush the log file every so often */
@@ -8337,15 +8349,15 @@ void gra_logwriteaction(INTBIG inputstate, INTBIG special, INTBIG cursorx, INTBI
 void gra_logwritecomment(CHAR *comment)
 {
 	if (us_logrecord == 0) return;
-	xprintf(us_logrecord, x_("; %s\n"), comment);
+	xprintf(us_logrecord, x_((char*)"; %s\n"), comment);
 }
 
 BOOLEAN gra_loggetnextaction(CHAR *message)
 {
-	REGISTER BOOLEAN eof;
+	 BOOLEAN eof;
 	CHAR tempstring[300], *pt, *start;
-	REGISTER WINDOWFRAME *wf;
-	REGISTER TDIALOG *dia;
+	 WINDOWFRAME *wf;
+	 TDIALOG *dia;
 	INTSML boundkey;
 	INTBIG sellist[MAXSCROLLMULTISELECT], i, x, y, item, count;
 	UINTBIG nowtime;
@@ -8355,7 +8367,7 @@ BOOLEAN gra_loggetnextaction(CHAR *message)
 	if (eof)
 	{
 		/* stop playback */
-		ttyputmsg(_("End of session playback file"));
+		ttyputmsg(_((char*)"End of session playback file"));
 		xclose(us_logplay);
 		us_logplay = NULL;
 		return(TRUE);
@@ -8366,10 +8378,10 @@ BOOLEAN gra_loggetnextaction(CHAR *message)
 	{
 		gra_inputstate = NOEVENT;
 		pt = &tempstring[3];
-		x = eatoi(getkeyword(&pt, x_(" ")));
-		y = eatoi(getkeyword(&pt, x_(" ")));
-		wf = gra_getframefromindex(eatoi(getkeyword(&pt, x_(" "))));
-		nowtime = eatoi(getkeyword(&pt, x_(" ")));
+		x = eatoi(getkeyword(&pt, x_((char*)" ")));
+		y = eatoi(getkeyword(&pt, x_((char*)" ")));
+		wf = gra_getframefromindex(eatoi(getkeyword(&pt, x_((char*)" "))));
+		nowtime = eatoi(getkeyword(&pt, x_((char*)" ")));
 		gra_timeoffset += nowtime - gra_lastplaybacktime;
 		gra_lastplaybacktime = nowtime;
 		if (wf != NOWINDOWFRAME)
@@ -8380,10 +8392,10 @@ BOOLEAN gra_loggetnextaction(CHAR *message)
 	{
 		gra_inputstate = NOEVENT;
 		pt = &tempstring[3];
-		x = eatoi(getkeyword(&pt, x_(" ")));
-		y = eatoi(getkeyword(&pt, x_(" ")));
-		wf = gra_getframefromindex(eatoi(getkeyword(&pt, x_(" "))));
-		nowtime = eatoi(getkeyword(&pt, x_(" ")));
+		x = eatoi(getkeyword(&pt, x_((char*)" ")));
+		y = eatoi(getkeyword(&pt, x_((char*)" ")));
+		wf = gra_getframefromindex(eatoi(getkeyword(&pt, x_((char*)" "))));
+		nowtime = eatoi(getkeyword(&pt, x_((char*)" ")));
 		gra_timeoffset += nowtime - gra_lastplaybacktime;
 		gra_lastplaybacktime = nowtime;
 		if (wf != NOWINDOWFRAME)
@@ -8394,8 +8406,8 @@ BOOLEAN gra_loggetnextaction(CHAR *message)
 	{
 		gra_inputstate = NOEVENT;
 		pt = &tempstring[3];
-		dia = gra_getdialogfromindex(eatoi(getkeyword(&pt, x_(" "))));
-		item = eatoi(getkeyword(&pt, x_(" ")));
+		dia = gra_getdialogfromindex(eatoi(getkeyword(&pt, x_((char*)" "))));
+		item = eatoi(getkeyword(&pt, x_((char*)" ")));
 		if (dia == NOTDIALOG) return(FALSE);
 		if (dia->modelessitemhit == 0)
 		{
@@ -8412,11 +8424,11 @@ BOOLEAN gra_loggetnextaction(CHAR *message)
 	{
 		gra_inputstate = NOEVENT;
 		pt = &tempstring[3];
-		dia = gra_getdialogfromindex(eatoi(getkeyword(&pt, x_(" "))));
+		dia = gra_getdialogfromindex(eatoi(getkeyword(&pt, x_((char*)" "))));
 		if (dia == NOTDIALOG) return(FALSE);
-		item = eatoi(getkeyword(&pt, x_(" ")));
-		count = eatoi(getkeyword(&pt, x_(" ")));
-		for(i=0; i<count; i++) sellist[i] = eatoi(getkeyword(&pt, x_(" ")));
+		item = eatoi(getkeyword(&pt, x_((char*)" ")));
+		count = eatoi(getkeyword(&pt, x_((char*)" ")));
+		for(i=0; i<count; i++) sellist[i] = eatoi(getkeyword(&pt, x_((char*)" ")));
 		if (count == 1)
 		{
 			DiaSelectLine(dia, item, sellist[0]);
@@ -8430,10 +8442,10 @@ BOOLEAN gra_loggetnextaction(CHAR *message)
 	{
 		gra_inputstate = NOEVENT;
 		pt = &tempstring[3];
-		dia = gra_getdialogfromindex(eatoi(getkeyword(&pt, x_(" "))));
+		dia = gra_getdialogfromindex(eatoi(getkeyword(&pt, x_((char*)" "))));
 		if (dia == NOTDIALOG) return(FALSE);
-		item = eatoi(getkeyword(&pt, x_(" ")));
-		i = eatoi(getkeyword(&pt, x_(" ")));
+		item = eatoi(getkeyword(&pt, x_((char*)" ")));
+		i = eatoi(getkeyword(&pt, x_((char*)" ")));
 		DiaSetPopupEntry(dia, item, i);
 		return(FALSE);
 	}
@@ -8441,10 +8453,10 @@ BOOLEAN gra_loggetnextaction(CHAR *message)
 	{
 		gra_inputstate = NOEVENT;
 		pt = &tempstring[3];
-		dia = gra_getdialogfromindex(eatoi(getkeyword(&pt, x_(" "))));
+		dia = gra_getdialogfromindex(eatoi(getkeyword(&pt, x_((char*)" "))));
 		if (dia == NOTDIALOG) return(FALSE);
-		item = eatoi(getkeyword(&pt, x_(" ")));
-		i = eatoi(getkeyword(&pt, x_(" ")));
+		item = eatoi(getkeyword(&pt, x_((char*)" ")));
+		i = eatoi(getkeyword(&pt, x_((char*)" ")));
 		DiaSetControl(dia, item, i);
 		return(FALSE);
 	}
@@ -8452,9 +8464,9 @@ BOOLEAN gra_loggetnextaction(CHAR *message)
 	{
 		gra_inputstate = NOEVENT;
 		pt = &tempstring[3];
-		dia = gra_getdialogfromindex(eatoi(getkeyword(&pt, x_(" "))));
+		dia = gra_getdialogfromindex(eatoi(getkeyword(&pt, x_((char*)" "))));
 		if (dia == NOTDIALOG) return(FALSE);
-		item = eatoi(getkeyword(&pt, x_(" ")));
+		item = eatoi(getkeyword(&pt, x_((char*)" ")));
 		while (*pt != 0 && *pt != ' ') pt++;
 		if (*pt == ' ') pt++;
 		DiaSetText(dia, item, pt);
@@ -8473,26 +8485,26 @@ BOOLEAN gra_loggetnextaction(CHAR *message)
 	{
 		gra_inputstate = DIAUSERMOUSE;
 		pt = &tempstring[3];
-		dia = gra_getdialogfromindex(eatoi(getkeyword(&pt, x_(" "))));
+		dia = gra_getdialogfromindex(eatoi(getkeyword(&pt, x_((char*)" "))));
 		if (dia == NOTDIALOG) return(FALSE);
-		gra_action.x = eatoi(getkeyword(&pt, x_(" ")));
-		gra_action.y = eatoi(getkeyword(&pt, x_(" ")));
+		gra_action.x = eatoi(getkeyword(&pt, x_((char*)" ")));
+		gra_action.y = eatoi(getkeyword(&pt, x_((char*)" ")));
 		return(FALSE);
 	}
 	if (estrncmp(tempstring, x_("DD"), 2) == 0)
 	{
 		gra_inputstate = DIAENDDIALOG;
 		pt = &tempstring[3];
-		dia = gra_getdialogfromindex(eatoi(getkeyword(&pt, x_(" "))));
+		dia = gra_getdialogfromindex(eatoi(getkeyword(&pt, x_((char*)" "))));
 		return(FALSE);
 	}
 	if (estrncmp(tempstring, x_("ME"), 2) == 0)
 	{
 		gra_inputstate = MENUEVENT;
 		pt = &tempstring[3];
-		gra_cursorx = eatoi(getkeyword(&pt, x_(" ")));
-		gra_cursory = eatoi(getkeyword(&pt, x_(" ")));
-		nowtime = eatoi(getkeyword(&pt, x_(" ")));
+		gra_cursorx = eatoi(getkeyword(&pt, x_((char*)" ")));
+		gra_cursory = eatoi(getkeyword(&pt, x_((char*)" ")));
+		nowtime = eatoi(getkeyword(&pt, x_((char*)" ")));
 		gra_timeoffset += nowtime - gra_lastplaybacktime;
 		gra_lastplaybacktime = nowtime;
 		return(FALSE);
@@ -8508,8 +8520,8 @@ BOOLEAN gra_loggetnextaction(CHAR *message)
 	{
 		gra_inputstate = POPUPSELECT;
 		pt = &tempstring[3];
-		gra_cursorx = eatoi(getkeyword(&pt, x_(" ")));
-		nowtime = eatoi(getkeyword(&pt, x_(" ")));
+		gra_cursorx = eatoi(getkeyword(&pt, x_((char*)" ")));
+		nowtime = eatoi(getkeyword(&pt, x_((char*)" ")));
 		gra_timeoffset += nowtime - gra_lastplaybacktime;
 		gra_lastplaybacktime = nowtime;
 		return(FALSE);
@@ -8519,10 +8531,10 @@ BOOLEAN gra_loggetnextaction(CHAR *message)
 	{
 		pt = &tempstring[3];
 		gra_inputstate = MOTION;
-		gra_cursorx = eatoi(getkeyword(&pt, x_(" ")));
-		gra_cursory = eatoi(getkeyword(&pt, x_(" ")));
-		gra_inputspecial = eatoi(getkeyword(&pt, x_(" ")));
-		i = eatoi(getkeyword(&pt, x_(" ")));
+		gra_cursorx = eatoi(getkeyword(&pt, x_((char*)" ")));
+		gra_cursory = eatoi(getkeyword(&pt, x_((char*)" ")));
+		gra_inputspecial = eatoi(getkeyword(&pt, x_((char*)" ")));
+		i = eatoi(getkeyword(&pt, x_((char*)" ")));
 		if (tempstring[1] == 'R') gra_inputstate |= BUTTONUP;
 	} else if (estrncmp(tempstring, x_("KT"), 2) == 0)
 	{
@@ -8534,23 +8546,23 @@ BOOLEAN gra_loggetnextaction(CHAR *message)
 		pt = &start[i+2];
 		(void)us_getboundkey(start, &boundkey, &gra_inputspecial);
 		gra_inputstate = ISKEYSTROKE | (boundkey & CHARREAD);
-		gra_cursorx = eatoi(getkeyword(&pt, x_(" ")));
-		gra_cursory = eatoi(getkeyword(&pt, x_(" ")));
-		i = eatoi(getkeyword(&pt, x_(" ")));
-		nowtime = eatoi(getkeyword(&pt, x_(" ")));
+		gra_cursorx = eatoi(getkeyword(&pt, x_((char*)" ")));
+		gra_cursory = eatoi(getkeyword(&pt, x_((char*)" ")));
+		i = eatoi(getkeyword(&pt, x_((char*)" ")));
+		nowtime = eatoi(getkeyword(&pt, x_((char*)" ")));
 		gra_timeoffset += nowtime - gra_lastplaybacktime;
 		gra_lastplaybacktime = nowtime;
 	} else if (tempstring[0] == 'B')
 	{
 		pt = &tempstring[3];
-		gra_inputstate = eatoi(getkeyword(&pt, x_(" ")));
-		gra_cursorx = eatoi(getkeyword(&pt, x_(" ")));
-		gra_cursory = eatoi(getkeyword(&pt, x_(" ")));
-		gra_inputspecial = eatoi(getkeyword(&pt, x_(" ")));
-		i = eatoi(getkeyword(&pt, x_(" ")));
+		gra_inputstate = eatoi(getkeyword(&pt, x_((char*)" ")));
+		gra_cursorx = eatoi(getkeyword(&pt, x_((char*)" ")));
+		gra_cursory = eatoi(getkeyword(&pt, x_((char*)" ")));
+		gra_inputspecial = eatoi(getkeyword(&pt, x_((char*)" ")));
+		i = eatoi(getkeyword(&pt, x_((char*)" ")));
 		if (tempstring[1] == 'D') gra_inputstate |= DOUBLECL;
 		if (tempstring[1] == 'R') gra_inputstate |= BUTTONUP;
-		nowtime = eatoi(getkeyword(&pt, x_(" ")));
+		nowtime = eatoi(getkeyword(&pt, x_((char*)" ")));
 		gra_timeoffset += nowtime - gra_lastplaybacktime;
 		gra_lastplaybacktime = nowtime;
 	}
@@ -8576,7 +8588,7 @@ BOOLEAN gra_logreadline(CHAR *string, INTBIG limit)
 
 WINDOWFRAME *gra_getframefromindex(INTBIG index)
 {
-	REGISTER WINDOWFRAME *wf;
+	 WINDOWFRAME *wf;
 
 	for(wf = el_firstwindowframe; wf != NOWINDOWFRAME; wf = wf->nextwindowframe)
 		if (wf->windindex == index) return(wf);
@@ -8585,7 +8597,7 @@ WINDOWFRAME *gra_getframefromindex(INTBIG index)
 
 TDIALOG *gra_getdialogfromindex(INTBIG index)
 {
-	REGISTER TDIALOG *dia;
+	 TDIALOG *dia;
 
 	for(dia = gra_firstactivedialog; dia != NOTDIALOG; dia = dia->nexttdialog)
 		if (dia->windindex == index) return(dia);
@@ -8596,13 +8608,13 @@ TDIALOG *gra_getdialogfromindex(INTBIG index)
 
 void getacceleratorstrings(CHAR **acceleratorstring, CHAR **acceleratorprefix)
 {
-	*acceleratorstring = x_("Ctrl");
-	*acceleratorprefix = x_("Ctrl-");
+	*acceleratorstring = x_((char*)"Ctrl");
+	*acceleratorprefix = x_((char*)"Ctrl-");
 }
 
 CHAR *getinterruptkey(void)
 {
-	return(_("Control-C in Messages Window"));
+	return(_((char*)"Control-C in Messages Window"));
 }
 
 INTBIG nativepopupmenu(POPUPMENU **menuptr, BOOLEAN header, INTBIG left, INTBIG top)
@@ -8623,8 +8635,8 @@ INTBIG gra_nativepopuptif(POPUPMENU **menuptr, BOOLEAN header, INTBIG left, INTB
 	CHAR msg[200], *pt;
 	POPUPMENUITEM *mi, *submi;
 	POPUPMENU *menu, **subpmlist;
-	REGISTER WINDOWFRAME *wf;
-	REGISTER USERCOM *uc;
+	 WINDOWFRAME *wf;
+	 USERCOM *uc;
 
 	while (us_logplay != NULL)
 	{
@@ -8638,7 +8650,7 @@ INTBIG gra_nativepopuptif(POPUPMENU **menuptr, BOOLEAN header, INTBIG left, INTB
 	wf = el_curwindowframe;
 	ac = 0;
 	XtSetArg(arg[ac], XmNpacking, XmPACK_COLUMN);   ac++;
-	popmenu = (Widget)XmCreatePopupMenu(wf->graphicswidget, b_("menu"), arg, ac);
+	popmenu = (Widget)XmCreatePopupMenu(wf->graphicswidget, b_((char*)"menu"), arg, ac);
 	if (header)
 	{
 		header = 2;
@@ -8674,7 +8686,7 @@ INTBIG gra_nativepopuptif(POPUPMENU **menuptr, BOOLEAN header, INTBIG left, INTB
 		mi->changed = FALSE;
 		if (*mi->attribute == 0)
 		{
-			XtVaCreateManagedWidget(b_("sep"), xmSeparatorWidgetClass, popmenu, NULL);
+			XtVaCreateManagedWidget(b_((char*)"sep"), xmSeparatorWidgetClass, popmenu, NULL);
 		} else
 		{
 			i = 0;
@@ -8685,7 +8697,7 @@ INTBIG gra_nativepopuptif(POPUPMENU **menuptr, BOOLEAN header, INTBIG left, INTB
 			uc = mi->response;
 			if (uc != NOUSERCOM && uc->menu != NOPOPUPMENU)
 			{
-				submenu = (Widget)XmVaCreateSimplePulldownMenu(popmenu, b_("menu"), j+header,
+				submenu = (Widget)XmVaCreateSimplePulldownMenu(popmenu, b_((char*)"menu"), j+header,
 					(XtCallbackProc)gra_menupcb, NULL);
 				if (submenu == 0) return(-1);
 				submenulist[submenus] = submenu;
@@ -8765,8 +8777,8 @@ void gra_nativemenudoone(WINDOWFRAME *wf, INTBIG low, INTBIG high)
 
 void nativemenuload(INTBIG count, CHAR *par[])
 {
-	REGISTER INTBIG i;
-	REGISTER WINDOWFRAME *wf;
+	 INTBIG i;
+	 WINDOWFRAME *wf;
 
 	/* remember the top-level pulldown menus */
 	for(i=0; i<count; i++)
@@ -8793,11 +8805,11 @@ void nativemenuload(INTBIG count, CHAR *par[])
 
 void gra_pulldownmenuload(WINDOWFRAME *wf)
 {
-	REGISTER INTBIG i, j;
-	REGISTER INTBIG keysym;
+	 INTBIG i, j;
+	 INTBIG keysym;
 	CHAR myline[256], *pt;
 	CHAR mstring[2];
-	REGISTER POPUPMENU *pm;
+	 POPUPMENU *pm;
 	Widget thismenu, child;
 
 	if (gra_pulldownmenucount == 0)
@@ -8831,7 +8843,7 @@ void gra_pulldownmenuload(WINDOWFRAME *wf)
 			keysym = XStringToKeysym(string1byte(mstring));
 			XtVaSetValues(child, XmNmnemonic, keysym, NULL);
 		}
-		thismenu = XmVaCreateSimplePulldownMenu(wf->menubar, b_("menu"), i,
+		thismenu = XmVaCreateSimplePulldownMenu(wf->menubar, b_((char*)"menu"), i,
 			(XtCallbackProc)gra_menucb, NULL);
 		if (thismenu == 0) return;
 		gra_pulldownindex(wf, pm, i, thismenu);
@@ -8846,10 +8858,10 @@ void nativemenurename(POPUPMENU *pm, INTBIG pindex)
 	Widget w, *newpulllist;
 	WidgetClass wc;
 	Arg arg[5];
-	REGISTER POPUPMENUITEM *mi;
-	REGISTER USERCOM *uc;
+	 POPUPMENUITEM *mi;
+	 USERCOM *uc;
 	XmString label, acctext;
-	REGISTER WINDOWFRAME *wf;
+	 WINDOWFRAME *wf;
 
 	/* see if there is a mnemonic */
 	pt = line;
@@ -8969,7 +8981,7 @@ void nativemenurename(POPUPMENU *pm, INTBIG pindex)
  */
 void gra_pulldownindex(WINDOWFRAME *wf, POPUPMENU *pm, INTBIG order, Widget parent)
 {
-	REGISTER INTBIG i, pindex, *newpulldownmenucount;
+	 INTBIG i, pindex, *newpulldownmenucount;
 	Widget *newpulldownmenus, **newpulldownmenulist;
 	CHAR **newpulldowns;
 
@@ -9028,11 +9040,11 @@ void gra_pulldownindex(WINDOWFRAME *wf, POPUPMENU *pm, INTBIG order, Widget pare
  */
 Widget gra_makepdmenu(WINDOWFRAME *wf, POPUPMENU *pm, INTBIG value, Widget thismenu, INTBIG pindex)
 {
-	REGISTER INTBIG i, j, keysym, checked, haveacc, len;
+	 INTBIG i, j, keysym, checked, haveacc, len;
 	CHAR myline[256], metaline[50], *pt;
 	CHAR mstring[2];
-	REGISTER USERCOM *uc;
-	REGISTER POPUPMENUITEM *mi;
+	 USERCOM *uc;
+	 POPUPMENUITEM *mi;
 	Widget submenu, *childlist;
 	INTBIG special;
 	INTSML key;
@@ -9075,7 +9087,7 @@ Widget gra_makepdmenu(WINDOWFRAME *wf, POPUPMENU *pm, INTBIG value, Widget thism
 		/* see if this command is another menu */
 		if (uc->menu != NOPOPUPMENU)
 		{
-			submenu = (Widget)XmVaCreateSimplePulldownMenu(thismenu, b_("menu"), i,
+			submenu = (Widget)XmVaCreateSimplePulldownMenu(thismenu, b_((char*)"menu"), i,
 				(XtCallbackProc)gra_menucb, NULL);
 			if (submenu == 0) return(0);
 			XtVaSetValues(submenu, XmNtearOffModel, XmTEAR_OFF_ENABLED, NULL);
@@ -9153,7 +9165,7 @@ void gra_menucb(Widget w, int item_number, XtPointer call_data)
 {
 	Widget parent;
 	INTBIG i;
-	REGISTER WINDOWFRAME *wf;
+	 WINDOWFRAME *wf;
 
 	parent = XtParent(w);
 	for(wf = el_firstwindowframe; wf != NOWINDOWFRAME; wf = wf->nextwindowframe)
@@ -9232,7 +9244,7 @@ BOOLEAN gra_initdialog(DIALOG *dialog, TDIALOG *dia, BOOLEAN modeless)
 	GC gc;
 	XGCValues gcv;
 	static INTBIG userdrawactionset = 0, listcopyactionset = 0;
-	REGISTER void *infstr;
+	 void *infstr;
 	XColor col;
 
 	/* add this to the list of active dialogs */
@@ -9322,7 +9334,7 @@ BOOLEAN gra_initdialog(DIALOG *dialog, TDIALOG *dia, BOOLEAN modeless)
 
 	/* create the dialog */
 	title = dialog->movable;
-	if (title == 0 || *title == 0) title = x_(" ");
+	if (title == 0 || *title == 0) title = x_((char*)" ");
 	gra_getdialogcoordinates(&dialog->windowRect, &x, &y, &wid, &hei);
 	ac = 0;
 	if (modeless)
@@ -9346,7 +9358,7 @@ BOOLEAN gra_initdialog(DIALOG *dialog, TDIALOG *dia, BOOLEAN modeless)
 	XtSetArg(arg[ac], XmNdeleteResponse,  XmDO_NOTHING);   ac++;
 	XtSetArg(arg[ac], XmNmwmFunctions,    MWM_FUNC_MOVE);   ac++;
 	XtSetArg(arg[ac], XmNdefaultPosition, False);   ac++;
-	dia->window = (Widget)XmCreateBulletinBoardDialog(base, b_("dialog"), arg, ac);
+	dia->window = (Widget)XmCreateBulletinBoardDialog(base, b_((char*)"dialog"), arg, ac);
 	dia->redrawroutine = 0;
 	dia->itemdesc = dialog;
 	dia->opaqueitem = -1;
@@ -9416,7 +9428,7 @@ BOOLEAN gra_initdialog(DIALOG *dialog, TDIALOG *dia, BOOLEAN modeless)
 					(XtCallbackProc)gra_dialogaction, (XtPointer)i);
 				break;
 			case RADIO:
-				temp = (Widget)XmCreateRadioBox(dia->window, b_("radio"), arg, ac);
+				temp = (Widget)XmCreateRadioBox(dia->window, b_((char*)"radio"), arg, ac);
 				XtManageChild(temp);
 				dia->items[i] = XtVaCreateManagedWidget(string1byte(dialog->list[i].msg),
 					xmToggleButtonGadgetClass, temp, XmNindicatorSize, hei-8, NULL);
@@ -9424,7 +9436,7 @@ BOOLEAN gra_initdialog(DIALOG *dialog, TDIALOG *dia, BOOLEAN modeless)
 					(XtCallbackProc)gra_dialogaction, (XtPointer)i);
 				break;
 			case EDITTEXT:
-				dia->items[i] = (Widget)XmCreateText(dia->window, b_("text"),
+				dia->items[i] = (Widget)XmCreateText(dia->window, b_((char*)"text"),
 					arg, ac);
 				XtManageChild(dia->items[i]);
 				XtAddCallback(dia->items[i], XmNvalueChangedCallback,
@@ -9441,12 +9453,12 @@ BOOLEAN gra_initdialog(DIALOG *dialog, TDIALOG *dia, BOOLEAN modeless)
 				break;
 			case PROGRESS:
 				dia->items[i] = (Widget)XmCreateDrawingArea(dia->window,
-					b_("user"), arg, ac);
+					b_((char*)"user"), arg, ac);
 				XtManageChild(dia->items[i]);
 				break;
 			case DIVIDELINE:
 				dia->items[i] = (Widget)XmCreateDrawingArea(dia->window,
-					b_("user"), arg, ac);
+					b_((char*)"user"), arg, ac);
 				XtManageChild(dia->items[i]);
 				XtAddCallback(dia->items[i], XmNexposeCallback,
 					(XtCallbackProc)gra_dialogredrawsep, (XtPointer)i);
@@ -9461,15 +9473,15 @@ BOOLEAN gra_initdialog(DIALOG *dialog, TDIALOG *dia, BOOLEAN modeless)
 			case USERDRAWN:
 				if (userdrawactionset == 0)
 				{
-					actions.string = b_("draw");
+					actions.string = b_((char*)"draw");
 					actions.proc = (XtActionProc)gra_dialogdraw;
 					XtAppAddActions(gra_xtapp, &actions, 1);
 					userdrawactionset = 1;
 				}
-				translation = b_("<BtnDown>: draw(down) ManagerGadgetArm()\n<BtnUp>: draw(up) ManagerGadgetActivate()\n<BtnMotion>: draw(motion) ManagerGadgetButtonMotion()");
+				translation = b_((char*)"<BtnDown>: draw(down) ManagerGadgetArm()\n<BtnUp>: draw(up) ManagerGadgetActivate()\n<BtnMotion>: draw(motion) ManagerGadgetButtonMotion()");
 				XtSetArg(arg[ac], XmNtranslations, XtParseTranslationTable(translation));   ac++;
 				dia->items[i] = (Widget)XmCreateDrawingArea(dia->window,
-					b_("user"), arg, ac);
+					b_((char*)"user"), arg, ac);
 				XtManageChild(dia->items[i]);
 				XtAddCallback(dia->items[i], XmNexposeCallback,
 					(XtCallbackProc)gra_dialogredraw, (XtPointer)i);
@@ -9478,7 +9490,7 @@ BOOLEAN gra_initdialog(DIALOG *dialog, TDIALOG *dia, BOOLEAN modeless)
 				XtSetArg(arg[ac], XmNresizeWidth, False);   ac++;
 				XtSetArg(arg[ac], XmNresizeHeight, False);   ac++;
 				dia->items[i] = (Widget)XmCreateOptionMenu(dia->window,
-					b_("menu"), arg, ac);
+					b_((char*)"menu"), arg, ac);
 				dialog->list[i].data = 0;
 				XtAddCallback(dia->items[i], XmNentryCallback,
 					(XtCallbackProc)gra_dialogaction, (XtPointer)i);
@@ -9513,12 +9525,12 @@ BOOLEAN gra_initdialog(DIALOG *dialog, TDIALOG *dia, BOOLEAN modeless)
 			case SCROLLMULTI:
 				if (listcopyactionset == 0)
 				{
-					actions.string = b_("copywholelist");
+					actions.string = b_((char*)"copywholelist");
 					actions.proc = (XtActionProc)gra_dialogcopywholelist;
 					XtAppAddActions(gra_xtapp, &actions, 1);
 					listcopyactionset = 1;
 				}
-				translation = b_("#override <Key>osfCopy: copywholelist()");
+				translation = b_((char*)"#override <Key>osfCopy: copywholelist()");
 				XtSetArg(arg[ac], XmNtranslations, XtParseTranslationTable(translation));   ac++;
 				if ((itemtype&ITEMTYPE) == SCROLL)
 				{
@@ -9531,7 +9543,7 @@ BOOLEAN gra_initdialog(DIALOG *dialog, TDIALOG *dia, BOOLEAN modeless)
 				XtSetArg(arg[ac], XmNresizePolicy, XmRESIZE_NONE);   ac++;
 				XtSetArg(arg[ac], XmNlistSizePolicy, XmCONSTANT);   ac++;
 				dia->items[i] = (Widget)XmCreateScrolledList(dia->window,
-					b_("scroll"), arg, ac);
+					b_((char*)"scroll"), arg, ac);
 				XtManageChild(dia->items[i]);
 
 				/* get the vertical scroll bar out of the widget */
@@ -9592,9 +9604,9 @@ BOOLEAN gra_initdialog(DIALOG *dialog, TDIALOG *dia, BOOLEAN modeless)
 		XtSetValues(temp, arg, 1);
 	}
 
-	if (*title == 0) title = _("UNTITLED");
+	if (*title == 0) title = _((char*)"UNTITLED");
 	infstr = initinfstr();
-	formatinfstr(infstr, _("Start dialog %s"), title);
+	formatinfstr(infstr, _((char*)"Start dialog %s"), title);
 	gra_logwritecomment(returninfstr(infstr));
 	dia->dialoghit = -1;
 	gra_flushdialog(dia);
@@ -9805,7 +9817,7 @@ void DiaSetText(void *vdia, INTBIG item, CHAR *msg)
 				gra_brokenbufsize = len;
 			}
 			if (separator == 0) separator = XmStringSeparatorCreate();
-			str = XmStringCreateLocalized(b_(""));
+			str = XmStringCreateLocalized(b_((char*)""));
 			pt = msg;
 			for(;;)
 			{
@@ -9858,7 +9870,7 @@ CHAR *DiaGetText(void *vdia, INTBIG item)
 	XmString str;
 	CHAR1 *text;
 	CHAR *retstring;
-	REGISTER void *infstr;
+	 void *infstr;
 	XmStringContext context;
 	XmStringCharSet tag;
 	XmStringDirection direction;
@@ -9899,7 +9911,7 @@ CHAR *DiaGetText(void *vdia, INTBIG item)
 		retstring = returninfstr(infstr);
 		return(retstring);
 	}
-	return(x_(""));
+	return(x_((char*)""));
 }
 
 /*
@@ -9952,7 +9964,7 @@ BOOLEAN DiaValidEntry(void *vdia, INTBIG item)
  */
 void DiaDimItem(void *vdia, INTBIG item)
 {
-	REGISTER INTBIG type;
+	 INTBIG type;
 	Arg arg[2];
 	TDIALOG *dia;
 
@@ -9974,7 +9986,7 @@ void DiaDimItem(void *vdia, INTBIG item)
  */
 void DiaUnDimItem(void *vdia, INTBIG item)
 {
-	REGISTER INTBIG type;
+	 INTBIG type;
 	Arg arg[2];
 	TDIALOG *dia;
 
@@ -10097,10 +10109,10 @@ void DiaSetPopup(void *vdia, INTBIG item, INTBIG count, CHAR **names)
 	item--;
 	gra_getdialogcoordinates(&dia->itemdesc->list[item].r, &x, &y, &wid, &hei);
 	XtSetArg(arg[0], XmNpacking, XmPACK_COLUMN);
-	menu = (Widget)XmCreatePulldownMenu(dia->window, b_("menu"), arg, 1);
+	menu = (Widget)XmCreatePulldownMenu(dia->window, b_((char*)"menu"), arg, 1);
 	if (count == 0)
 	{
-		child = (Widget)XmCreatePushButton(menu, b_(""), NULL, 0);
+		child = (Widget)XmCreatePushButton(menu, b_((char*)""), NULL, 0);
 		XtManageChild(child);
 	}
 	for(i=0; i<count; i++)
@@ -10213,7 +10225,7 @@ void DiaInitTextDialog(void *vdia, INTBIG item, BOOLEAN (*toplist)(CHAR **), CHA
 		{
 			dpy = XtDisplay(w);
 			entry = XmFontListEntryLoad(dpy, string1byte(gra_font[11].fontname),
-				XmFONT_IS_FONT, b_("TAG"));
+				XmFONT_IS_FONT, b_((char*)"TAG"));
 			fontlist = XmFontListAppendEntry(NULL, entry);
 			XmFontListEntryFree(&entry);
 			havefontlist = 1;
@@ -10283,7 +10295,7 @@ void DiaLoadTextDialog(void *vdia, INTBIG item, BOOLEAN (*toplist)(CHAR **), CHA
 		for(i=0; i<items; i++)
 		{
 			next = (*nextinlist)();
-			if (next == 0) next = x_("???");
+			if (next == 0) next = x_((char*)"???");
 			list[i] = (CHAR *)emalloc((estrlen(next)+1) * SIZEOFCHAR, el_tempcluster);
 			if (list[i] == 0) return;
 			estrcpy(list[i], next);
@@ -10438,7 +10450,7 @@ INTBIG *DiaGetCurLines(void *vdia, INTBIG item)
 {
 	Widget w;
 	static INTBIG selected[MAXSCROLLMULTISELECT];
-	REGISTER INTBIG i;
+	 INTBIG i;
 	int count, *pos;   /* must be "int", and not "INTBIG" to work on Alpha */
 	TDIALOG *dia;
 
@@ -10476,15 +10488,15 @@ CHAR *DiaGetScrollLine(void *vdia, INTBIG item, INTBIG line)
 	XmString *strlist;
 	CHAR1 *text;
 	CHAR *retstring;
-	REGISTER void *infstr;
+	 void *infstr;
 	TDIALOG *dia;
 
 	dia = (TDIALOG *)vdia;
 	item--;
-	if (line < 0) return(x_(""));
+	if (line < 0) return(x_((char*)""));
 	w = dia->items[item];
 	XtVaGetValues(w, XmNitemCount, &count, XmNitems, &strlist, NULL);
-	if (line >= count) retstring = x_(""); else
+	if (line >= count) retstring = x_((char*)""); else
 	{
 		XmStringGetLtoR(strlist[line], XmFONTLIST_DEFAULT_TAG, &text);
 		infstr = initinfstr();
@@ -10962,7 +10974,7 @@ INTBIG gra_makedpycolor(Display *dpy, INTBIG r, INTBIG g, INTBIG b)
 Pixmap gra_makeicon(UCHAR1 *data, Widget widget)
 {
 	static Pixmap buildupmain[MAXICONS], buildupalt[MAXICONS];
-	REGISTER Pixmap *buildup;
+	 Pixmap *buildup;
 	static INTBIG which = 0;
 	static INTBIG foreground, background, screen, bgr, bgg, bgb;
 	UCHAR1 *tdptr, *setptr;
@@ -10981,7 +10993,7 @@ Pixmap gra_makeicon(UCHAR1 *data, Widget widget)
 	if (dpy == gra_maindpy) buildup = buildupmain; else
 		if (dpy == gra_altdpy) buildup = buildupalt; else
 	{
-		ttyputerr(_("Cannot find display for icon"));
+		ttyputerr(_((char*)"Cannot find display for icon"));
 		return(0);
 	}
 	screen = DefaultScreen(dpy);
@@ -11124,7 +11136,7 @@ void gra_vertslider(Widget w, XtPointer client_data, XmScrollBarCallbackStruct *
 	if (dia == NOTDIALOG) return;
 
 	value = call_data->value;
-	item = (int)client_data;
+	item = (intptr_t)client_data;
 	for(i=0; i<dia->numlocks; i++)
 	{
 		if (dia->lock1[i] == item)
@@ -11191,8 +11203,8 @@ void gra_dialogaction(Widget w, XtPointer client_data, XmSelectionBoxCallbackStr
 
 	dia = gra_whichdialog(w);
 	if (dia == NOTDIALOG) return;
-
-	item = ((int)client_data) & 0xFFFF;
+	item = ((intptr_t)client_data) & 0xFFFF;
+	//item = ((int)client_data) & 0xFFFF;
 	itemtype = dia->itemdesc->list[item].type;
 	item++;
 
@@ -11321,7 +11333,7 @@ void gra_dialogcopywholelist(Widget widget, XEvent *event, String *args, int *nu
 
 	dpy = XtDisplay(widget);
 	win = XtWindow(widget);
-	copylabel = XmStringCreateLocalized(b_("Electric dialog scroll list"));
+	copylabel = XmStringCreateLocalized(b_((char*)"ElectriC++ dialog scroll list"));
 	for(;;)
 	{
 		status = XmClipboardStartCopy(dpy, win, copylabel, CurrentTime, widget, NULL, &itemid);
@@ -11336,7 +11348,7 @@ void gra_dialogcopywholelist(Widget widget, XEvent *event, String *args, int *nu
 		text[len] = '\n';
 		for(;;)
 		{
-			status = XmClipboardCopy(dpy, win, itemid, b_("STRING"), text, len+1, i, NULL);
+			status = XmClipboardCopy(dpy, win, itemid, b_((char*)"STRING"), text, len+1, i, NULL);
 			if (status != ClipboardLocked) break;
 		}
 		text[len] = 0;
@@ -11429,7 +11441,7 @@ void gra_dialogredrawsep(Widget w, XtPointer client_data, XmSelectionBoxCallback
  */
 int gra_stringposascending(const void *e1, const void *e2)
 {
-	REGISTER CHAR *c1, *c2;
+	 CHAR *c1, *c2;
 
 	c1 = *((CHAR **)e1);
 	c2 = *((CHAR **)e2);

@@ -575,7 +575,7 @@ ELK_SRC = \
 
 GRAPH_SRC_XT = \
     src/graph/graphcommon.cpp \
-    src/graph/graphunixx11.c
+    src/graph/graphunixx11.cpp
 
 GRAPH_SRC_QT = \
     src/graph/graphcommon.cpp \
@@ -991,8 +991,8 @@ src/elk/elkkernel.h: src/elk/elkconfig.h src/elk/elkfuncproto.h \
 	src/elk/elkextern.h src/elk/elkmisc.h src/elk/elkexception.h \
 	src/elk/elkgc.h src/elk/elktype.h src/elk/elkstkmem.h \
 	src/elk/elkcstring.h src/elk/elkcompat.h
-src/graph/graphunixx11.o: src/graph/graphunixx11.c $(HDS)/global.h $(HDS)/database.h $(HDS)/egraphics.h $(HDS)/usr.h $(HDS)/eio.h $(HDS)/usrtrack.h $(HDS)/edialogs.h $(HDS)/config.h
-	$(CCOMPILER) $(XCFLAGS) -c src/graph/graphunixx11.c -o $@
+src/graph/graphunixx11.o: src/graph/graphunixx11.cpp $(HDS)/global.h $(HDS)/database.h $(HDS)/egraphics.h $(HDS)/usr.h $(HDS)/eio.h $(HDS)/usrtrack.h $(HDS)/edialogs.h $(HDS)/config.h
+	$(CCOMPILER) $(XCFLAGS) -c src/graph/graphunixx11.cpp -o $@
 
 src/graph/graphqt.o: src/graph/graphqt.cpp $(HDS)/global.h $(HDS)/database.h $(HDS)/egraphics.h $(HDS)/eio.h $(HDS)/usr.h $(HDS)/usrtrack.h $(HDS)/edialogs.h src/graph/graphqt.h $(HDS)/dblang.h
 src/graph/graphqtdlg.o: src/graph/graphqtdlg.cpp $(HDS)/global.h src/graph/graphqtdlg.h $(HDS)/edialogs.h
